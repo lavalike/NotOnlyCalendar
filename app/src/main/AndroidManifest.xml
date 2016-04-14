@@ -3,6 +3,7 @@
     package="com.notonly.calendar">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
@@ -27,7 +28,7 @@
             android:label="@string/action_about"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UI.HistoryActivity"
+            android:name=".UI.TodayInHistoryActivity"
             android:label="@string/todayinhistory"
             android:screenOrientation="portrait"></activity>
     </application>

@@ -12,9 +12,9 @@ import com.notonly.calendar.adapter.HistoryAdapter;
 import com.notonly.calendar.bean.HistoryBean;
 import com.notonly.calendar.util.Constants;
 import com.notonly.calendar.util.DateUtil;
+import com.notonly.calendar.util.NetworkUtil;
 import com.notonly.calendar.util.ToastUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -25,8 +25,8 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
-@ContentView(R.layout.activity_history)
-public class HistoryActivity extends BaseActivity {
+@ContentView(R.layout.activity_today_in_history)
+public class TodayInHistoryActivity extends BaseActivity {
     private Context mContext;
 
     @ViewInject(R.id.SwipeRefresh_History)
@@ -41,14 +41,20 @@ public class HistoryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         mContext = this;
         setTitle(getTitle() + "(" + DateUtil.getMonth() + "月" + DateUtil.getDay() + "日)");
-        mSwipeRefresh.setRefreshing(true);
-        load();
+        mSwipeRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefresh.setRefreshing(true);
+            }
+        });
+
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 load();
             }
         });
+        load();
     }
 
     /**
@@ -60,16 +66,9 @@ public class HistoryActivity extends BaseActivity {
         params.addQueryStringParameter("v", "1.0");
         params.addQueryStringParameter("month", DateUtil.getMonth());
         params.addQueryStringParameter("day", DateUtil.getDay());
-        params.setCacheMaxAge(1000 * 60 * 5);//缓存时间5分钟
-        x.http().get(params, new Callback.CacheCallback<String>() {
+        Callback.Cancelable task = x.http().get(params, new Callback.CommonCallback<String>() {
             String result = "";
             boolean hasErr = false;
-
-            @Override
-            public boolean onCache(String result) {
-                this.result = result;
-                return true;
-            }
 
             @Override
             public void onSuccess(String result) {
@@ -79,6 +78,9 @@ public class HistoryActivity extends BaseActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 this.hasErr = true;
+                if (!NetworkUtil.isNetworkAvailable(mContext)) {
+                    ToastUtil.getInstance(mContext).toast(getString(R.string.error_network));
+                }
             }
 
             @Override
@@ -93,20 +95,17 @@ public class HistoryActivity extends BaseActivity {
                     return;
                 try {
                     JSONObject object = new JSONObject(this.result);
-                    String errCode = object.getString("error_code");
-                    if (!errCode.equals("0")) {
-                        ToastUtil.getInstance(mContext).toast("出错啦(ErrCode:" + errCode + ")");
-                        return;
-                    }
-                    List<HistoryBean> list = new Gson().fromJson(object.getString("result"), new TypeToken<ArrayList<HistoryBean>>() {
+                    Gson gson = new Gson();
+                    List<HistoryBean> list = gson.fromJson(object.getString("result"), new TypeToken<ArrayList<HistoryBean>>() {
                     }.getType());
                     mAdapter = new HistoryAdapter(mContext, list);
                     mListView.setAdapter(mAdapter);
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
             }
         });
+        addTaskToList(task);
     }
 }

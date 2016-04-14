@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
@@ -20,7 +19,6 @@ import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.NetworkUtil;
 import com.notonly.calendar.util.ToastUtil;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -40,8 +38,6 @@ import cn.bmob.v3.listener.UpdateListener;
 public class MainActivity extends AppCompatActivity {
 
     private Context mContext;
-    @ViewInject(R.id.SwipeRefresh1)
-    private SwipeRefreshLayout mSwipeRefresh;
     @ViewInject(R.id.TextView_date)
     private TextView mTextView_date;
     @ViewInject(R.id.TextView_weekday)
@@ -57,26 +53,17 @@ public class MainActivity extends AppCompatActivity {
     @ViewInject(R.id.TextView_suit)
     private TextView mTextView_suit;
 
+    private Callback.Cancelable task;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
         mContext = this;
-        Bmob.initialize(mContext, Constants.AppKey_bmob);// 初始化Bmob SDK
-
+        Bmob.initialize(mContext, Constants.AppKey_bmob);
         mTextView_date.setText(DateUtil.getYear() + "年" + DateUtil.getMonth() + "月");
         mTextView_day.setText(DateUtil.getDay());
-
-        mSwipeRefresh.setRefreshing(true);
         requestData();
-
-        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                requestData();
-            }
-        });
-
         collectDeviceData();
     }
 
@@ -144,17 +131,10 @@ public class MainActivity extends AppCompatActivity {
         RequestParams params = new RequestParams(Constants.url_calendar);
         params.addQueryStringParameter("date", DateUtil.getDatetime());
         params.addQueryStringParameter("key", Constants.AppKey_Calendar);
-        params.setCacheMaxAge(1000 * 60 * 5);//缓存时间5分钟
-        x.http().get(params, new Callback.CacheCallback<String>() {
+        task = x.http().get(params, new Callback.CommonCallback<String>() {
 
             String result = "";
             boolean hasError = false;
-
-            @Override
-            public boolean onCache(String result) {
-                this.result = result;
-                return true;
-            }
 
             @Override
             public void onSuccess(String result) {
@@ -164,31 +144,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 this.hasError = true;
-                ToastUtil.getInstance(mContext).toast("请检查网络");
+                if (!NetworkUtil.isNetworkAvailable(mContext)) {
+                    ToastUtil.getInstance(mContext).toast(getString(R.string.error_network));
+                }
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
-                ToastUtil.getInstance(mContext).toast("Cancelled.");
             }
 
             @Override
             public void onFinished() {
-                mSwipeRefresh.setRefreshing(false);
-                if (this.result.equals("") || this.hasError)
+                if (this.result.equals("") || this.hasError) {
                     return;
+                }
                 try {
-                    String err_code = new JSONObject(this.result).getString("error_code");
-                    if (!err_code.equals("0")) {
-                        ToastUtil.getInstance(mContext).toast("出错啦");
-                        return;
-                    }
-
-                    String data = new JSONObject(new JSONObject(this.result).getString("result")).getString("data");
-                    CalendarBean bean = new Gson().fromJson(data, CalendarBean.class);
+                    JSONObject object = new JSONObject(this.result);
+                    String data = new JSONObject(object.getString("result")).getString("data");
+                    Gson gson = new Gson();
+                    CalendarBean bean = gson.fromJson(data, CalendarBean.class);
                     inflateData(bean);
-
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     ToastUtil.getInstance(mContext).toast("出错啦");
                 }
@@ -207,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_todayinhistory:
-                startActivity(new Intent(mContext, HistoryActivity.class));
+                startActivity(new Intent(mContext, TodayInHistoryActivity.class));
                 break;
             case R.id.action_about:
                 startActivity(new Intent(mContext, AboutActivity.class));
@@ -229,5 +205,15 @@ public class MainActivity extends AppCompatActivity {
         mTextView_lunar.setText(bean.getLunar());
         mTextView_avoid.setText(bean.getAvoid());
         mTextView_suit.setText(bean.getSuit());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (task != null) {
+            if (!task.isCancelled()) {
+                task.cancel();
+            }
+        }
     }
 }

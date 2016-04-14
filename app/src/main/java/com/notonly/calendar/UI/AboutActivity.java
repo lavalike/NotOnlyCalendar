@@ -50,7 +50,7 @@ public class AboutActivity extends BaseActivity {
                 new AlertDialog.Builder(mContext).setItems(new String[]{"保存"}, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        SaveFile();
+                        saveQrcode2File();
                     }
                 }).show();
                 break;
@@ -61,11 +61,11 @@ public class AboutActivity extends BaseActivity {
     }
 
     /**
-     * 保存文件
+     * 二维码保存为文件
      */
-    private void SaveFile() {
+    private void saveQrcode2File() {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            ToastUtil.getInstance(mContext).toast("存储卡未就绪");
+            ToastUtil.getInstance(mContext).toast(getString(R.string.error_sdcard_failure));
             return;
         }
         File path = new File(Environment.getExternalStorageDirectory() + "/NotOnlyCalendar/Images/");
@@ -75,7 +75,7 @@ public class AboutActivity extends BaseActivity {
         RequestParams params = new RequestParams(Constants.url_weixin_qrcode);
         params.setSaveFilePath(path.getAbsolutePath() + "/qrcode.jpg");
 
-        x.http().get(params, new Callback.CommonCallback<File>() {
+        Callback.Cancelable task = x.http().get(params, new Callback.CommonCallback<File>() {
             boolean hasErr = false;
 
             @Override
@@ -85,7 +85,9 @@ public class AboutActivity extends BaseActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 hasErr = true;
-                ToastUtil.getInstance(mContext).toast("请检查网络");
+                if (!NetworkUtil.isNetworkAvailable(mContext)) {
+                    ToastUtil.getInstance(mContext).toast(getString(R.string.error_network));
+                }
             }
 
             @Override
@@ -100,5 +102,6 @@ public class AboutActivity extends BaseActivity {
                 }
             }
         });
+        addTaskToList(task);
     }
 }

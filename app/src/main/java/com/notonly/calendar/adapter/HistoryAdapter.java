@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.notonly.calendar.R;
 import com.notonly.calendar.bean.HistoryBean;
 
@@ -51,7 +52,7 @@ public class HistoryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (view == null) {
             view = mInflater.inflate(R.layout.item_history_layout, null);
             holder = new ViewHolder(view);
@@ -66,6 +67,7 @@ public class HistoryAdapter extends BaseAdapter {
             holder.iv_pic.setVisibility(View.GONE);
         else
             x.image().bind(holder.iv_pic, bean.getPic(), mOptions);
+//        Glide.with(mContext).load(bean.getPic()).into(holder.iv_pic);
         holder.tv_date.setText(bean.getYear() + "年" + bean.getMonth() + "月" + bean.getDay() + "日");
         holder.tv_title.setText(bean.getTitle());
         holder.tv_des.setText(bean.getDes());
