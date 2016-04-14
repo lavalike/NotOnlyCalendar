@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">大黄历</string>
+    <string name="todayinhistory">历史上的今天</string>
+    <string name="action_about">关于</string>
+</resources>
