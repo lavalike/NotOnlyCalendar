@@ -6,6 +6,11 @@ package com.notonly.calendar.util;
 public class Constants {
 
     /**
+     * 微信AppID
+     */
+    public static String AppID_WX = "wx97589a5851c051c8";
+
+    /**
      * 万年历 AppKey
      */
     public static String AppKey_Calendar = "8b1fc95fd35a9f2ebdef438dc8fb3aba";
