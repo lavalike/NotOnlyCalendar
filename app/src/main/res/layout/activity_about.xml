@@ -15,7 +15,8 @@
         android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:src="@drawable/qrcode" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,13 +27,26 @@
         android:text="快扫一扫，有啥建议就向这里反馈"
         android:textColor="@android:color/darker_gray" />
 
+
     <TextView
         android:id="@+id/tv_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_email"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:text="版本号:1.0"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="版本号:1.0"
+        android:autoLink="email"
+        android:singleLine="true"
+        android:text="邮箱:lavalike@yeah.net"
         android:textColor="@android:color/darker_gray" />
 
 </RelativeLayout>

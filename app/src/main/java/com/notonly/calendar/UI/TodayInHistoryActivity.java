@@ -151,16 +151,17 @@ public class TodayInHistoryActivity extends BaseActivity {
      * @param data
      */
     private void share2Weixin(int type, HistoryBean data) {
-        //日期
-        String date = data.getYear() + "年" + data.getMonth() + "月" + data.getDay() + "日";
-        //标题
-        String title = data.getTitle();
+        //        //日期
+        //        String date = data.getYear() + "年" + data.getMonth() + "月" + data.getDay() + "日";
+        //        //标题
+        //        String title = data.getTitle();
         //描述
         String des = data.getDes();
         //图片链接
         String picUrl = data.getPic();
         //要分享的文本
-        String content = date + "\n" + title + "\n" + des;
+        //        String content = date + "\n" + title + "\n" + des;
+        String content = des;
 
         //创建一个用于封装文本的WXTextObject对象
         WXTextObject textObject = new WXTextObject();

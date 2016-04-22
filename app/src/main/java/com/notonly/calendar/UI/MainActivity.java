@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
@@ -38,6 +39,8 @@ import cn.bmob.v3.listener.UpdateListener;
 public class MainActivity extends AppCompatActivity {
 
     private Context mContext;
+    @ViewInject(R.id.SwipeRefresh1)
+    private SwipeRefreshLayout mSwipeRefresh;
     @ViewInject(R.id.TextView_date)
     private TextView mTextView_date;
     @ViewInject(R.id.TextView_weekday)
@@ -63,6 +66,13 @@ public class MainActivity extends AppCompatActivity {
         Bmob.initialize(mContext, Constants.AppKey_bmob);
         mTextView_date.setText(DateUtil.getYear() + "年" + DateUtil.getMonth() + "月");
         mTextView_day.setText(DateUtil.getDay());
+        mSwipeRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefresh.setRefreshing(true);
+            }
+        });
+
         requestData();
         collectDeviceData();
     }
@@ -155,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinished() {
+                mSwipeRefresh.setRefreshing(false);
                 if (this.result.equals("") || this.hasError) {
                     return;
                 }
