@@ -35,7 +35,7 @@
         android:layout_above="@+id/tv_email"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="5dp"
-        android:text="版本号:1.0"
+        android:text="版本号：1.0"
         android:textColor="@android:color/darker_gray" />
 
     <TextView
@@ -46,7 +46,7 @@
         android:layout_centerHorizontal="true"
         android:autoLink="email"
         android:singleLine="true"
-        android:text="邮箱:lavalike@yeah.net"
+        android:text="邮箱：lavalike@yeah.net"
         android:textColor="@android:color/darker_gray" />
 
 </RelativeLayout>
