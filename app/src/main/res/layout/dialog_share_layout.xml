@@ -26,7 +26,7 @@
             android:background="?android:selectableItemBackground"
             android:clickable="true"
             android:padding="15dp"
-            android:src="@drawable/ic_weixin64" />
+            android:src="@mipmap/ic_weixin64" />
 
         <ImageView
             android:id="@+id/iv_share_moments"
@@ -35,7 +35,7 @@
             android:background="?android:selectableItemBackground"
             android:clickable="true"
             android:padding="10dp"
-            android:src="@drawable/ic_moments64" />
+            android:src="@mipmap/ic_moments64" />
 
     </LinearLayout>
 

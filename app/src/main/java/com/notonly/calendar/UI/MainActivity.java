@@ -27,6 +27,7 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
@@ -66,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
         Bmob.initialize(mContext, Constants.AppKey_bmob);
         mTextView_date.setText(DateUtil.getYear() + "年" + DateUtil.getMonth() + "月");
         mTextView_day.setText(DateUtil.getDay());
+        //设置加载图标颜色
+        mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, android.R.color.holo_purple, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         mSwipeRefresh.post(new Runnable() {
             @Override
             public void run() {
@@ -186,8 +190,28 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        setIconEnable(menu, true);
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    /**
+     * 通过反射实现Menu显示图标
+     *
+     * @param menu
+     * @param enable
+     */
+    private void setIconEnable(Menu menu, boolean enable) {
+        try {
+            Class<?> clazz = Class.forName("com.android.internal.view.menu.MenuBuilder");
+            Method m = clazz.getDeclaredMethod("setOptionalIconsVisible", boolean.class);
+            m.setAccessible(true);
+            //下面传入参数
+            m.invoke(menu, enable);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -52,6 +52,9 @@ public class TodayInHistoryActivity extends BaseActivity {
         mContext = this;
         setTitle(getTitle() + "(" + DateUtil.getMonth() + "月" + DateUtil.getDay() + "日)");
         setupWeixin();
+        //设置加载图标颜色
+        mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, android.R.color.holo_purple, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
         mSwipeRefresh.post(new Runnable() {
             @Override
             public void run() {

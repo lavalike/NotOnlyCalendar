@@ -38,7 +38,7 @@ public class AboutActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        options = new ImageOptions.Builder().setLoadingDrawableId(R.drawable.qrcode).setFailureDrawableId(R.drawable.qrcode).build();
+        options = new ImageOptions.Builder().setLoadingDrawableId(R.mipmap.qrcode).setFailureDrawableId(R.mipmap.qrcode).build();
         x.image().bind(mImageView, Constants.url_weixin_qrcode, options);
         mTextViewVersion.setText("版本：" + NetworkUtil.getAppVersion(mContext));
     }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_todayinhistory"
-        android:icon="@drawable/ic_calendar"
+        android:icon="@mipmap/ic_calendar"
         android:orderInCategory="100"
         android:title="@string/todayinhistory"
         app:showAsAction="always"></item>

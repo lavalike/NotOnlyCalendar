@@ -2,6 +2,6 @@
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="100dp"
     android:layout_height="100dp"
-    android:src="@drawable/ic_weixin64">
+    android:src="@mipmap/ic_weixin64">
 
 </ImageView>
