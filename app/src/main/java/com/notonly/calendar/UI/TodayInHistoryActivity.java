@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.notonly.calendar.R;
 import com.notonly.calendar.adapter.HistoryAdapter;
 import com.notonly.calendar.bean.HistoryBean;
+import com.notonly.calendar.util.App;
 import com.notonly.calendar.util.Constants;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.NetworkUtil;
@@ -50,6 +51,7 @@ public class TodayInHistoryActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        App.getInstance().addActivity(this);
         setTitle(getTitle() + "(" + DateUtil.getMonth() + "月" + DateUtil.getDay() + "日)");
         setupWeixin();
         //设置加载图标颜色

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.notonly.calendar.R;
+import com.notonly.calendar.util.App;
 import com.notonly.calendar.util.Constants;
 import com.notonly.calendar.util.NetworkUtil;
 import com.notonly.calendar.util.ToastUtil;
@@ -38,6 +39,7 @@ public class AboutActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        App.getInstance().addActivity(this);
         options = new ImageOptions.Builder().setLoadingDrawableId(R.mipmap.qrcode).setFailureDrawableId(R.mipmap.qrcode).build();
         x.image().bind(mImageView, Constants.url_weixin_qrcode, options);
         mTextViewVersion.setText("版本：" + NetworkUtil.getAppVersion(mContext));

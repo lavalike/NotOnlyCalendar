@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.notonly.calendar.R;
 import com.notonly.calendar.bean.CalendarBean;
 import com.notonly.calendar.bean.Device;
+import com.notonly.calendar.util.App;
 import com.notonly.calendar.util.Constants;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.NetworkUtil;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
         mContext = this;
+        App.getInstance().addActivity(this);
         Bmob.initialize(mContext, Constants.AppKey_bmob);
         mTextView_date.setText(DateUtil.getYear() + "年" + DateUtil.getMonth() + "月");
         mTextView_day.setText(DateUtil.getDay());
@@ -250,5 +252,7 @@ public class MainActivity extends AppCompatActivity {
                 task.cancel();
             }
         }
+        //保持后台运行
+        moveTaskToBack(false);
     }
 }

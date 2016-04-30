@@ -53,7 +53,7 @@ public class HistoryAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         HistoryViewHolder holder;
         if (view == null) {
-            view = mInflater.inflate(R.layout.item_history_layout, null);
+            view = mInflater.inflate(R.layout.item_history_layout, viewGroup, false);
             holder = new HistoryViewHolder(view);
             view.setTag(holder);
         } else
