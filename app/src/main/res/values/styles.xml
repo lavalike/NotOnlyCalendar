@@ -18,6 +18,8 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="TranslucentTheme" parent="AppTheme"></style>
+
 
     <style name="CalendarTextStyle">
         <item name="android:textColor">@color/colorText</item>

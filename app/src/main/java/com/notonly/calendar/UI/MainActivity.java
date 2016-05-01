@@ -192,28 +192,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        setIconEnable(menu, true);
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
-    }
-
-    /**
-     * 通过反射实现Menu显示图标
-     *
-     * @param menu
-     * @param enable
-     */
-    private void setIconEnable(Menu menu, boolean enable) {
-        try {
-            Class<?> clazz = Class.forName("com.android.internal.view.menu.MenuBuilder");
-            Method m = clazz.getDeclaredMethod("setOptionalIconsVisible", boolean.class);
-            m.setAccessible(true);
-            //下面传入参数
-            m.invoke(menu, enable);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
