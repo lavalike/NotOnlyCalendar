@@ -28,7 +28,6 @@ import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.lang.reflect.Method;
 import java.util.List;
 
 import cn.bmob.v3.Bmob;
@@ -91,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
         final String deviceID = manager.getDeviceId();//设备ID
         final String mobileNumber = manager.getLine1Number();//手机号
         final String appVersion = NetworkUtil.getAppVersion(mContext);
-        final String sysVersion = Build.BRAND;
-        final String brand = Build.VERSION.RELEASE;
+        final String sysVersion = Build.VERSION.RELEASE;
+        final String brand = Build.BRAND;
         final String model = Build.MODEL;
 
         BmobQuery<Device> query = new BmobQuery<>();
