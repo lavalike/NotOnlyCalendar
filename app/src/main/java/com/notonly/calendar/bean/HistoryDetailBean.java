@@ -1,13 +1,12 @@
 package com.notonly.calendar.bean;
 
-import java.io.Serializable;
-
 /**
- * 历史上的数据 实体类
- * Created by wangzhen on 16/1/13.
+ * 历史上的今天详情
+ * Created by wangzhen on 16/5/6.
  */
-public class HistoryBean implements Serializable {
+public class HistoryDetailBean {
     private String _id;
+    private String content;
     private String day;
     private String des;
     private String lunar;
@@ -16,12 +15,20 @@ public class HistoryBean implements Serializable {
     private String title;
     private String year;
 
-    public String getId() {
+    public String get_id() {
         return _id;
     }
 
-    public void setId(String id) {
-        this._id = id;
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getDay() {

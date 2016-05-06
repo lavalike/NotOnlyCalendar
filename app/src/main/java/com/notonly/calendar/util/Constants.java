@@ -20,6 +20,7 @@ public class Constants {
      */
     public static String AppKey_todayinhistory = "9cf7fd27641553195bb9c4a99c2ba59a";
 
+
     /**
      * Bmob AppKey
      */
@@ -41,6 +42,15 @@ public class Constants {
      * @param day
      */
     public static String url_todayinhistory = "http://api.juheapi.com/japi/toh";
+
+    /**
+     * 历史上的今天详情 URL
+     *
+     * @param key
+     * @param v 版本默认1.0
+     * @param id
+     */
+    public static String url_historydetail = "http://api.juheapi.com/japi/tohdet";
 
     /**
      * 微信订阅号二维码

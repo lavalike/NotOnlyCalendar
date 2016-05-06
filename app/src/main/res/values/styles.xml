@@ -9,9 +9,9 @@
         <!--<item name="android:windowContentOverlay">@null</item>-->
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="AppTheme">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.FullScreen">
@@ -19,6 +19,8 @@
     </style>
 
     <style name="TranslucentTheme" parent="AppTheme"></style>
+
+    <style name="TranslucentTheme.NoActionBar" parent="AppTheme.NoActionBar"></style>
 
 
     <style name="CalendarTextStyle">
