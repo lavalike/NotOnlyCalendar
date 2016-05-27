@@ -26,7 +26,7 @@ import org.xutils.x;
 import java.io.File;
 
 @ContentView(R.layout.activity_about)
-public class AboutActivity1 extends BaseActivity {
+public class AboutActivity extends BaseActivity {
 
     private Context mContext;
     private ImageOptions options;

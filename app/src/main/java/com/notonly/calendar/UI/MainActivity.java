@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(mContext, TodayInHistoryActivity.class));
                 break;
             case R.id.action_about:
-                startActivity(new Intent(mContext, AboutActivity1.class));
+                startActivity(new Intent(mContext, AboutActivity.class));
                 break;
             default:
                 break;
