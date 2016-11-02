@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 23
@@ -10,6 +11,7 @@ android {
         targetSdkVersion 23
         versionCode 103
         versionName "1.0.3"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -33,4 +35,7 @@ dependencies {
     compile files('libs/gson-2.2.2.jar')
     compile files('libs/BmobSDK_V3.4.4_0930.jar')
     compile files('libs/libammsdk.jar')
+    compile 'com.jakewharton:butterknife:8.1.0'
+    apt 'com.jakewharton:butterknife-compiler:8.1.0'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
 }

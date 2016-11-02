@@ -1,6 +1,5 @@
-package com.notonly.calendar.UI;
+package com.notonly.calendar.UI.view;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
@@ -9,44 +8,41 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.notonly.calendar.R;
-import com.notonly.calendar.util.App;
-import com.notonly.calendar.util.Constants;
+import com.notonly.calendar.base.BaseActivity;
+import com.notonly.calendar.util.APIManager;
 import com.notonly.calendar.util.NetworkUtil;
 import com.notonly.calendar.util.ToastUtil;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
-import org.xutils.image.ImageOptions;
-import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.File;
 
-@ContentView(R.layout.activity_about)
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class AboutActivity extends BaseActivity {
 
-    private Context mContext;
-    private ImageOptions options;
-    @ViewInject(R.id.iv_qrcode)
-    private ImageView mImageView;
-    @ViewInject(R.id.tv_version)
-    private TextView mTextViewVersion;
+    @BindView(R.id.iv_qrcode)
+    ImageView mImageView;
+    @BindView(R.id.tv_version)
+    TextView mTextViewVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this;
-        App.getInstance().addActivity(this);
-        options = new ImageOptions.Builder().setLoadingDrawableId(R.mipmap.qrcode).setFailureDrawableId(R.mipmap.qrcode).build();
-        x.image().bind(mImageView, Constants.url_weixin_qrcode, options);
+        setContentView(R.layout.activity_about);
+        ButterKnife.bind(this);
+        Glide.with(mContext).load(APIManager.url_weixin_qrcode).placeholder(R.mipmap.qrcode).into(mImageView);
         mTextViewVersion.setText("版本：" + NetworkUtil.getAppVersion(mContext));
     }
 
-    @Event(value = R.id.iv_qrcode)
-    private void imageClick(View view) {
+    @OnClick(value = R.id.iv_qrcode)
+    public void imageClick(View view) {
         switch (view.getId()) {
             case R.id.iv_qrcode:
                 new AlertDialog.Builder(mContext).setItems(new String[]{"保存"}, new DialogInterface.OnClickListener() {
@@ -74,7 +70,7 @@ public class AboutActivity extends BaseActivity {
         if (!path.exists()) {
             path.mkdirs();
         }
-        RequestParams params = new RequestParams(Constants.url_weixin_qrcode);
+        RequestParams params = new RequestParams(APIManager.url_weixin_qrcode);
         params.setSaveFilePath(path.getAbsolutePath() + "/qrcode.jpg");
 
         Callback.Cancelable task = x.http().get(params, new Callback.CommonCallback<File>() {

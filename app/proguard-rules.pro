@@ -35,5 +35,26 @@
 }
 #################### end region
 
-#################### Device不要混淆
--keep class com.notonly.calendar.bean.Device{*;}
+#实体类不要混淆
+-keep class com.notonly.calendar.bean.**{*;}
+
+#Glide不混淆
+-keep class com.bumptech.glide.integration.okhttp3.OkHttpGlideModule
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
+#ButterKnife不混淆
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}

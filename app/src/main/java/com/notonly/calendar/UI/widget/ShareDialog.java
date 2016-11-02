@@ -1,4 +1,4 @@
-package com.notonly.calendar.view;
+package com.notonly.calendar.UI.widget;
 
 import android.app.Dialog;
 import android.content.Context;

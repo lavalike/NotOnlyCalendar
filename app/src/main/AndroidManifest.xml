@@ -10,14 +10,14 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
-        android:name=".util.App"
+        android:name=".base.App"
         android:allowBackup="true"
         android:icon="@mipmap/calendar128"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".UI.MainActivity"
+            android:name=".UI.view.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentTheme">
@@ -28,17 +28,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UI.SplashActivity"
+            android:name=".UI.view.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentTheme" />
         <activity
-            android:name=".UI.AboutActivity"
+            android:name=".UI.view.AboutActivity"
             android:label="@string/action_about"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentTheme" />
         <activity
-            android:name=".UI.TodayInHistoryActivity"
+            android:name=".UI.view.TodayInHistoryActivity"
             android:label="@string/todayinhistory"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentTheme" />
@@ -47,7 +47,7 @@
             android:exported="true"
             android:label="@string/app_name" />
         <activity
-            android:name=".UI.HistoryDetailActivity"
+            android:name=".UI.view.HistoryDetailActivity"
             android:label="@string/history_detail"
             android:screenOrientation="portrait"
             android:theme="@style/TranslucentTheme.NoActionBar"></activity>

@@ -1,11 +1,11 @@
-package com.notonly.calendar.UI;
+package com.notonly.calendar.UI.view;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,59 +13,56 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.notonly.calendar.R;
+import com.notonly.calendar.base.BaseActivity;
+import com.notonly.calendar.base.manager.PermissionManager;
 import com.notonly.calendar.bean.CalendarBean;
 import com.notonly.calendar.bean.Device;
-import com.notonly.calendar.util.App;
-import com.notonly.calendar.util.Constants;
+import com.notonly.calendar.util.APIManager;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.NetworkUtil;
+import com.notonly.calendar.util.T;
 import com.notonly.calendar.util.ToastUtil;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
-import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
-@ContentView(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
-    private Context mContext;
-    @ViewInject(R.id.SwipeRefresh1)
-    private SwipeRefreshLayout mSwipeRefresh;
-    @ViewInject(R.id.TextView_date)
-    private TextView mTextView_date;
-    @ViewInject(R.id.TextView_weekday)
-    private TextView mTextView_weekday;
-    @ViewInject(R.id.TextView_lunaryear)
-    private TextView mTextView_lunaryear;
-    @ViewInject(R.id.TextView_lunar)
-    private TextView mTextView_lunar;
-    @ViewInject(R.id.TextView_day)
-    private TextView mTextView_day;
-    @ViewInject(R.id.TextView_avoid)
-    private TextView mTextView_avoid;
-    @ViewInject(R.id.TextView_suit)
-    private TextView mTextView_suit;
-
-    private Callback.Cancelable task;
+    @BindView(R.id.SwipeRefresh1)
+    SwipeRefreshLayout mSwipeRefresh;
+    @BindView(R.id.TextView_date)
+    TextView mTextView_date;
+    @BindView(R.id.TextView_weekday)
+    TextView mTextView_weekday;
+    @BindView(R.id.TextView_lunaryear)
+    TextView mTextView_lunaryear;
+    @BindView(R.id.TextView_lunar)
+    TextView mTextView_lunar;
+    @BindView(R.id.TextView_day)
+    TextView mTextView_day;
+    @BindView(R.id.TextView_avoid)
+    TextView mTextView_avoid;
+    @BindView(R.id.TextView_suit)
+    TextView mTextView_suit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        x.view().inject(this);
-        mContext = this;
-        App.getInstance().addActivity(this);
-        Bmob.initialize(mContext, Constants.AppKey_bmob);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+        Bmob.initialize(mContext, APIManager.AppKey_bmob);
         mTextView_date.setText(DateUtil.getYear() + "年" + DateUtil.getMonth() + "月");
         mTextView_day.setText(DateUtil.getDay());
         //设置加载图标颜色
@@ -79,7 +76,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
         requestData();
-        collectDeviceData();
+        PermissionManager.requestPermission(this, Manifest.permission.READ_PHONE_STATE, new PermissionManager.OnPermissionCallback() {
+            @Override
+            public void onGranted() {
+                collectDeviceData();
+            }
+
+            @Override
+            public void onDenied() {
+                T.get(mContext).toast(getString(R.string.error_permission_denied));
+                PermissionManager.managePermissionByHand(mContext);
+            }
+        });
+    }
+
+    @Override
+    protected boolean canNavigationBack() {
+        return false;
     }
 
     /**
@@ -143,10 +156,10 @@ public class MainActivity extends AppCompatActivity {
      * 请求数据
      */
     private void requestData() {
-        RequestParams params = new RequestParams(Constants.url_calendar);
+        RequestParams params = new RequestParams(APIManager.url_calendar);
         params.addQueryStringParameter("date", DateUtil.getDatetime());
-        params.addQueryStringParameter("key", Constants.AppKey_Calendar);
-        task = x.http().get(params, new Callback.CommonCallback<String>() {
+        params.addQueryStringParameter("key", APIManager.AppKey_Calendar);
+        Callback.Cancelable cancelable = x.http().get(params, new Callback.CommonCallback<String>() {
 
             String result = "";
             boolean hasError = false;
@@ -187,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        addTaskToList(cancelable);
     }
 
     @Override
@@ -224,13 +238,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
-        if (task != null) {
-            if (!task.isCancelled()) {
-                task.cancel();
-            }
-        }
         //保持后台运行
         moveTaskToBack(false);
     }

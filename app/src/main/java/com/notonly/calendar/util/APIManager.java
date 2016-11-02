@@ -1,9 +1,10 @@
 package com.notonly.calendar.util;
 
 /**
+ * APIManager
  * Created by wangzhen on 16/1/12.
  */
-public class Constants {
+public class APIManager {
 
     /**
      * 微信AppID
