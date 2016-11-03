@@ -1,5 +1,6 @@
 package com.notonly.calendar.UI.view;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
+import com.notonly.calendar.base.manager.PermissionManager;
 import com.notonly.calendar.util.APIManager;
 import com.notonly.calendar.util.NetworkUtil;
+import com.notonly.calendar.util.T;
 import com.notonly.calendar.util.ToastUtil;
 
 import org.xutils.common.Callback;
@@ -45,12 +48,23 @@ public class AboutActivity extends BaseActivity {
     public void imageClick(View view) {
         switch (view.getId()) {
             case R.id.iv_qrcode:
-                new AlertDialog.Builder(mContext).setItems(new String[]{"保存"}, new DialogInterface.OnClickListener() {
+                PermissionManager.requestPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionManager.OnPermissionCallback() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        saveQrcode2File();
+                    public void onGranted() {
+                        new AlertDialog.Builder(mContext).setItems(new String[]{"保存"}, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                saveQrcode2File();
+                            }
+                        }).show();
                     }
-                }).show();
+
+                    @Override
+                    public void onDenied() {
+                        T.get(mContext).toast(getString(R.string.error_permission_denied));
+                        PermissionManager.managePermissionByHand(mContext);
+                    }
+                });
                 break;
             default:
                 break;
