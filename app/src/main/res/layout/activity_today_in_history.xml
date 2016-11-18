@@ -15,9 +15,9 @@
             android:id="@+id/ListView_History"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/colorListDivider"
-            android:dividerHeight="@dimen/list_divider_height"
+            android:divider="@null"
             android:listSelector="@android:color/transparent" />
+
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

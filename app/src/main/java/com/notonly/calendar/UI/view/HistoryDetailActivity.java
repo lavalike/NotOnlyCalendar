@@ -19,6 +19,7 @@ import com.notonly.calendar.base.helper.ErrHelper;
 import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.domain.HistoryBean;
 import com.notonly.calendar.domain.HistoryDetailBean;
+import com.notonly.calendar.util.T;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXTextObject;
@@ -137,8 +138,14 @@ public class HistoryDetailActivity extends BaseActivity {
                 try {
                     Gson gson = new Gson();
                     HistoryDetailBean bean = gson.fromJson(this.result, HistoryDetailBean.class);
-                    if (bean != null && bean.getError_code() == 0) {
-                        displayData(bean);
+                    if (bean != null && bean.getResult() != null && bean.getResult().size() > 0) {
+                        if (bean.getError_code() == 0) {
+                            displayData(bean);
+                        }
+                    } else {
+                        if (bean.getReason() != null) {
+                            T.get(mContext).toast(bean.getReason());
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -156,12 +163,14 @@ public class HistoryDetailActivity extends BaseActivity {
      */
     private void displayData(HistoryDetailBean bean) {
         HistoryDetailBean.ResultBean result = bean.getResult().get(0);
-        String imgUrl = result.getPicUrl().get(0).getUrl();
         String content = result.getContent();
-        if (!TextUtils.isEmpty(imgUrl)) {
-            Glide.with(mContext).load(imgUrl).placeholder(R.mipmap.ic_header).into(mHeaderImage);
-        }
         mTextViewContent.setText(content);
+        if (result.getPicUrl() != null && result.getPicUrl().size() > 0) {
+            String imgUrl = result.getPicUrl().get(0).getUrl();
+            if (!TextUtils.isEmpty(imgUrl)) {
+                Glide.with(mContext).load(imgUrl).placeholder(R.mipmap.ic_header).into(mHeaderImage);
+            }
+        }
     }
 
     /**

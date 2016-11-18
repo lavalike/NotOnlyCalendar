@@ -41,11 +41,13 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
         AppManager.get().addActivity(this);
         mContext = this;
         mListTasks = new ArrayList<>();
-        if (canNavigationBack()) {
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            if (canNavigationBack()) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
             }
+            //去除Toolbar下阴影
+            actionBar.setElevation(0);
         }
     }
 

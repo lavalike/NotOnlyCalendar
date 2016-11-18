@@ -4,5 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
 
-    <dimen name="list_divider_height">1dp</dimen>
+    <!--历史上的今天列表分隔线高度-->
+    <dimen name="list_todaylist_divider_height">5dp</dimen>
 </resources>

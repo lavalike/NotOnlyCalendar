@@ -16,6 +16,7 @@ import com.notonly.calendar.base.helper.ErrHelper;
 import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.domain.HistoryBean;
 import com.notonly.calendar.util.DateUtil;
+import com.notonly.calendar.util.T;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -97,6 +98,9 @@ public class HistoryListActivity extends BaseActivity {
                     if (list != null && list.getResult() != null) {
                         mAdapter = new HistoryAdapter(mContext, list.getResult());
                         mListView.setAdapter(mAdapter);
+                    } else {
+                        if (list.getReason() != null)
+                            T.get(mContext).toast(list.getReason());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

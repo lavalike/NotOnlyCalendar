@@ -1,26 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:orientation="vertical"
-    android:padding="15dp">
+    android:padding="10dp">
 
-    <TextView
-        android:id="@+id/tv_date"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/item_history_linear_bg"
+        android:foreground="?attr/selectableItemBackground"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorTextColorLight"
+            android:textSize="15sp"
+            tools:text="2016年11月18日" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/colorTextColor"
+            android:textSize="18sp"
+            tools:text="标题" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorPrimary" />
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorTextColorLight"
-        tools:text="2016年11月18日" />
+        android:layout_gravity="top|end"
+        android:layout_margin="5dp"
+        android:src="@mipmap/ic_pin" />
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/colorTextColor"
-        android:textSize="18sp"
-        tools:text="标题" />
-
-</LinearLayout>
+</FrameLayout>
