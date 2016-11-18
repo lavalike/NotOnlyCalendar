@@ -14,14 +14,15 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
+import com.notonly.calendar.base.helper.APIKey;
+import com.notonly.calendar.base.helper.ErrHelper;
+import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.base.manager.PermissionManager;
-import com.notonly.calendar.bean.CalendarBean;
-import com.notonly.calendar.bean.Device;
-import com.notonly.calendar.util.APIManager;
+import com.notonly.calendar.domain.CalendarBean;
+import com.notonly.calendar.domain.Device;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.NetworkUtil;
 import com.notonly.calendar.util.T;
-import com.notonly.calendar.util.ToastUtil;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -38,6 +39,10 @@ import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 
+/**
+ * 主页面
+ * created by wangzhen on 2016/11/18
+ */
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.SwipeRefresh1)
@@ -62,7 +67,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Bmob.initialize(mContext, APIManager.AppKey_bmob);
+        Bmob.initialize(mContext, APIKey.AppKey_bmob);
         mTextView_date.setText(DateUtil.getYear() + "年" + DateUtil.getMonth() + "月");
         mTextView_day.setText(DateUtil.getDay());
         //设置加载图标颜色
@@ -156,9 +161,9 @@ public class MainActivity extends BaseActivity {
      * 请求数据
      */
     private void requestData() {
-        RequestParams params = new RequestParams(APIManager.url_calendar);
+        RequestParams params = new RequestParams(APIManager.URL_CALENDAR);
         params.addQueryStringParameter("date", DateUtil.getDatetime());
-        params.addQueryStringParameter("key", APIManager.AppKey_Calendar);
+        params.addQueryStringParameter("key", APIKey.AppKey_Calendar);
         Callback.Cancelable cancelable = x.http().get(params, new Callback.CommonCallback<String>() {
 
             String result = "";
@@ -172,9 +177,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 this.hasError = true;
-                if (!NetworkUtil.isNetworkAvailable(mContext)) {
-                    ToastUtil.getInstance(mContext).toast(getString(R.string.error_network));
-                }
+                ErrHelper.check(ex);
             }
 
             @Override
@@ -195,7 +198,7 @@ public class MainActivity extends BaseActivity {
                     inflateData(bean);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ToastUtil.getInstance(mContext).toast("出错啦");
+                    T.get(mContext).toast("出错啦");
                 }
 
             }
@@ -213,7 +216,7 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_todayinhistory:
-                startActivity(new Intent(mContext, TodayInHistoryActivity.class));
+                startActivity(new Intent(mContext, HistoryListActivity.class));
                 break;
             case R.id.action_about:
                 startActivity(new Intent(mContext, AboutActivity.class));

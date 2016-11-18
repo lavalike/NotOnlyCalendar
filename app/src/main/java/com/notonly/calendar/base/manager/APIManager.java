@@ -1,4 +1,4 @@
-package com.notonly.calendar.util;
+package com.notonly.calendar.base.manager;
 
 /**
  * APIManager
@@ -7,51 +7,48 @@ package com.notonly.calendar.util;
 public class APIManager {
 
     /**
-     * 微信AppID
-     */
-    public static String AppID_WX = "wx97589a5851c051c8";
-
-    /**
-     * 万年历 AppKey
-     */
-    public static String AppKey_Calendar = "8b1fc95fd35a9f2ebdef438dc8fb3aba";
-
-    /**
-     * 历史上的今天 AppKey
-     */
-    public static String AppKey_todayinhistory = "9cf7fd27641553195bb9c4a99c2ba59a";
-
-
-    /**
-     * Bmob AppKey
-     */
-    public static String AppKey_bmob = "501a9b6f002895753d000a30e8ee983d";
-
-    /**
-     * 万年历 URL
+     * 万年历
      *
      * @param date
      * @param key
      */
-    public static String url_calendar = "http://japi.juhe.cn/calendar/day";
+    public static String URL_CALENDAR = "http://japi.juhe.cn/calendar/day";
     /**
-     * 历史上的今天 URL
+     * 历史上的今天 V1.0
      *
      * @param key
      * @param v 版本默认1.0
      * @param month
      * @param day
      */
-    public static String url_todayinhistory = "http://api.juheapi.com/japi/toh";
+    public static String URL_TODAY_ON_HISTORY = "http://api.juheapi.com/japi/toh";
 
     /**
-     * 历史上的今天详情 URL
+     * 历史上的今天详情 V1.0
      *
      * @param key
      * @param v 版本默认1.0
      * @param id
      */
-    public static String url_historydetail = "http://api.juheapi.com/japi/tohdet";
+    public static String URL_HISTORY_DETAIL = "http://api.juheapi.com/japi/tohdet";
+
+    /**
+     * 历史上的今天 V2.0
+     * GET请求
+     *
+     * @param date 11/18
+     * @param key
+     */
+    public static String URL_TODAY_ON_HISTORY_V2 = "http://v.juhe.cn/todayOnhistory/queryEvent.php";
+
+    /**
+     * 历史上的今天详情 V2.0
+     * GET请求
+     *
+     * @param e_id 事件id
+     * @param key
+     */
+    public static String URL_HISTORY_DETAIL_V2 = "http://v.juhe.cn/todayOnhistory/queryDetail.php";
 
     /**
      * 微信订阅号二维码

@@ -1,4 +1,4 @@
-package com.notonly.calendar.bean;
+package com.notonly.calendar.domain;
 
 import cn.bmob.v3.BmobObject;
 

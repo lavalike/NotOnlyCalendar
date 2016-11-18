@@ -79,7 +79,7 @@
                     android:layout_height="1dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@color/colorText"></View>
+                    android:background="@color/colorPrimary"></View>
 
 
                 <LinearLayout
@@ -124,7 +124,7 @@
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp"
                             android:paddingTop="10dp"
-                            android:textColor="@color/colorText"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -140,7 +140,7 @@
                             android:paddingLeft="20dp"
                             android:paddingRight="20dp"
                             android:paddingTop="10dp"
-                            android:textColor="@color/colorText"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="15sp" />
 
                     </LinearLayout>

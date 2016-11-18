@@ -3,6 +3,9 @@ package com.notonly.calendar.base;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
+import android.util.Log;
+
+import com.notonly.calendar.base.helper.ErrHelper;
 
 import org.xutils.DbManager;
 import org.xutils.x;
@@ -11,7 +14,7 @@ import org.xutils.x;
  * Created by wangzhen on 16/2/23.
  */
 public class App extends MultiDexApplication {
-    private static App mInstance;
+    private static App mContext;
     //SQLite配置
     private static DbManager.DaoConfig db_config;
 
@@ -23,8 +26,13 @@ public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = this;
         x.Ext.init(this);
         x.Ext.setDebug(false);
+    }
+
+    public static App getContext() {
+        return mContext;
     }
 
     /**
@@ -40,22 +48,4 @@ public class App extends MultiDexApplication {
         }
         return db_config;
     }
-
-
-    /**
-     * 单例模式
-     *
-     * @return
-     */
-    public static App getInstance() {
-        if (mInstance == null) {
-            synchronized (App.class) {
-                if (mInstance == null) {
-                    mInstance = new App();
-                }
-            }
-        }
-        return mInstance;
-    }
-
 }

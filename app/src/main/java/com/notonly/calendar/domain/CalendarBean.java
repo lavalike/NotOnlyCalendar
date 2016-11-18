@@ -1,4 +1,4 @@
-package com.notonly.calendar.bean;
+package com.notonly.calendar.domain;
 
 /**
  * Created by wangzhen on 16/1/12.

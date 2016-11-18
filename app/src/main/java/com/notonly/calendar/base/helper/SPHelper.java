@@ -1,4 +1,4 @@
-package com.notonly.calendar.util;
+package com.notonly.calendar.base.helper;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

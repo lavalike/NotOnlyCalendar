@@ -8,29 +8,28 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.notonly.calendar.R;
 import com.notonly.calendar.UI.adapter.HistoryAdapter;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.bean.HistoryBean;
-import com.notonly.calendar.util.APIManager;
+import com.notonly.calendar.base.helper.APIKey;
+import com.notonly.calendar.base.helper.ErrHelper;
+import com.notonly.calendar.base.manager.APIManager;
+import com.notonly.calendar.domain.HistoryBean;
 import com.notonly.calendar.util.DateUtil;
-import com.notonly.calendar.util.NetworkUtil;
-import com.notonly.calendar.util.ToastUtil;
 
-import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 
-public class TodayInHistoryActivity extends BaseActivity {
+/**
+ * 历史上的今天列表
+ * created by wangzhen on 2016/11/18
+ */
+public class HistoryListActivity extends BaseActivity {
     @BindView(R.id.SwipeRefresh_History)
     SwipeRefreshLayout mSwipeRefresh;
     @BindView(R.id.ListView_History)
@@ -43,8 +42,8 @@ public class TodayInHistoryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_in_history);
         ButterKnife.bind(this);
-        setTitle(getTitle() + "(" + DateUtil.getMonth() + "月" + DateUtil.getDay() + "日)");
         initSwipeRefresh();
+        startLoading();
         load();
     }
 
@@ -58,6 +57,62 @@ public class TodayInHistoryActivity extends BaseActivity {
                 load();
             }
         });
+    }
+
+    /**
+     * 加载数据
+     */
+    private void load() {
+        RequestParams params = new RequestParams(APIManager.URL_TODAY_ON_HISTORY_V2);
+        params.addQueryStringParameter("key", APIKey.AppKey_todayinhistory);
+        params.addQueryStringParameter("date", DateUtil.getMonth() + "/" + DateUtil.getDay());
+        Callback.Cancelable task = x.http().get(params, new Callback.CommonCallback<String>() {
+            String result = "";
+            boolean hasErr = false;
+
+            @Override
+            public void onSuccess(String result) {
+                this.result = result;
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                this.hasErr = true;
+                ErrHelper.check(ex);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+                stopLoading();
+                if (this.result.equals("") || this.hasErr)
+                    return;
+                try {
+                    Gson gson = new Gson();
+                    HistoryBean list = gson.fromJson(this.result, HistoryBean.class);
+                    if (list != null && list.getResult() != null) {
+                        mAdapter = new HistoryAdapter(mContext, list.getResult());
+                        mListView.setAdapter(mAdapter);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        addTaskToList(task);
+    }
+
+    @OnItemClick(value = {R.id.ListView_History})
+    public void onListViewHistoryItemClick(AdapterView<?> parent, View view, int position, long id) {
+        final HistoryBean.ResultBean data = ((HistoryAdapter.HistoryViewHolder) view.getTag()).data;
+        Intent intent = new Intent(mContext, HistoryDetailActivity.class);
+        intent.putExtra("data", data);
+        startActivity(intent);
     }
 
     public void startLoading() {
@@ -76,67 +131,5 @@ public class TodayInHistoryActivity extends BaseActivity {
                 mSwipeRefresh.setRefreshing(false);
             }
         });
-    }
-
-    /**
-     * 加载数据
-     */
-    private void load() {
-        startLoading();
-        RequestParams params = new RequestParams(APIManager.url_todayinhistory);
-        params.addQueryStringParameter("key", APIManager.AppKey_todayinhistory);
-        params.addQueryStringParameter("v", "1.0");
-        params.addQueryStringParameter("month", DateUtil.getMonth());
-        params.addQueryStringParameter("day", DateUtil.getDay());
-        Callback.Cancelable task = x.http().get(params, new Callback.CommonCallback<String>() {
-            String result = "";
-            boolean hasErr = false;
-
-            @Override
-            public void onSuccess(String result) {
-                this.result = result;
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                this.hasErr = true;
-                if (!NetworkUtil.isNetworkAvailable(mContext)) {
-                    ToastUtil.getInstance(mContext).toast(getString(R.string.error_network));
-                }
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-                stopLoading();
-                if (this.result.equals("") || this.hasErr)
-                    return;
-                try {
-                    JSONObject object = new JSONObject(this.result);
-                    Gson gson = new Gson();
-                    List<HistoryBean> list = gson.fromJson(object.getString("result"), new TypeToken<ArrayList<HistoryBean>>() {
-                    }.getType());
-                    mAdapter = new HistoryAdapter(mContext, list);
-                    mListView.setAdapter(mAdapter);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-        addTaskToList(task);
-    }
-
-    @OnItemClick(value = {R.id.ListView_History})
-    public void onListViewHistoryItemClick(AdapterView<?> parent, View view, int position, long id) {
-        final HistoryBean data = ((HistoryAdapter.HistoryViewHolder) view.getTag()).data;
-        Intent intent = new Intent(mContext, HistoryDetailActivity.class);
-        intent.putExtra("data", data);
-        startActivity(intent);
-
     }
 }

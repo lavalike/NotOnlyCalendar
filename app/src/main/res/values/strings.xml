@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">大黄历</string>
-    <string name="todayinhistory">历史上的今天</string>
-    <string name="history_detail">详情</string>
-    <string name="action_about">关于</string>
+    <string name="title_todayinhistory">历史上的今天</string>
+    <string name="title_history_detail">详情</string>
+    <string name="title_about">关于</string>
 
+    <!--错误提示-->
     <string name="error_network">请检查网络</string>
+    <string name="error_connect_timeout">网络连接超时</string>
     <string name="error_sdcard_failure">请检查SD卡</string>
     <string name="error_permission_denied">权限被拒绝</string>
 

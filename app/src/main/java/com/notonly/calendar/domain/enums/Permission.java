@@ -1,4 +1,4 @@
-package com.notonly.calendar.bean.enums;
+package com.notonly.calendar.domain.enums;
 
 import android.Manifest;
 import android.text.TextUtils;

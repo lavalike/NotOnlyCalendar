@@ -5,25 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.notonly.calendar.R;
-import com.notonly.calendar.bean.HistoryBean;
+import com.notonly.calendar.domain.HistoryBean;
 
 import java.util.List;
 
 /**
+ * 历史上的今天列表
  * Created by wangzhen on 16/1/13.
  */
 public class HistoryAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater mInflater;
-    private List<HistoryBean> mDatas;
+    private List<HistoryBean.ResultBean> mDatas;
 
-    public HistoryAdapter(Context context, List<HistoryBean> data) {
+    public HistoryAdapter(Context context, List<HistoryBean.ResultBean> data) {
         this.mContext = context;
         mInflater = LayoutInflater.from(mContext);
         this.mDatas = data;
@@ -54,32 +53,21 @@ public class HistoryAdapter extends BaseAdapter {
             view.setTag(holder);
         } else
             holder = (HistoryViewHolder) view.getTag();
-        //复位
-        holder.iv_pic.setVisibility(View.VISIBLE);
-        HistoryBean bean = mDatas.get(i);
-        if (bean.getPic().equals(""))
-            holder.iv_pic.setVisibility(View.GONE);
-        else
-            Glide.with(mContext).load(bean.getPic()).into(holder.iv_pic);
-        holder.tv_date.setText(bean.getYear() + "年" + bean.getMonth() + "月" + bean.getDay() + "日");
+        HistoryBean.ResultBean bean = mDatas.get(i);
+        holder.tv_date.setText(bean.getDate());
         holder.tv_title.setText(bean.getTitle());
-        holder.tv_des.setText(bean.getDes());
         holder.data = bean;
         return view;
     }
 
     public class HistoryViewHolder {
-        public ImageView iv_pic;
         public TextView tv_date;
         public TextView tv_title;
-        public TextView tv_des;
-        public HistoryBean data;
+        public HistoryBean.ResultBean data;
 
         public HistoryViewHolder(View view) {
-            iv_pic = (ImageView) view.findViewById(R.id.iv_item_pic);
             tv_date = (TextView) view.findViewById(R.id.tv_date);
             tv_title = (TextView) view.findViewById(R.id.tv_title);
-            tv_des = (TextView) view.findViewById(R.id.tv_des);
         }
     }
 }

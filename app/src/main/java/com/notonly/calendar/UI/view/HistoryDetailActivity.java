@@ -14,11 +14,11 @@ import com.google.gson.Gson;
 import com.notonly.calendar.R;
 import com.notonly.calendar.UI.widget.ShareDialog;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.bean.HistoryBean;
-import com.notonly.calendar.bean.HistoryDetailBean;
-import com.notonly.calendar.util.APIManager;
-import com.notonly.calendar.util.NetworkUtil;
-import com.notonly.calendar.util.ToastUtil;
+import com.notonly.calendar.base.helper.APIKey;
+import com.notonly.calendar.base.helper.ErrHelper;
+import com.notonly.calendar.base.manager.APIManager;
+import com.notonly.calendar.domain.HistoryBean;
+import com.notonly.calendar.domain.HistoryDetailBean;
 import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.modelmsg.WXTextObject;
@@ -60,14 +60,15 @@ public class HistoryDetailActivity extends BaseActivity {
         setSupportActionBar(mToolBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupWeixin();
-        HistoryBean bean = (HistoryBean) getIntent().getSerializableExtra("data");
+        HistoryBean.ResultBean bean = (HistoryBean.ResultBean) getIntent().getSerializableExtra("data");
         if (bean == null) {
             return;
         }
-        mID = bean.getId();
+        mID = bean.getE_id();
         String title = bean.getTitle();
         getSupportActionBar().setTitle(title);
         initSwipeRefresh();
+        startLoading();
         loadDetail();
     }
 
@@ -105,11 +106,9 @@ public class HistoryDetailActivity extends BaseActivity {
      * 加载详情
      */
     private void loadDetail() {
-        startLoading();
-        RequestParams params = new RequestParams(APIManager.url_historydetail);
-        params.addQueryStringParameter("key", APIManager.AppKey_todayinhistory);
-        params.addQueryStringParameter("v", "1.0");
-        params.addQueryStringParameter("id", mID);
+        RequestParams params = new RequestParams(APIManager.URL_HISTORY_DETAIL_V2);
+        params.addQueryStringParameter("key", APIKey.AppKey_todayinhistory);
+        params.addQueryStringParameter("e_id", mID);
         Callback.Cancelable task = x.http().get(params, new Callback.CommonCallback<String>() {
             String result = "";
             boolean hasErr = false;
@@ -122,9 +121,7 @@ public class HistoryDetailActivity extends BaseActivity {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 this.hasErr = true;
-                if (!NetworkUtil.isNetworkAvailable(mContext)) {
-                    ToastUtil.getInstance(mContext).toast(getString(R.string.error_network));
-                }
+                ErrHelper.check(ex);
             }
 
             @Override
@@ -138,7 +135,6 @@ public class HistoryDetailActivity extends BaseActivity {
                 if (this.result.equals("") || this.hasErr)
                     return;
                 try {
-//                    JSONObject object = new JSONObject(this.result);
                     Gson gson = new Gson();
                     HistoryDetailBean bean = gson.fromJson(this.result, HistoryDetailBean.class);
                     if (bean != null && bean.getError_code() == 0) {
@@ -160,7 +156,7 @@ public class HistoryDetailActivity extends BaseActivity {
      */
     private void displayData(HistoryDetailBean bean) {
         HistoryDetailBean.ResultBean result = bean.getResult().get(0);
-        String imgUrl = result.getPic();
+        String imgUrl = result.getPicUrl().get(0).getUrl();
         String content = result.getContent();
         if (!TextUtils.isEmpty(imgUrl)) {
             Glide.with(mContext).load(imgUrl).placeholder(R.mipmap.ic_header).into(mHeaderImage);
@@ -172,8 +168,8 @@ public class HistoryDetailActivity extends BaseActivity {
      * 设置微信
      */
     private void setupWeixin() {
-        wxapi = WXAPIFactory.createWXAPI(mContext, APIManager.AppID_WX);
-        wxapi.registerApp(APIManager.AppID_WX);
+        wxapi = WXAPIFactory.createWXAPI(mContext, APIKey.AppID_WX);
+        wxapi.registerApp(APIKey.AppID_WX);
     }
 
     @Override

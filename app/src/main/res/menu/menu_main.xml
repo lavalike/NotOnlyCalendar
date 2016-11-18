@@ -5,11 +5,11 @@
         android:id="@+id/action_todayinhistory"
         android:icon="@mipmap/ic_calendar"
         android:orderInCategory="100"
-        android:title="@string/todayinhistory"
+        android:title="@string/title_todayinhistory"
         app:showAsAction="always"></item>
     <item
         android:id="@+id/action_about"
         android:orderInCategory="100"
-        android:title="@string/action_about"
+        android:title="@string/title_about"
         app:showAsAction="never"></item>
 </menu>

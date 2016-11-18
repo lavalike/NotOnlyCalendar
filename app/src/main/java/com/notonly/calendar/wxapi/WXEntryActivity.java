@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.notonly.calendar.util.APIManager;
-import com.notonly.calendar.util.ToastUtil;
+import com.notonly.calendar.base.helper.APIKey;
+import com.notonly.calendar.util.T;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;
 import com.tencent.mm.sdk.openapi.IWXAPI;
@@ -25,8 +25,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        api = WXAPIFactory.createWXAPI(mContext, APIManager.AppID_WX, false);
-        api.registerApp(APIManager.AppID_WX);
+        api = WXAPIFactory.createWXAPI(mContext, APIKey.AppID_WX, false);
+        api.registerApp(APIKey.AppID_WX);
         api.handleIntent(getIntent(), this);
     }
 
@@ -53,7 +53,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 result = "返回";
                 break;
         }
-        ToastUtil.getInstance(mContext).toast(result);
+        T.get(mContext).toast(result);
         finish();
     }
 
