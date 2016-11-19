@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_linear"
+        android:icon="@mipmap/ic_linear"
+        android:title="@string/action_linear"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_stagger"
+        android:icon="@mipmap/ic_grid"
+        android:title="@string/action_stagger"
+        app:showAsAction="always" />
+</menu>

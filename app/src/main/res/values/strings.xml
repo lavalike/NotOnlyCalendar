@@ -3,6 +3,8 @@
     <string name="title_todayinhistory">历史上的今天</string>
     <string name="title_history_detail">详情</string>
     <string name="title_about">关于</string>
+    <string name="action_stagger">瀑布流</string>
+    <string name="action_linear">列表</string>
 
     <!--错误提示-->
     <string name="error_network">请检查网络</string>

@@ -11,12 +11,11 @@
         android:layout_height="match_parent"
         android:background="@color/colorWhite">
 
-        <ListView
-            android:id="@+id/ListView_History"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_hitorylist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@null"
-            android:listSelector="@android:color/transparent" />
+            android:scrollbars="vertical" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

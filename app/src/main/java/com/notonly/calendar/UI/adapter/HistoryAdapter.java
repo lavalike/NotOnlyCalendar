@@ -1,13 +1,13 @@
 package com.notonly.calendar.UI.adapter;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.notonly.calendar.R;
+import com.notonly.calendar.base.BaseRecyclerAdapter;
 import com.notonly.calendar.domain.HistoryBean;
 
 import java.util.List;
@@ -16,58 +16,34 @@ import java.util.List;
  * 历史上的今天列表
  * Created by wangzhen on 16/1/13.
  */
-public class HistoryAdapter extends BaseAdapter {
+public class HistoryAdapter extends BaseRecyclerAdapter<HistoryBean.ResultBean, HistoryAdapter.HistoryViewHolder> {
 
-    private Context mContext;
-    private LayoutInflater mInflater;
-    private List<HistoryBean.ResultBean> mDatas;
-
-    public HistoryAdapter(Context context, List<HistoryBean.ResultBean> data) {
-        this.mContext = context;
-        mInflater = LayoutInflater.from(mContext);
-        this.mDatas = data;
-    }
-
-
-    @Override
-    public int getCount() {
-        return mDatas.size();
+    public HistoryAdapter(List<HistoryBean.ResultBean> data) {
+        super(data);
     }
 
     @Override
-    public Object getItem(int i) {
-        return mDatas.get(i);
+    public HistoryViewHolder onMyCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history_layout, parent, false);
+        return new HistoryViewHolder(view);
     }
 
     @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        HistoryViewHolder holder;
-        if (view == null) {
-            view = mInflater.inflate(R.layout.item_history_layout, viewGroup, false);
-            holder = new HistoryViewHolder(view);
-            view.setTag(holder);
-        } else
-            holder = (HistoryViewHolder) view.getTag();
-        HistoryBean.ResultBean bean = mDatas.get(i);
+    public void onMyBindViewHolder(HistoryViewHolder holder, int position) {
+        HistoryBean.ResultBean bean = mDatas.get(position);
         holder.tv_date.setText(bean.getDate());
         holder.tv_title.setText(bean.getTitle());
-        holder.data = bean;
-        return view;
     }
 
-    public class HistoryViewHolder {
+    public class HistoryViewHolder extends RecyclerView.ViewHolder {
         public TextView tv_date;
         public TextView tv_title;
-        public HistoryBean.ResultBean data;
 
-        public HistoryViewHolder(View view) {
-            tv_date = (TextView) view.findViewById(R.id.tv_date);
-            tv_title = (TextView) view.findViewById(R.id.tv_title);
+
+        public HistoryViewHolder(View itemView) {
+            super(itemView);
+            tv_date = (TextView) itemView.findViewById(R.id.tv_date);
+            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
         }
     }
 }
