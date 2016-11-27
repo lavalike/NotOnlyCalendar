@@ -2,7 +2,7 @@ package com.notonly.calendar.base.helper;
 
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.App;
-import com.notonly.calendar.util.NetworkUtil;
+import com.notonly.calendar.util.AppUtil;
 import com.notonly.calendar.util.T;
 
 import java.net.SocketTimeoutException;
@@ -25,7 +25,7 @@ public class ErrHelper {
      * @param throwable
      */
     public static void check(Throwable throwable) {
-        if (!NetworkUtil.isNetworkAvailable(mContext)) {
+        if (!AppUtil.isNetworkAvailable(mContext)) {
             T.get(mContext).toast(mContext.getString(R.string.error_network));
             return;
         }

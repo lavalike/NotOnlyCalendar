@@ -14,7 +14,7 @@ import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.base.helper.ErrHelper;
 import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.base.manager.PermissionManager;
-import com.notonly.calendar.util.NetworkUtil;
+import com.notonly.calendar.util.AppUtil;
 import com.notonly.calendar.util.PathUtil;
 import com.notonly.calendar.util.T;
 
@@ -45,7 +45,7 @@ public class AboutActivity extends BaseActivity {
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
         Glide.with(mContext).load(APIManager.url_weixin_qrcode).placeholder(R.mipmap.qrcode).into(mImageView);
-        mTextViewVersion.setText("版本：" + NetworkUtil.getAppVersion(mContext));
+        mTextViewVersion.setText("版本：" + AppUtil.getVersionName(mContext));
     }
 
     @OnClick(value = R.id.iv_qrcode)

@@ -114,7 +114,7 @@
 #################### end region
 
 #实体类不要混淆
--keep class com.notonly.calendar.bean.**{*;}
+-keep class com.notonly.calendar.domain.**{*;}
 
 #Glide不混淆
 -keep class com.bumptech.glide.integration.okhttp3.OkHttpGlideModule
@@ -148,3 +148,7 @@
 #Bmob
 -keep class cn.bmob.**{*;}
 -dontwarn cn.bmob.**
+
+# 蒲公英混淆
+-dontwarn com.pgyersdk.**
+-keep class com.pgyersdk.** { *; }

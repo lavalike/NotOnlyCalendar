@@ -21,7 +21,7 @@ import com.notonly.calendar.base.manager.PermissionManager;
 import com.notonly.calendar.domain.CalendarBean;
 import com.notonly.calendar.domain.Device;
 import com.notonly.calendar.util.DateUtil;
-import com.notonly.calendar.util.NetworkUtil;
+import com.notonly.calendar.util.AppUtil;
 import com.notonly.calendar.util.T;
 
 import org.json.JSONObject;
@@ -68,19 +68,11 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Bmob.initialize(mContext, APIKey.AppKey_bmob);
+        initSwipe();
         mTextView_date.setText(DateUtil.getYear() + "年" + DateUtil.getMonth() + "月");
         mTextView_day.setText(DateUtil.getDay());
-        //设置加载图标颜色
-        mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, android.R.color.holo_purple, android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        mSwipeRefresh.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefresh.setRefreshing(true);
-            }
-        });
-
         requestData();
+        checkUpdate();
         PermissionManager.requestPermission(this, Manifest.permission.READ_PHONE_STATE, new PermissionManager.OnPermissionCallback() {
             @Override
             public void onGranted() {
@@ -91,6 +83,18 @@ public class MainActivity extends BaseActivity {
             public void onDenied() {
                 T.get(mContext).toast(getString(R.string.error_permission_denied));
                 PermissionManager.managePermissionByHand(mContext);
+            }
+        });
+    }
+
+    private void initSwipe() {
+        //设置加载图标颜色
+        mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, android.R.color.holo_purple, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        mSwipeRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefresh.setRefreshing(true);
             }
         });
     }
@@ -107,7 +111,7 @@ public class MainActivity extends BaseActivity {
         TelephonyManager manager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
         final String deviceID = manager.getDeviceId();//设备ID
         final String mobileNumber = manager.getLine1Number();//手机号
-        final String appVersion = NetworkUtil.getAppVersion(mContext);
+        final String appVersion = AppUtil.getVersionName(mContext);
         final String sysVersion = Build.VERSION.RELEASE;
         final String brand = Build.BRAND;
         final String model = Build.MODEL;

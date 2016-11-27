@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.util.NetworkUtil;
+import com.notonly.calendar.util.AppUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +28,7 @@ public class SplashActivity extends BaseActivity {
         ButterKnife.bind(this);
         //隐藏ActionBar
         getSupportActionBar().hide();
-        mVersion.setText("版本：" + NetworkUtil.getAppVersion(mContext));
+        mVersion.setText("版本：" + AppUtil.getVersionName(mContext));
 
         new Handler().postDelayed(new Runnable() {
             @Override
