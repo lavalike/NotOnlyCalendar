@@ -3,9 +3,6 @@ package com.notonly.calendar.base;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
-import android.util.Log;
-
-import com.notonly.calendar.base.helper.ErrHelper;
 
 import org.xutils.DbManager;
 import org.xutils.x;
