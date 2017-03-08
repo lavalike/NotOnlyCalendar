@@ -18,10 +18,11 @@ import com.notonly.calendar.base.helper.APIKey;
 import com.notonly.calendar.base.helper.ErrHelper;
 import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.base.manager.PermissionManager;
+import com.notonly.calendar.base.manager.UpdateManager;
 import com.notonly.calendar.domain.CalendarBean;
 import com.notonly.calendar.domain.Device;
-import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.AppUtil;
+import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.T;
 
 import org.json.JSONObject;
@@ -72,7 +73,7 @@ public class MainActivity extends BaseActivity {
         mTextView_date.setText(DateUtil.getYear() + "年" + DateUtil.getMonth() + "月");
         mTextView_day.setText(DateUtil.getDay());
         requestData();
-        checkUpdate();
+        UpdateManager.get(this).check();
         PermissionManager.requestPermission(this, Manifest.permission.READ_PHONE_STATE, new PermissionManager.OnPermissionCallback() {
             @Override
             public void onGranted() {
@@ -191,6 +192,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onFinished() {
                 mSwipeRefresh.setRefreshing(false);
+                mSwipeRefresh.setEnabled(false);
                 if (this.result.equals("") || this.hasError) {
                     return;
                 }

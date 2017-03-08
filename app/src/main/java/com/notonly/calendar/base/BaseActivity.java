@@ -119,7 +119,6 @@ public class BaseActivity extends AppCompatActivity implements PermissionManager
                         }
                     }
                 }
-//                UpdateManagerListener.updateLocalBuildNumber(s);
             }
         });
     }

@@ -12,7 +12,8 @@ public class APIManager {
      * @param date
      * @param key
      */
-    public static String URL_CALENDAR = "http://japi.juhe.cn/calendar/day";
+//    public static String URL_CALENDAR = "http://japi.juhe.cn/calendar/day";
+    public static String URL_CALENDAR = "http://v.juhe.cn/calendar/day";
     /**
      * 历史上的今天 V1.0
      *
