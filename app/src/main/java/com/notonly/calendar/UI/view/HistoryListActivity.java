@@ -3,12 +3,13 @@ package com.notonly.calendar.UI.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.google.gson.Gson;
 import com.notonly.calendar.R;
@@ -18,6 +19,7 @@ import com.notonly.calendar.base.BaseRecyclerAdapter;
 import com.notonly.calendar.base.helper.APIKey;
 import com.notonly.calendar.base.helper.ErrHelper;
 import com.notonly.calendar.base.manager.APIManager;
+import com.notonly.calendar.base.toolbar.ToolBarRightIconHolder;
 import com.notonly.calendar.domain.HistoryBean;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.T;
@@ -42,7 +44,9 @@ public class HistoryListActivity extends BaseActivity {
     private HistoryAdapter mAdapter;
     private LinearLayoutManager managerLinear;
     private StaggeredGridLayoutManager managerStagger;
-    private Menu mMenu;
+    private static final int TYPE_LINER = 0x01;
+    private static final int TYPE_STAGGER = 0x02;
+    private int mCurrentType = TYPE_LINER;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,26 @@ public class HistoryListActivity extends BaseActivity {
         initSwipeRefresh();
         startLoading();
         load();
+    }
+
+    @Override
+    protected void onSetupToolbar(Toolbar toolbar, ActionBar actionBar) {
+        ToolBarRightIconHolder holder = new ToolBarRightIconHolder(this, toolbar, getString(R.string.title_todayinhistory), R.mipmap.ic_grid);
+        final ImageView rightMenu = holder.getRightMenu();
+        rightMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCurrentType == TYPE_LINER) {
+                    mCurrentType = TYPE_STAGGER;
+                    rightMenu.setImageResource(R.mipmap.ic_linear);
+                    mRecycler.setLayoutManager(managerStagger);
+                } else {
+                    mCurrentType = TYPE_LINER;
+                    rightMenu.setImageResource(R.mipmap.ic_grid);
+                    mRecycler.setLayoutManager(managerLinear);
+                }
+            }
+        });
     }
 
     /**
@@ -156,29 +180,5 @@ public class HistoryListActivity extends BaseActivity {
                 mSwipeRefresh.setRefreshing(false);
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        mMenu = menu;
-        getMenuInflater().inflate(R.menu.menu_historylist, mMenu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        mMenu.findItem(R.id.action_linear).setVisible(true);
-        mMenu.findItem(R.id.action_stagger).setVisible(true);
-        switch (item.getItemId()) {
-            case R.id.action_stagger:
-                mRecycler.setLayoutManager(managerStagger);
-                item.setVisible(false);
-                break;
-            case R.id.action_linear:
-                mRecycler.setLayoutManager(managerLinear);
-                item.setVisible(false);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

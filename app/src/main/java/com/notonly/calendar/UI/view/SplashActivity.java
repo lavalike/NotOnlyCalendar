@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.util.AppUtil;
+import com.notonly.calendar.util.AppUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,7 +28,7 @@ public class SplashActivity extends BaseActivity {
         ButterKnife.bind(this);
         //隐藏ActionBar
         getSupportActionBar().hide();
-        mVersion.setText("版本：" + AppUtil.getVersionName(mContext));
+        mVersion.setText("版本：" + AppUtils.getVersionName(mContext));
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -37,10 +37,5 @@ public class SplashActivity extends BaseActivity {
                 finish();
             }
         }, 2000);
-    }
-
-    @Override
-    protected boolean canNavigationBack() {
-        return false;
     }
 }

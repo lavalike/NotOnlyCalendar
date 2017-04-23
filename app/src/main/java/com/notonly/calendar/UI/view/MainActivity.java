@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -19,9 +20,10 @@ import com.notonly.calendar.base.helper.ErrHelper;
 import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.base.manager.PermissionManager;
 import com.notonly.calendar.base.manager.UpdateManager;
+import com.notonly.calendar.base.toolbar.ToolBarRightIconHolder;
 import com.notonly.calendar.domain.CalendarBean;
 import com.notonly.calendar.domain.Device;
-import com.notonly.calendar.util.AppUtil;
+import com.notonly.calendar.util.AppUtils;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.T;
 
@@ -88,6 +90,18 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onSetupToolbar(Toolbar toolbar, ActionBar actionBar) {
+        ToolBarRightIconHolder holder = new ToolBarRightIconHolder(this, toolbar, getString(R.string.app_name), R.mipmap.ic_calendar, false);
+        holder.getRightMenu().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, HistoryListActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
     private void initSwipe() {
         //设置加载图标颜色
         mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, android.R.color.holo_purple, android.R.color.holo_orange_light,
@@ -100,11 +114,6 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected boolean canNavigationBack() {
-        return false;
-    }
-
     /**
      * 收集设备信息
      */
@@ -112,7 +121,7 @@ public class MainActivity extends BaseActivity {
         TelephonyManager manager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
         final String deviceID = manager.getDeviceId();//设备ID
         final String mobileNumber = manager.getLine1Number();//手机号
-        final String appVersion = AppUtil.getVersionName(mContext);
+        final String appVersion = AppUtils.getVersionName(mContext);
         final String sysVersion = Build.VERSION.RELEASE;
         final String brand = Build.BRAND;
         final String model = Build.MODEL;
@@ -210,27 +219,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         addTaskToList(cancelable);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_todayinhistory:
-                startActivity(new Intent(mContext, HistoryListActivity.class));
-                break;
-            case R.id.action_about:
-                startActivity(new Intent(mContext, AboutActivity.class));
-                break;
-            default:
-                break;
-        }
-        return true;
     }
 
     /**

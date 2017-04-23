@@ -14,7 +14,7 @@ import android.net.NetworkInfo;
  * @author Administrator
  * @since 2015年10月9日 15:28:08
  */
-public class AppUtil {
+public class AppUtils {
 
     /**
      * 获取应用名称

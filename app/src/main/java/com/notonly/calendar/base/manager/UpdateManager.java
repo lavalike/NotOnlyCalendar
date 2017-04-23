@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.domain.UpdateBean;
-import com.notonly.calendar.util.AppUtil;
+import com.notonly.calendar.util.AppUtils;
 import com.notonly.calendar.util.PathUtil;
 import com.notonly.calendar.util.T;
 import com.pgyersdk.update.PgyUpdateManager;
@@ -64,7 +64,7 @@ public class UpdateManager {
                 if (updateBean != null) {
                     final UpdateBean.DataBean data = updateBean.getData();
                     if (data != null) {
-                        String currentCode = AppUtil.getVersionCode(mContext);
+                        String currentCode = AppUtils.getVersionCode(mContext);
                         String serverCode = data.getVersionCode();
                         if (serverCode.compareTo(currentCode) > 0) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -103,7 +103,7 @@ public class UpdateManager {
      * @param url
      */
     private void download(String url) {
-        final String localUrl = PathUtil.getDownloadPath() + "/" + AppUtil.getAppName(mContext) + ".apk";
+        final String localUrl = PathUtil.getDownloadPath() + "/" + AppUtils.getAppName(mContext) + ".apk";
         File path = new File(localUrl);
         if (path.exists()) {
             path.delete();
@@ -112,7 +112,7 @@ public class UpdateManager {
         Uri uri = Uri.parse(url);
         DownloadManager.Request request = new DownloadManager.Request(uri);
         // 设置下载路径和文件名
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, AppUtil.getAppName(mContext) + ".apk");
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, AppUtils.getAppName(mContext) + ".apk");
         request.setDescription("正在更新");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         request.setMimeType("application/vnd.android.package-archive");
@@ -129,7 +129,7 @@ public class UpdateManager {
             public void onReceive(Context context, Intent intent) {
                 long myDwonloadID = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
                 if (refernece == myDwonloadID) {
-                    T.get(mContext).toast(AppUtil.getAppName(mContext) + "下载完成，请点击安装");
+                    T.get(mContext).toast(AppUtils.getAppName(mContext) + "下载完成，请点击安装");
 //                    Intent install = new Intent(Intent.ACTION_VIEW);
 //                    install.setDataAndType(Uri.fromFile(new File(localUrl)), "application/vnd.android.package-archive");
 //                    install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

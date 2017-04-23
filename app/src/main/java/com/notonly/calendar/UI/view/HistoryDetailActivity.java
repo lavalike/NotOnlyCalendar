@@ -73,6 +73,11 @@ public class HistoryDetailActivity extends BaseActivity {
         loadDetail();
     }
 
+    @Override
+    public boolean showToolbar() {
+        return false;
+    }
+
     private void initSwipeRefresh() {
         //设置加载图标颜色
         mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, android.R.color.holo_purple, android.R.color.holo_orange_light,

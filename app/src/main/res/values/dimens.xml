@@ -4,6 +4,13 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
 
+
+    <!--Toolbar高度-->
+    <dimen name="toolbar_height">55dp</dimen>
+    <dimen name="toolbar_title_size">20sp</dimen>
+    <dimen name="toolbar_menu_size">14sp</dimen>
+
+
     <!--历史上的今天列表分隔线高度-->
     <dimen name="list_todaylist_divider_height">5dp</dimen>
 </resources>
