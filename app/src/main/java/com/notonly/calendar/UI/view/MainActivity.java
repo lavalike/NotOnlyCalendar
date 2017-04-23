@@ -100,6 +100,14 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        holder.getRightMenu().setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(mContext, AboutActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
     }
 
     private void initSwipe() {

@@ -90,24 +90,6 @@ public class HistoryDetailActivity extends BaseActivity {
         });
     }
 
-    public void startLoading() {
-        mSwipeRefresh.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefresh.setRefreshing(true);
-            }
-        });
-    }
-
-    public void stopLoading() {
-        mSwipeRefresh.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefresh.setRefreshing(false);
-            }
-        });
-    }
-
     /**
      * 加载详情
      */
@@ -173,7 +155,10 @@ public class HistoryDetailActivity extends BaseActivity {
         if (result.getPicUrl() != null && result.getPicUrl().size() > 0) {
             String imgUrl = result.getPicUrl().get(0).getUrl();
             if (!TextUtils.isEmpty(imgUrl)) {
-                Glide.with(mContext).load(imgUrl).placeholder(R.mipmap.ic_header).into(mHeaderImage);
+                Glide.with(mContext)
+                        .load(imgUrl)
+                        .placeholder(R.mipmap.ic_header)
+                        .into(mHeaderImage);
             }
         }
     }
@@ -246,5 +231,23 @@ public class HistoryDetailActivity extends BaseActivity {
     //为请求生成一个唯一标识
     private String buildTransaction(String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
+
+    public void startLoading() {
+        mSwipeRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefresh.setRefreshing(true);
+            }
+        });
+    }
+
+    public void stopLoading() {
+        mSwipeRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefresh.setRefreshing(false);
+            }
+        });
     }
 }
