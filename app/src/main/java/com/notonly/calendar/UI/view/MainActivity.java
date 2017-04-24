@@ -55,6 +55,10 @@ public class MainActivity extends BaseActivity {
     TextView tvAvoid;
     @BindView(R.id.tv_suit)
     TextView tvSuit;
+    @BindView(R.id.tv_weekday)
+    TextView tvWeekday;
+    @BindView(R.id.tv_lunaryear)
+    TextView tvLunaryear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +86,8 @@ public class MainActivity extends BaseActivity {
                 App.getMainHandler().post(new Runnable() {
                     @Override
                     public void run() {
+                        tvWeekday.setText(data.getDate() + " " + data.getWeekday());
+                        tvLunaryear.setText(data.getLunarYear() + " " + data.getLunar());
                         tvAvoid.setText(data.getAvoid());
                         tvSuit.setText(data.getSuit());
                     }
@@ -203,11 +209,14 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.menu_calendar)
+    @OnClick({R.id.menu_calendar, R.id.menu_setting})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.menu_calendar:
                 startActivity(new Intent(mContext, HistoryListActivity.class));
+                break;
+            case R.id.menu_setting:
+                startActivity(new Intent(mContext, AboutActivity.class));
                 break;
         }
     }

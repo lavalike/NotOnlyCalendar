@@ -11,6 +11,8 @@
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="220dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@drawable/bg_banner_gradient"
         android:fitsSystemWindows="true">
 
@@ -18,11 +20,24 @@
             android:id="@+id/menu_calendar"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
+            android:layout_margin="5dp"
+            android:layout_toLeftOf="@+id/menu_setting"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:padding="5dp"
             android:src="@mipmap/ic_calendar" />
+
+        <ImageView
+            android:id="@+id/menu_setting"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/menu_calendar"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:src="@mipmap/ic_setting" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -60,14 +75,33 @@
             android:id="@+id/layout_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:id="@+id/tv_weekday"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="2017年4月24日 星期一" />
+
+                <TextView
+                    android:id="@+id/tv_lunaryear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    tools:text="丁酉年 三月廿八" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="20dp"
                 android:textColor="@color/colorPrimary"
                 android:textSize="100sp"
                 tools:text="24" />
