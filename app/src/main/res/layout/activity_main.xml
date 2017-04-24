@@ -11,7 +11,7 @@
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/bg_banner_gradient"
         android:fitsSystemWindows="true">
 
         <ImageView

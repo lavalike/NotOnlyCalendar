@@ -9,6 +9,7 @@
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#FFC107</color>
     <color name="colorPrimaryTransparent">#ae2196F3</color>
+    <color name="colorGradient">#58b5ff</color>
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGrey">#C0C0C0</color>
