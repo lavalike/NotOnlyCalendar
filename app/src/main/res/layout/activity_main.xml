@@ -1,230 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UI.view.MainActivity">
 
-    <!--顶部布局-->
-    <RelativeLayout
-        android:id="@+id/layout_top"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/bg_banner_gradient"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/menu_calendar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="5dp"
-            android:layout_toLeftOf="@+id/menu_setting"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:padding="5dp"
-            android:src="@mipmap/ic_calendar" />
+        <!--顶部布局-->
+        <RelativeLayout
+            android:id="@+id/layout_top"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/bg_banner_gradient"
+            android:fitsSystemWindows="true">
 
-        <ImageView
-            android:id="@+id/menu_setting"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/menu_calendar"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:src="@mipmap/ic_setting" />
+            <ImageView
+                android:id="@+id/menu_calendar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:layout_toLeftOf="@+id/menu_setting"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:padding="5dp"
+                android:src="@mipmap/ic_calendar" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical"
-            android:padding="30dp">
+            <ImageView
+                android:id="@+id/menu_setting"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/menu_calendar"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:src="@mipmap/ic_setting" />
 
-            <TextView
-                android:id="@+id/tv_slogan_en"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
-                android:textSize="20sp"
-                tools:text="A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal." />
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                android:padding="30dp">
 
-            <TextView
-                android:id="@+id/tv_slogan_cn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="14sp"
-                tools:text="不够真诚是危险的，太真诚则绝对是致命的。" />
-        </LinearLayout>
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/tv_slogan_en"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="20sp"
+                    tools:text="A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal." />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/layout_top">
+                <TextView
+                    android:id="@+id/tv_slogan_cn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp"
+                    tools:text="不够真诚是危险的，太真诚则绝对是致命的。" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <!--日期-->
-        <LinearLayout
-            android:id="@+id/layout_date"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:padding="20dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_weekday"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                tools:text="2017年4月24日 星期一" />
 
-                <TextView
-                    android:id="@+id/tv_weekday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="2017年4月24日 星期一" />
+            <TextView
+                android:id="@+id/tv_lunaryear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                tools:text="丁酉年 三月廿八" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_lunaryear"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    tools:text="丁酉年 三月廿八" />
-            </RelativeLayout>
+        <!--动画-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <View
+                android:id="@+id/view_anim_breathe"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_circle" />
 
             <TextView
                 android:id="@+id/tv_day"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="100sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="80sp"
                 tools:text="24" />
-        </LinearLayout>
 
-        <View
-            android:id="@+id/line_date"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line_height"
-            android:layout_below="@id/layout_date"
-            android:background="@color/colorPrimary" />
-        <!--忌&宜-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/line_date"
-            android:orientation="vertical">
+        </FrameLayout>
 
-            <android.support.percent.PercentRelativeLayout
-                android:id="@+id/layout_avoid"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+        <!--忌-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="@string/avoid"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-                <RelativeLayout
-                    android:id="@+id/layout_inner_avoid"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    app:layout_widthPercent="30%">
+        <TextView
+            android:id="@+id/tv_avoid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textSize="15sp"
+            tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/avoid"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="15sp" />
-                </RelativeLayout>
+        <!--宜-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="@string/suit"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-                <View
-                    android:id="@+id/line_avoid"
-                    android:layout_width="@dimen/line_height"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/layout_inner_avoid"
-                    android:background="@color/colorPrimary" />
-
-                <RelativeLayout
-                    android:id="@+id/layout_inner_avoid_text"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@id/line_avoid"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    app:layout_widthPercent="70%">
-
-                    <TextView
-                        android:id="@+id/tv_avoid"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:lines="6"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="15sp"
-                        tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
-                </RelativeLayout>
-            </android.support.percent.PercentRelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line_height"
-                android:background="@color/colorPrimary" />
-
-            <android.support.percent.PercentRelativeLayout
-                android:id="@+id/layout_suit"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-                <RelativeLayout
-                    android:id="@+id/layout_inner_suit"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    app:layout_widthPercent="30%">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/suit"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="15sp" />
-                </RelativeLayout>
-
-                <View
-                    android:id="@+id/line_suit"
-                    android:layout_width="@dimen/line_height"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/layout_inner_suit"
-                    android:background="@color/colorPrimary" />
-
-                <RelativeLayout
-                    android:id="@+id/layout_inner_suit_text"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toRightOf="@id/line_suit"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    app:layout_widthPercent="70%">
-
-                    <TextView
-                        android:id="@+id/tv_suit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:lines="6"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="15sp"
-                        tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
-                </RelativeLayout>
-            </android.support.percent.PercentRelativeLayout>
-        </LinearLayout>
-    </RelativeLayout>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_suit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textSize="15sp"
+            tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
+    </LinearLayout>
+</ScrollView>
 

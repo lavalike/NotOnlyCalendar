@@ -48,7 +48,7 @@ public class ToolbarActivity extends AppCompatActivity {
 
     private void initView(View view) {
         mRootView = new FrameLayout(this);
-        mRootView.setBackgroundResource(R.color.colorPrimaryDark);
+        mRootView.setBackgroundResource(R.color.colorPrimary);
         mRootView.setFitsSystemWindows(true);
         FrameLayout.LayoutParams paramsRoot = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT);
@@ -94,7 +94,7 @@ public class ToolbarActivity extends AppCompatActivity {
             ((ViewGroup) view.getParent()).removeView(view);
         }
         mRootView = new FrameLayout(this);
-        mRootView.setBackgroundResource(R.color.colorPrimaryDark);
+        mRootView.setBackgroundResource(R.color.colorPrimary);
         mRootView.setFitsSystemWindows(true);
         FrameLayout.LayoutParams paramsRoot = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT);

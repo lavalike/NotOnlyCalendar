@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.notonly.calendar.R;
@@ -59,6 +62,8 @@ public class MainActivity extends BaseActivity {
     TextView tvWeekday;
     @BindView(R.id.tv_lunaryear)
     TextView tvLunaryear;
+    @BindView(R.id.view_anim_breathe)
+    View viewAnimBreathe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,48 +77,31 @@ public class MainActivity extends BaseActivity {
         findCalendar();
     }
 
-    private void findCalendar() {
-        APIService apiService = RetrofitManager.getClient().create(APIService.class);
-        Call<CalendarBean> call = apiService.findCalendar(DateUtil.getDatetime(), APIKey.AppKey_Calendar);
-        call.enqueue(new Callback<CalendarBean>() {
-            @Override
-            public void onResponse(Call<CalendarBean> call, Response<CalendarBean> response) {
-                if (!response.isSuccessful()) return;
-                final CalendarBean bean = response.body();
-                final CalendarBean.ResultBean result = bean.getResult();
-                if (result == null) return;
-                final CalendarBean.ResultBean.DataBean data = result.getData();
-                App.getMainHandler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        tvWeekday.setText(data.getDate() + " " + data.getWeekday());
-                        tvLunaryear.setText(data.getLunarYear() + " " + data.getLunar());
-                        tvAvoid.setText(data.getAvoid());
-                        tvSuit.setText(data.getSuit());
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(Call<CalendarBean> call, Throwable t) {
-                ErrHelper.check(t);
-            }
-        });
-        addTaskToList(call);
-    }
-
     private void init() {
+        String sloganCN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_CN, "");
+        String sloganEN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_EN, "");
+        String weekday = SPHelper.getInstance().get(SPKey.KEY_WEEKDAY, "");
+        String lunar = SPHelper.getInstance().get(SPKey.KEY_LUNAR, "");
+        String avoid = SPHelper.getInstance().get(SPKey.KEY_AVOID, "");
+        String suit = SPHelper.getInstance().get(SPKey.KEY_SUIT, "");
+        tvSloganCN.setText(sloganCN);
+        tvSloganEN.setText(sloganEN);
+        tvWeekday.setText(weekday);
+        tvLunaryear.setText(lunar);
+        tvAvoid.setText(avoid);
+        tvSuit.setText(suit);
         tvDay.setText(DateUtil.getDay());
+        //开启呼吸动画
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_breathe);
+        animation.setInterpolator(new AccelerateInterpolator());
+        viewAnimBreathe.setAnimation(animation);
+        animation.start();
     }
 
     /**
      * 加载标语
      */
     private void findSlogan() {
-        String sloganCN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_CN, "");
-        String sloganEN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_EN, "");
-        tvSloganCN.setText(sloganCN);
-        tvSloganEN.setText(sloganEN);
         APIService apiService = RetrofitManager.getClient().create(APIService.class);
         Call<SloganBean> call = apiService.findSlogan(APIManager.URL_SLOGAN);
         call.enqueue(new Callback<SloganBean>() {
@@ -141,6 +129,42 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onFailure(Call<SloganBean> call, Throwable t) {
+                ErrHelper.check(t);
+            }
+        });
+        addTaskToList(call);
+    }
+
+    private void findCalendar() {
+        APIService apiService = RetrofitManager.getClient().create(APIService.class);
+        Call<CalendarBean> call = apiService.findCalendar(DateUtil.getDatetime(), APIKey.AppKey_Calendar);
+        call.enqueue(new Callback<CalendarBean>() {
+            @Override
+            public void onResponse(Call<CalendarBean> call, Response<CalendarBean> response) {
+                if (!response.isSuccessful()) return;
+                final CalendarBean bean = response.body();
+                final CalendarBean.ResultBean result = bean.getResult();
+                if (result == null) return;
+                final CalendarBean.ResultBean.DataBean data = result.getData();
+                App.getMainHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String weekday = DateUtil.getYear() + "年" + DateUtil.getMonth() + "月" + DateUtil.getDay() + " " + data.getWeekday();
+                        String lunar = data.getLunarYear() + " " + data.getLunar();
+                        tvWeekday.setText(weekday);
+                        tvLunaryear.setText(lunar);
+                        tvAvoid.setText(data.getAvoid());
+                        tvSuit.setText(data.getSuit());
+                        SPHelper.getInstance().put(SPKey.KEY_WEEKDAY, weekday);
+                        SPHelper.getInstance().put(SPKey.KEY_LUNAR, lunar);
+                        SPHelper.getInstance().put(SPKey.KEY_AVOID, data.getAvoid());
+                        SPHelper.getInstance().put(SPKey.KEY_SUIT, data.getSuit());
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<CalendarBean> call, Throwable t) {
                 ErrHelper.check(t);
             }
         });
