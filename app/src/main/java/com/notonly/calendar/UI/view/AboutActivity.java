@@ -32,7 +32,7 @@ public class AboutActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
-        Glide.with(mContext).load(APIManager.url_weixin_qrcode).placeholder(R.mipmap.qrcode).into(mImageView);
+        Glide.with(mContext).load(APIManager.URL_WEIXIN_QRCODE).placeholder(R.mipmap.qrcode).into(mImageView);
         mTextViewVersion.setText("版本：" + AppUtils.getVersionName(mContext));
     }
 

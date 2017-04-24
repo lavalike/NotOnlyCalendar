@@ -1,148 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/SwipeRefresh1"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    android:padding="@dimen/activity_horizontal_margin">
+    tools:context=".UI.view.MainActivity">
 
-    <android.support.v7.widget.CardView
+    <!--顶部布局-->
+    <RelativeLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true">
+
+        <ImageView
+            android:id="@+id/menu_calendar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:padding="5dp"
+            android:src="@mipmap/ic_calendar" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <TextView
+                android:id="@+id/tv_slogan_en"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"
+                tools:text="A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal." />
+
+            <TextView
+                android:id="@+id/tv_slogan_cn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                tools:text="不够真诚是危险的，太真诚则绝对是致命的。" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardElevation="@dimen/card_elevation"
-        app:cardPreventCornerOverlap="true"
-        app:cardUseCompatPadding="true">
+        android:layout_below="@+id/layout_top">
 
+        <!--日期-->
+        <LinearLayout
+            android:id="@+id/layout_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tv_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colorPrimary"
+                android:textSize="100sp"
+                tools:text="24" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/line_date"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line_height"
+            android:layout_below="@id/layout_date"
+            android:background="@color/colorPrimary" />
+        <!--忌&宜-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="@dimen/activity_horizontal_margin">
+            android:layout_below="@+id/line_date"
+            android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="250dp">
-
-                <TextView
-                    android:id="@+id/TextView_date"
-                    style="@style/CalendarTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/TextView_weekday"
-                    style="@style/CalendarTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/TextView_day"
-                    style="@style/CalendarTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textSize="150sp" />
-
-
-                <TextView
-                    android:id="@+id/TextView_lunaryear"
-                    style="@style/CalendarTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentLeft="true" />
-
-                <TextView
-                    android:id="@+id/TextView_lunar"
-                    style="@style/CalendarTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorPrimary"></View>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/CalendarTextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="忌"
-                    android:textSize="20sp" />
-
-                <TextView
-                    style="@style/CalendarTextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="宜"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <android.support.percent.PercentRelativeLayout
+                android:id="@+id/layout_avoid"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <RelativeLayout
+                    android:id="@+id/layout_inner_avoid"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:gravity="center"
+                    app:layout_widthPercent="30%">
 
                     <TextView
-                        android:id="@+id/TextView_avoid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="10dp"
+                        android:gravity="center"
+                        android:text="@string/avoid"
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp" />
-                </LinearLayout>
+                </RelativeLayout>
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <View
+                    android:id="@+id/line_avoid"
+                    android:layout_width="@dimen/line_height"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_toRightOf="@id/layout_inner_avoid"
+                    android:background="@color/colorPrimary" />
+
+                <RelativeLayout
+                    android:id="@+id/layout_inner_avoid_text"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toRightOf="@id/line_avoid"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    app:layout_widthPercent="70%">
 
                     <TextView
-                        android:id="@+id/TextView_suit"
+                        android:id="@+id/tv_avoid"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:paddingTop="10dp"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="6"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp"
+                        tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
+                </RelativeLayout>
+            </android.support.percent.PercentRelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line_height"
+                android:background="@color/colorPrimary" />
+
+            <android.support.percent.PercentRelativeLayout
+                android:id="@+id/layout_suit"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:id="@+id/layout_inner_suit"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:layout_widthPercent="30%">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/suit"
                         android:textColor="@color/colorPrimary"
                         android:textSize="15sp" />
+                </RelativeLayout>
 
-                </LinearLayout>
+                <View
+                    android:id="@+id/line_suit"
+                    android:layout_width="@dimen/line_height"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/layout_inner_suit"
+                    android:background="@color/colorPrimary" />
 
-            </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/layout_inner_suit_text"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toRightOf="@id/line_suit"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    app:layout_widthPercent="70%">
+
+                    <TextView
+                        android:id="@+id/tv_suit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:lines="6"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="15sp"
+                        tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
+                </RelativeLayout>
+            </android.support.percent.PercentRelativeLayout>
         </LinearLayout>
-
-
-    </android.support.v7.widget.CardView>
-
-</android.support.v4.widget.SwipeRefreshLayout>
+    </RelativeLayout>
+</RelativeLayout>
 

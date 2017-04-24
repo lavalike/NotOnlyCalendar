@@ -1,46 +1,43 @@
 package com.notonly.calendar.UI.view;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.notonly.calendar.R;
+import com.notonly.calendar.api.APIService;
+import com.notonly.calendar.base.App;
 import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.base.helper.APIKey;
 import com.notonly.calendar.base.helper.ErrHelper;
+import com.notonly.calendar.base.helper.SPHelper;
+import com.notonly.calendar.base.helper.SPKey;
 import com.notonly.calendar.base.manager.APIManager;
-import com.notonly.calendar.base.manager.PermissionManager;
-import com.notonly.calendar.base.manager.UpdateManager;
-import com.notonly.calendar.base.toolbar.ToolBarRightIconHolder;
+import com.notonly.calendar.base.retrofit.RetrofitManager;
 import com.notonly.calendar.domain.CalendarBean;
 import com.notonly.calendar.domain.Device;
+import com.notonly.calendar.domain.SloganBean;
 import com.notonly.calendar.util.AppUtils;
 import com.notonly.calendar.util.DateUtil;
-import com.notonly.calendar.util.T;
-
-import org.json.JSONObject;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 主页面
@@ -48,22 +45,16 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.SwipeRefresh1)
-    SwipeRefreshLayout mSwipeRefresh;
-    @BindView(R.id.TextView_date)
-    TextView mTextView_date;
-    @BindView(R.id.TextView_weekday)
-    TextView mTextView_weekday;
-    @BindView(R.id.TextView_lunaryear)
-    TextView mTextView_lunaryear;
-    @BindView(R.id.TextView_lunar)
-    TextView mTextView_lunar;
-    @BindView(R.id.TextView_day)
-    TextView mTextView_day;
-    @BindView(R.id.TextView_avoid)
-    TextView mTextView_avoid;
-    @BindView(R.id.TextView_suit)
-    TextView mTextView_suit;
+    @BindView(R.id.tv_slogan_cn)
+    TextView tvSloganCN;
+    @BindView(R.id.tv_slogan_en)
+    TextView tvSloganEN;
+    @BindView(R.id.tv_day)
+    TextView tvDay;
+    @BindView(R.id.tv_avoid)
+    TextView tvAvoid;
+    @BindView(R.id.tv_suit)
+    TextView tvSuit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,55 +62,88 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Bmob.initialize(mContext, APIKey.AppKey_bmob);
-        initSwipe();
-        mTextView_date.setText(DateUtil.getYear() + "年" + DateUtil.getMonth() + "月");
-        mTextView_day.setText(DateUtil.getDay());
-        requestData();
-        UpdateManager.get(this).check();
-        PermissionManager.requestPermission(this, Manifest.permission.READ_PHONE_STATE, new PermissionManager.OnPermissionCallback() {
+        collectDeviceData();
+        init();
+        findSlogan();
+        findCalendar();
+    }
+
+    private void findCalendar() {
+        APIService apiService = RetrofitManager.getClient().create(APIService.class);
+        Call<CalendarBean> call = apiService.findCalendar(DateUtil.getDatetime(), APIKey.AppKey_Calendar);
+        call.enqueue(new Callback<CalendarBean>() {
             @Override
-            public void onGranted() {
-                collectDeviceData();
+            public void onResponse(Call<CalendarBean> call, Response<CalendarBean> response) {
+                if (!response.isSuccessful()) return;
+                final CalendarBean bean = response.body();
+                final CalendarBean.ResultBean result = bean.getResult();
+                if (result == null) return;
+                final CalendarBean.ResultBean.DataBean data = result.getData();
+                App.getMainHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvAvoid.setText(data.getAvoid());
+                        tvSuit.setText(data.getSuit());
+                    }
+                });
             }
 
             @Override
-            public void onDenied() {
-                T.get(mContext).toast(getString(R.string.error_permission_denied));
-                PermissionManager.managePermissionByHand(mContext);
+            public void onFailure(Call<CalendarBean> call, Throwable t) {
+                ErrHelper.check(t);
             }
         });
+        addTaskToList(call);
+    }
+
+    private void init() {
+        tvDay.setText(DateUtil.getDay());
+    }
+
+    /**
+     * 加载标语
+     */
+    private void findSlogan() {
+        String sloganCN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_CN, "");
+        String sloganEN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_EN, "");
+        tvSloganCN.setText(sloganCN);
+        tvSloganEN.setText(sloganEN);
+        APIService apiService = RetrofitManager.getClient().create(APIService.class);
+        Call<SloganBean> call = apiService.findSlogan(APIManager.URL_SLOGAN);
+        call.enqueue(new Callback<SloganBean>() {
+            @Override
+            public void onResponse(Call<SloganBean> call, final Response<SloganBean> response) {
+                SloganBean body = response.body();
+                String en = body.getContent();
+                String cn = body.getNote();
+                en = en.substring(0, en.lastIndexOf(".") + 1);
+                cn = cn.substring(0, cn.lastIndexOf("。") + 1);
+                final String finalEn = en;
+                final String finalCn = cn;
+                App.getMainHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!TextUtils.isEmpty(finalEn) && !TextUtils.isEmpty(finalCn)) {
+                            tvSloganEN.setText(finalEn);
+                            tvSloganCN.setText(finalCn);
+                            SPHelper.getInstance().put(SPKey.KEY_SLOGAN_EN, finalEn);
+                            SPHelper.getInstance().put(SPKey.KEY_SLOGAN_CN, finalCn);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<SloganBean> call, Throwable t) {
+                ErrHelper.check(t);
+            }
+        });
+        addTaskToList(call);
     }
 
     @Override
-    protected void onSetupToolbar(Toolbar toolbar, ActionBar actionBar) {
-        ToolBarRightIconHolder holder = new ToolBarRightIconHolder(this, toolbar, getString(R.string.app_name), R.mipmap.ic_calendar, false);
-        holder.getRightMenu().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, HistoryListActivity.class);
-                startActivity(intent);
-            }
-        });
-        holder.getRightMenu().setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Intent intent = new Intent(mContext, AboutActivity.class);
-                startActivity(intent);
-                return true;
-            }
-        });
-    }
-
-    private void initSwipe() {
-        //设置加载图标颜色
-        mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, android.R.color.holo_purple, android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        mSwipeRefresh.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefresh.setRefreshing(true);
-            }
-        });
+    public boolean showToolbar() {
+        return false;
     }
 
     /**
@@ -179,73 +203,12 @@ public class MainActivity extends BaseActivity {
         });
     }
 
-    /**
-     * 请求数据
-     */
-    private void requestData() {
-        RequestParams params = new RequestParams(APIManager.URL_CALENDAR);
-        params.addQueryStringParameter("date", DateUtil.getDatetime());
-        params.addQueryStringParameter("key", APIKey.AppKey_Calendar);
-        Callback.Cancelable cancelable = x.http().get(params, new Callback.CommonCallback<String>() {
-
-            String result = "";
-            boolean hasError = false;
-
-            @Override
-            public void onSuccess(String result) {
-                this.result = result;
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                this.hasError = true;
-                ErrHelper.check(ex);
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-            }
-
-            @Override
-            public void onFinished() {
-                mSwipeRefresh.setRefreshing(false);
-                mSwipeRefresh.setEnabled(false);
-                if (this.result.equals("") || this.hasError) {
-                    return;
-                }
-                try {
-                    JSONObject object = new JSONObject(this.result);
-                    String data = new JSONObject(object.getString("result")).getString("data");
-                    Gson gson = new Gson();
-                    CalendarBean bean = gson.fromJson(data, CalendarBean.class);
-                    inflateData(bean);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    T.get(mContext).toast("出错啦");
-                }
-
-            }
-        });
-        addTaskToList(cancelable);
-    }
-
-    /**
-     * 展示网络数据
-     *
-     * @param bean
-     */
-    private void inflateData(CalendarBean bean) {
-        mTextView_weekday.setText(bean.getWeekday());
-        mTextView_lunaryear.setText(bean.getLunarYear());
-        mTextView_lunar.setText(bean.getLunar());
-        mTextView_avoid.setText(bean.getAvoid());
-        mTextView_suit.setText(bean.getSuit());
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //保持后台运行
-        moveTaskToBack(false);
+    @OnClick(R.id.menu_calendar)
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.menu_calendar:
+                startActivity(new Intent(mContext, HistoryListActivity.class));
+                break;
+        }
     }
 }

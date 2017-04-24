@@ -10,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.notonly.calendar.R;
 import com.notonly.calendar.UI.widget.ShareDialog;
+import com.notonly.calendar.api.APIService;
 import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.base.helper.APIKey;
 import com.notonly.calendar.base.helper.ErrHelper;
-import com.notonly.calendar.base.manager.APIManager;
+import com.notonly.calendar.base.retrofit.RetrofitManager;
 import com.notonly.calendar.domain.HistoryBean;
 import com.notonly.calendar.domain.HistoryDetailBean;
 import com.notonly.calendar.util.T;
@@ -26,12 +26,10 @@ import com.tencent.mm.sdk.modelmsg.WXTextObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Response;
 
 /**
  * 历史上的今天详情
@@ -94,53 +92,31 @@ public class HistoryDetailActivity extends BaseActivity {
      * 加载详情
      */
     private void loadDetail() {
-        RequestParams params = new RequestParams(APIManager.URL_HISTORY_DETAIL_V2);
-        params.addQueryStringParameter("key", APIKey.AppKey_todayinhistory);
-        params.addQueryStringParameter("e_id", mID);
-        Callback.Cancelable task = x.http().get(params, new Callback.CommonCallback<String>() {
-            String result = "";
-            boolean hasErr = false;
-
+        APIService apiService = RetrofitManager.getClient().create(APIService.class);
+        Call<HistoryDetailBean> call = apiService.findHistoryDetail(mID, APIKey.AppKey_todayinhistory);
+        call.enqueue(new retrofit2.Callback<HistoryDetailBean>() {
             @Override
-            public void onSuccess(String result) {
-                this.result = result;
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                this.hasErr = true;
-                ErrHelper.check(ex);
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
+            public void onResponse(Call<HistoryDetailBean> call, Response<HistoryDetailBean> response) {
                 stopLoading();
-                if (this.result.equals("") || this.hasErr)
-                    return;
-                try {
-                    Gson gson = new Gson();
-                    HistoryDetailBean bean = gson.fromJson(this.result, HistoryDetailBean.class);
-                    if (bean != null && bean.getResult() != null && bean.getResult().size() > 0) {
-                        if (bean.getError_code() == 0) {
-                            displayData(bean);
-                        }
-                    } else {
-                        if (bean.getReason() != null) {
-                            T.get(mContext).toast(bean.getReason());
-                        }
+                if (!response.isSuccessful()) return;
+                HistoryDetailBean result = response.body();
+                if (result != null && result.getResult() != null && result.getResult().size() > 0) {
+                    if (result.getError_code() == 0) {
+                        displayData(result);
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } else {
+                    if (result.getReason() != null) {
+                        T.get(mContext).toast(result.getReason());
+                    }
                 }
+            }
 
+            @Override
+            public void onFailure(Call<HistoryDetailBean> call, Throwable t) {
+                ErrHelper.check(t);
             }
         });
-        addTaskToList(task);
+        addTaskToList(call);
     }
 
     /**

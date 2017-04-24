@@ -1,6 +1,7 @@
 package com.notonly.calendar.base;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
@@ -14,6 +15,7 @@ public class App extends MultiDexApplication {
     private static App mContext;
     //SQLite配置
     private static DbManager.DaoConfig db_config;
+    private static Handler mainHandler = new Handler();
 
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -26,6 +28,10 @@ public class App extends MultiDexApplication {
         mContext = this;
         x.Ext.init(this);
         x.Ext.setDebug(false);
+    }
+
+    public static Handler getMainHandler() {
+        return mainHandler;
     }
 
     public static App getContext() {

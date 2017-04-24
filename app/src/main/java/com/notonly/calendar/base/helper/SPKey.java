@@ -10,4 +10,6 @@ public class SPKey {
     public static String KEY_LIST_MODE = "list_mode";
     public static String LIST_MODE_LIST = "list_mode_list";
     public static String LIST_MODE_STAGGER = "list_mode_stagger";
+    public static String KEY_SLOGAN_CN = "key_slogan_cn";
+    public static String KEY_SLOGAN_EN = "key_slogan_en";
 }

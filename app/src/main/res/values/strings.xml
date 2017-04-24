@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">大黄历</string>
+    <string name="suit">宜</string>
+    <string name="avoid">忌</string>
     <string name="title_todayinhistory">历史上的今天</string>
     <string name="title_history_detail">详情</string>
     <string name="title_about">关于</string>

@@ -20,6 +20,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+
 /**
  * Activity基类
  * Created by wangzhen on 16/2/23.
@@ -29,7 +31,7 @@ public class BaseActivity extends ToolbarActivity implements PermissionManager.O
     public Context mContext;
 
     //任务请求队列
-    private List<Callback.Cancelable> mListTasks;
+    private List<Call> mListTasks;
 
     private PermissionManager.OnPermissionCallback mCallback;
 
@@ -44,7 +46,7 @@ public class BaseActivity extends ToolbarActivity implements PermissionManager.O
     /**
      * 将任务添加到队列
      */
-    public void addTaskToList(Callback.Cancelable task) {
+    public void addTaskToList(Call task) {
         if (mListTasks == null) {
             mListTasks = new ArrayList<>();
         }
@@ -167,8 +169,8 @@ public class BaseActivity extends ToolbarActivity implements PermissionManager.O
         super.onDestroy();
         AppManager.get().removeActivity(this);
         //取消所有任务
-        for (Callback.Cancelable task : mListTasks) {
-            if (!task.isCancelled()) {
+        for (Call task : mListTasks) {
+            if (!task.isCanceled()) {
                 task.cancel();
             }
         }
