@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'android-apt'
+apply from: 'version.gradle'
 
 android {
     compileSdkVersion 25
@@ -9,8 +10,8 @@ android {
         applicationId "com.notonly.calendar"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 106
-        versionName "1.0.6"
+        versionCode appVersionCode
+        versionName appVersionName
         multiDexEnabled true
     }
     signingConfigs {
@@ -42,11 +43,11 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-    //配置APK输出名字 格式:NotOnltCalendar_V2.1.5.apk
+    //配置APK输出名字 格式:NotOnlyCalendar_V2.1.5.apk
     android.applicationVariants.all { variant ->
         variant.outputs.each { output ->
             def file = output.outputFile
-            output.outputFile = new File(file.parent, "NotOnltCalendar_V" + defaultConfig.versionName + ".apk")
+            output.outputFile = new File(file.parent, "NotOnlyCalendar_V" + defaultConfig.versionName + ".apk")
         }
     }
 }
