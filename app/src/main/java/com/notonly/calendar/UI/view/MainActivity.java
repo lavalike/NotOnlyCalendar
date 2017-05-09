@@ -1,5 +1,6 @@
 package com.notonly.calendar.UI.view;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -21,6 +22,7 @@ import com.notonly.calendar.base.helper.ErrHelper;
 import com.notonly.calendar.base.helper.SPHelper;
 import com.notonly.calendar.base.helper.SPKey;
 import com.notonly.calendar.base.manager.APIManager;
+import com.notonly.calendar.base.manager.PermissionManager;
 import com.notonly.calendar.base.retrofit.RetrofitManager;
 import com.notonly.calendar.domain.CalendarBean;
 import com.notonly.calendar.domain.Device;
@@ -180,55 +182,65 @@ public class MainActivity extends BaseActivity {
      * 收集设备信息
      */
     private void collectDeviceData() {
-        TelephonyManager manager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        final String deviceID = manager.getDeviceId();//设备ID
-        final String mobileNumber = manager.getLine1Number();//手机号
-        final String appVersion = AppUtils.getVersionName(mContext);
-        final String sysVersion = Build.VERSION.RELEASE;
-        final String brand = Build.BRAND;
-        final String model = Build.MODEL;
-
-        BmobQuery<Device> query = new BmobQuery<>();
-        query.addWhereEqualTo("DeviceID", deviceID);
-        query.findObjects(mContext, new FindListener<Device>() {
+        PermissionManager.requestPermission(this, Manifest.permission.READ_PHONE_STATE, new PermissionManager.OnPermissionCallback() {
             @Override
-            public void onSuccess(List<Device> list) {
-                //提交手机信息
-                Device bean = new Device();
-                bean.setAppVersion(appVersion);
-                bean.setBrand(brand);
-                bean.setDeviceID(deviceID);
-                bean.setModel(model);
-                bean.setSysVersion(sysVersion);
-                bean.setMobileNumber(mobileNumber);
-                if (list.size() == 0) {
-                    bean.save(mContext, new SaveListener() {
-                        @Override
-                        public void onSuccess() {
+            public void onGranted() {
+                TelephonyManager manager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
+                final String deviceID = manager.getDeviceId();//设备ID
+                final String mobileNumber = manager.getLine1Number();//手机号
+                final String appVersion = AppUtils.getVersionName(mContext);
+                final String sysVersion = Build.VERSION.RELEASE;
+                final String brand = Build.BRAND;
+                final String model = Build.MODEL;
+
+                BmobQuery<Device> query = new BmobQuery<>();
+                query.addWhereEqualTo("DeviceID", deviceID);
+                query.findObjects(mContext, new FindListener<Device>() {
+                    @Override
+                    public void onSuccess(List<Device> list) {
+                        //提交手机信息
+                        Device bean = new Device();
+                        bean.setAppVersion(appVersion);
+                        bean.setBrand(brand);
+                        bean.setDeviceID(deviceID);
+                        bean.setModel(model);
+                        bean.setSysVersion(sysVersion);
+                        bean.setMobileNumber(mobileNumber);
+                        if (list.size() == 0) {
+                            bean.save(mContext, new SaveListener() {
+                                @Override
+                                public void onSuccess() {
+                                }
+
+                                @Override
+                                public void onFailure(int i, String s) {
+
+                                }
+                            });
+                        } else {
+                            bean.update(mContext, list.get(0).getObjectId(), new UpdateListener() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onFailure(int i, String s) {
+
+                                }
+                            });
                         }
+                    }
 
-                        @Override
-                        public void onFailure(int i, String s) {
-
-                        }
-                    });
-                } else {
-                    bean.update(mContext, list.get(0).getObjectId(), new UpdateListener() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailure(int i, String s) {
-
-                        }
-                    });
-                }
+                    @Override
+                    public void onError(int i, String s) {
+                    }
+                });
             }
 
             @Override
-            public void onError(int i, String s) {
+            public void onDenied() {
+
             }
         });
     }
