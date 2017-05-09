@@ -240,7 +240,7 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onDenied() {
-
+                PermissionManager.managePermissionByHand(mContext);
             }
         });
     }

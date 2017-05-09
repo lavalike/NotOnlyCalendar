@@ -62,7 +62,6 @@ dependencies {
     compile 'com.android.support:support-v4:' + SUPPORT_VERSION
     compile 'com.android.support:percent:' + SUPPORT_VERSION
     compile 'com.android.support:multidex:1.0.1'
-    compile 'org.xutils:xutils:3.3.30'
     compile files('libs/BmobSDK_V3.4.4_0930.jar')
     compile files('libs/libammsdk.jar')
     compile 'com.jakewharton:butterknife:8.1.0'

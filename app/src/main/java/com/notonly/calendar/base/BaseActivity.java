@@ -13,8 +13,6 @@ import com.notonly.calendar.base.manager.AppManager;
 import com.notonly.calendar.base.manager.PermissionManager;
 import com.notonly.calendar.base.toolbar.ToolbarActivity;
 
-import org.xutils.common.Callback;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -57,7 +55,7 @@ public class BaseActivity extends ToolbarActivity implements PermissionManager.O
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //权限被授予
                 if (mCallback != null) {
                     mCallback.onGranted();
