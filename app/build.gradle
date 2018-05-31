@@ -1,15 +1,12 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 apply from: 'version.gradle'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
-
+    compileSdkVersion 26
     defaultConfig {
         applicationId "com.notonly.calendar"
-        minSdkVersion 17
-        targetSdkVersion 25
+        minSdkVersion 19
+        targetSdkVersion 26
         versionCode appVersionCode
         versionName appVersionName
         multiDexEnabled true
@@ -45,30 +42,29 @@ android {
     }
     //配置APK输出名字 格式:NotOnlyCalendar_V2.1.5.apk
     android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def file = output.outputFile
-            output.outputFile = new File(file.parent, "NotOnlyCalendar_V" + defaultConfig.versionName + ".apk")
+        variant.outputs.all { output ->
+            outputFileName = "NotOnlyCalendar_V" + defaultConfig.versionName + ".apk"
         }
     }
 }
 
-def SUPPORT_VERSION = "25.3.0"
+def SUPPORT_VERSION = "26.0.0"
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:' + SUPPORT_VERSION
-    compile 'com.android.support:design:' + SUPPORT_VERSION
-    compile 'com.android.support:cardview-v7:' + SUPPORT_VERSION
-    compile 'com.android.support:support-v4:' + SUPPORT_VERSION
-    compile 'com.android.support:percent:' + SUPPORT_VERSION
-    compile 'com.android.support:multidex:1.0.1'
-    compile files('libs/BmobSDK_V3.4.4_0930.jar')
-    compile files('libs/libammsdk.jar')
-    compile 'com.jakewharton:butterknife:8.1.0'
-    apt 'com.jakewharton:butterknife-compiler:8.1.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.pgyersdk:sdk:2.4.0'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:' + SUPPORT_VERSION
+    implementation 'com.android.support:design:' + SUPPORT_VERSION
+    implementation 'com.android.support:cardview-v7:' + SUPPORT_VERSION
+    implementation 'com.android.support:support-v4:' + SUPPORT_VERSION
+    implementation 'com.android.support:percent:' + SUPPORT_VERSION
+    implementation 'com.android.support:multidex:1.0.2'
+    implementation files('libs/BmobSDK_V3.4.4_0930.jar')
+    implementation files('libs/libammsdk.jar')
+    implementation 'com.jakewharton:butterknife:8.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.1.0'
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.pgyersdk:sdk:2.4.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.7.0'
 }
