@@ -4,7 +4,7 @@ apply from: 'version.gradle'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '25.0.3'
 
     defaultConfig {
         applicationId "com.notonly.calendar"
@@ -52,7 +52,7 @@ android {
     }
 }
 
-def SUPPORT_VERSION = "25.2.0"
+def SUPPORT_VERSION = "25.3.0"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
