@@ -1,6 +1,7 @@
 package com.notonly.calendar.util;
 
 import android.content.Context;
+import android.content.res.Resources;
 
 import com.notonly.calendar.base.BaseApplication;
 
@@ -32,5 +33,19 @@ public class UIUtils {
 
     public static Context getContext() {
         return mApp;
+    }
+
+    /**
+     * 获取资源
+     */
+    public static Resources getResources() {
+        return getContext().getResources();
+    }
+
+    /**
+     * 获取文字
+     */
+    public static String getString(int resId) {
+        return getResources().getString(resId);
     }
 }

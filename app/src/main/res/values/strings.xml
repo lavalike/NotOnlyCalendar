@@ -14,6 +14,9 @@
     <string name="error_connect_timeout_lovely">好像出了点小状况(╥﹏╥)</string>
     <string name="error_sdcard_failure">请检查SD卡</string>
     <string name="error_permission_denied">权限被拒绝</string>
+    <string name="error_invalid_apk_url">无效的URL</string>
+    <string name="error_invalid_apk_file">不是有效的安装包</string>
+    <string name="tip_update_complete">下载完成，请安装新版本</string>
 
     <string name="cancel">取消</string>
     <string name="share">分享</string>

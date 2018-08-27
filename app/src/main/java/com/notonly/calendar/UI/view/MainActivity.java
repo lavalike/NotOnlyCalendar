@@ -23,6 +23,7 @@ import com.notonly.calendar.base.helper.SPHelper;
 import com.notonly.calendar.base.helper.SPKey;
 import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.base.manager.PermissionManager;
+import com.notonly.calendar.base.manager.UpdateManager;
 import com.notonly.calendar.base.retrofit.RetrofitManager;
 import com.notonly.calendar.domain.CalendarBean;
 import com.notonly.calendar.domain.Device;
@@ -78,6 +79,7 @@ public class MainActivity extends BaseActivity {
         init();
         findSlogan();
         findCalendar();
+        UpdateManager.get(this).check();
     }
 
     private void init() {
