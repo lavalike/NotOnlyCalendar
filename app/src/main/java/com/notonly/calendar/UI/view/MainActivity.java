@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.notonly.calendar.R;
 import com.notonly.calendar.api.APIService;
-import com.notonly.calendar.base.App;
 import com.notonly.calendar.base.BaseActivity;
+import com.notonly.calendar.base.BaseApplication;
 import com.notonly.calendar.base.helper.APIKey;
 import com.notonly.calendar.base.helper.ErrHelper;
 import com.notonly.calendar.base.helper.SPHelper;
@@ -116,7 +116,7 @@ public class MainActivity extends BaseActivity {
                 cn = cn.substring(0, cn.lastIndexOf("。") + 1);
                 final String finalEn = en;
                 final String finalCn = cn;
-                App.getMainHandler().post(new Runnable() {
+                BaseApplication.getMainHandler().post(new Runnable() {
                     @Override
                     public void run() {
                         if (!TextUtils.isEmpty(finalEn) && !TextUtils.isEmpty(finalCn)) {
@@ -148,7 +148,7 @@ public class MainActivity extends BaseActivity {
                 final CalendarBean.ResultBean result = bean.getResult();
                 if (result == null) return;
                 final CalendarBean.ResultBean.DataBean data = result.getData();
-                App.getMainHandler().post(new Runnable() {
+                BaseApplication.getMainHandler().post(new Runnable() {
                     @Override
                     public void run() {
                         String weekday = DateUtil.getYear() + "年" + DateUtil.getMonth() + "月" + DateUtil.getDay() + " " + data.getWeekday();

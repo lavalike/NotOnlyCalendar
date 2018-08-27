@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.notonly.calendar.base.manager.AppManager;
+import com.notonly.calendar.util.UIUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -28,12 +29,12 @@ public class SPHelper {
     private SharedPreferences.Editor editor;
 
     public SPHelper() {
-        sharedPreferences = AppManager.get().getActivity().getSharedPreferences(
+        sharedPreferences = UIUtils.getApp().getSharedPreferences(
                 AppManager.get().getAppName(), Activity.MODE_PRIVATE);
     }
 
     public SPHelper(String spName) {
-        sharedPreferences = AppManager.get().getActivity().getSharedPreferences(spName,
+        sharedPreferences = UIUtils.getApp().getSharedPreferences(spName,
                 Activity.MODE_PRIVATE);
     }
 

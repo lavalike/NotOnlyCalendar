@@ -1,7 +1,7 @@
 package com.notonly.calendar.base.helper;
 
 import com.notonly.calendar.R;
-import com.notonly.calendar.base.App;
+import com.notonly.calendar.base.BaseApplication;
 import com.notonly.calendar.util.AppUtils;
 import com.notonly.calendar.util.T;
 
@@ -13,10 +13,10 @@ import java.net.SocketTimeoutException;
  */
 
 public class ErrHelper {
-    private static App mContext;
+    private static BaseApplication mContext;
 
     static {
-        mContext = App.getContext();
+        mContext = BaseApplication.getContext();
     }
 
     /**
