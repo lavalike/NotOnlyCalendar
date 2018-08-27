@@ -11,6 +11,7 @@
     <!--错误提示-->
     <string name="error_network">请检查网络</string>
     <string name="error_connect_timeout">网络连接超时</string>
+    <string name="error_connect_timeout_lovely">好像出了点小状况(╥﹏╥)</string>
     <string name="error_sdcard_failure">请检查SD卡</string>
     <string name="error_permission_denied">权限被拒绝</string>
 

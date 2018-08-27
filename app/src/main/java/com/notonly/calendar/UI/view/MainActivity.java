@@ -29,6 +29,7 @@ import com.notonly.calendar.domain.Device;
 import com.notonly.calendar.domain.SloganBean;
 import com.notonly.calendar.util.AppUtils;
 import com.notonly.calendar.util.DateUtil;
+import com.notonly.calendar.util.T;
 
 import java.util.List;
 
@@ -146,7 +147,10 @@ public class MainActivity extends BaseActivity {
                 if (!response.isSuccessful()) return;
                 final CalendarBean bean = response.body();
                 final CalendarBean.ResultBean result = bean.getResult();
-                if (result == null) return;
+                if (result == null) {
+                    T.get(mContext).toast(getString(R.string.error_connect_timeout_lovely));
+                    return;
+                }
                 final CalendarBean.ResultBean.DataBean data = result.getData();
                 BaseApplication.getMainHandler().post(new Runnable() {
                     @Override
