@@ -22,5 +22,5 @@ public class APIManager {
     /**
      * 微信订阅号二维码
      */
-    public static String URL_WEIXIN_QRCODE = "http://p1.bpimg.com/567571/4ff93f8d2ddeb083.jpg";
+    public static String URL_WEIXIN_QRCODE = "https://ws2.sinaimg.cn/large/006tNc79ly1fzgtb64mfuj3076076gm2.jpg";
 }

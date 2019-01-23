@@ -15,66 +15,50 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-## API里的类最好都避免混淆
--keep public class * extends android.app.Fragment
+#---------------------------------基本指令区----------------------------------
+# 代码混淆压缩比，在0~7之间，默认为5，一般不做修改
+-optimizationpasses 5
+# 混合时不使用大小写混合，混合后的类名为小写
+-dontusemixedcaseclassnames
+# 指定不去忽略非公共库的类
+-dontskipnonpubliclibraryclasses
+# 指定不去忽略非公共库的类成员
+-dontskipnonpubliclibraryclassmembers
+# 这句话能够使我们的项目混淆后产生映射文件
+# 包含有类名->混淆后类名的映射关系
+-verbose
+# 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。
+-dontpreverify
+-printmapping proguardMapping.txt
+# 保留Annotation不混淆
+-keepattributes *Annotation*,InnerClasses
+# 避免混淆泛型
+-keepattributes Signature
+# 抛出异常时保留代码行号
+-keepattributes SourceFile,LineNumberTable
+# 指定混淆是采用的算法，后面的参数是一个过滤器
+# 这个过滤器是谷歌推荐的算法，一般不做更改
+-optimizations !code/simplification/cast,!field/*,!class/merging/*
+-ignorewarnings
+#----------------------------------------------------------------------------
+
+# ------------------------ 默认保留区 ------------------------
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
--keep public class * extends android.support.multidex.MultiDexApplication
 -keep public class * extends android.app.Service
+-keep public class * extends android.app.View
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
--keep public class * extends android.support.v4.**
--keep public class * extends android.support.v7.**
+-keep public class * extends android.view.View
 -keep public class * extends java.lang.Throwable {*;}
 -keep public class * extends java.lang.Exception {*;}
-
-# 指定不去忽略包可见的库类的成员
--dontskipnonpubliclibraryclassmembers
-
-# 指定不去忽略非公共的库类
--dontskipnonpubliclibraryclasses
-
-# 不优化泛型和反射
--keepattributes Signature
--keepattributes *Annotation*
-# 不优化内部类
--keepattributes InnerClasses
--keepattributes EnclosingMethod
-
--keepnames class * implements java.io.Serializable
--keep public class * implements java.io.Serializable {
-        public *;
-}
--keepclassmembers class * implements java.io.Serializable {
-    static final long serialVersionUID;
-    private static final java.io.ObjectStreamField[] serialPersistentFields;
-    private void writeObject(java.io.ObjectOutputStream);
-    private void readObject(java.io.ObjectInputStream);
-    java.lang.Object writeReplace();
-    java.lang.Object readResolve();
-}
-
-#-libraryjars libs/core.jar
-#-libraryjars libs/gson-2.2.2.jar
-#-libraryjars libs/libammsdk.jar
-#-libraryjars libs/TencentLocationSDK_v4.5.8_r160216_1427.jar
-#-libraryjars libs/TencentMapSDK_Raster_v1.0.6.jar
+-keep class android.support.** {*;}
 
 # 保持 native 方法不被混淆
 -keepclasseswithmembernames class * {
     native <methods>;
-}
-
-# 保持自定义控件类不被混淆
--keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet);
-}
-
-# 保持自定义控件类不被混淆
--keepclasseswithmembers class * {
-    public <init>(android.content.Context, android.util.AttributeSet, int);
 }
 
 # 保护指定类的成员，如果此类受到保护他们会保护的更好
@@ -88,10 +72,69 @@
     public static ** valueOf(java.lang.String);
 }
 
-# 保持 Parcelable 不被混淆
+# 不优化泛型和反射
+-keepattributes Signature
+# 不优化内部类
+-keepattributes InnerClasses
+
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
 }
+-keep class * implements java.io.Serializable { *; }
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+-keep public class * extends android.view.View{
+    *** get*();
+    void set*(***);
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+# 保持自定义控件类不被混淆
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keep class **.R$* {
+ *;
+}
+-keepclassmembers class * {
+    void *(**On*Event);
+}
+# ----------------------------------------------------------
+
+# -------------------------移除Log---------------------------
+-assumenosideeffects class android.util.Log {
+    public static boolean isLoggable(java.lang.String, int);
+    public static *** d(...);
+    public static *** e(...);
+    public static *** i(...);
+    public static *** v(...);
+    public static *** println(...);
+    public static *** w(...);
+    public static *** wtf(...);
+}
+# ----------------------------------------------------------
+
+# ------------------------ WebView ------------------------
+-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+   public *;
+}
+-keepclassmembers class * extends android.webkit.WebViewClient {
+    public void *(android.webkit.WebView, java.lang.String, android.graphics.Bitmap);
+    public boolean *(android.webkit.WebView, java.lang.String);
+    public void *(android.webkit.WebView, jav.lang.String);
+    public void openFileChooser(...);
+}
+# ----------------------------------------------------------
+
 
 ################### region for xUtils
 -keepattributes Exceptions,InnerClasses,Signature,Deprecated,*Annotation*,Synthetic,EnclosingMethod
@@ -161,7 +204,9 @@
 # Okio
 -dontwarn com.squareup.**
 -dontwarn okio.**
+-dontwarn org.codehaus.*
 -keep public class org.codehaus.* { *; }
+-dontwarn java.nio.*
 -keep public class java.nio.* { *; }
 
 # Retrofit

@@ -17,6 +17,7 @@
     <string name="error_invalid_apk_url">无效的URL</string>
     <string name="error_invalid_apk_file">不是有效的安装包</string>
     <string name="tip_update_complete">下载完成，请安装新版本</string>
+    <string name="error_common">出错了</string>
 
     <string name="cancel">取消</string>
     <string name="share">分享</string>
