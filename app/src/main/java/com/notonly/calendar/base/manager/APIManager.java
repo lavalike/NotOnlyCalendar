@@ -13,6 +13,15 @@ public class APIManager {
     }
 
     /**
+     * 个人站点 http://www.mxnzp.com/
+     *
+     * @return url
+     */
+    public static String getMxnzpUrl() {
+        return "http://www.mxnzp.com/api/";
+    }
+
+    /**
      * 请求词霸每日一句
      *
      * @method get

@@ -90,8 +90,6 @@ public class SPHelper {
             editor.putString(key, writeObjectToString(value));
 
         }
-        editor.commit();
-
         return this;
     }
 
@@ -117,6 +115,12 @@ public class SPHelper {
 
     public Set<String> get(String key, Set<String> defValue) {
         return sharedPreferences.getStringSet(key, defValue);
+    }
+
+    public void commit() {
+        if (editor != null) {
+            editor.commit();
+        }
     }
 
     /**

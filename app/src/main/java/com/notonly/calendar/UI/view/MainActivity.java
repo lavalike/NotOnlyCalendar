@@ -56,18 +56,20 @@ public class MainActivity extends BaseActivity {
     TextView tvSloganCN;
     @BindView(R.id.tv_slogan_en)
     TextView tvSloganEN;
-    @BindView(R.id.tv_day)
-    TextView tvDay;
+    @BindView(R.id.tv_anim_day)
+    TextView tvAnimDay;
     @BindView(R.id.tv_avoid)
     TextView tvAvoid;
     @BindView(R.id.tv_suit)
     TextView tvSuit;
-    @BindView(R.id.tv_weekday)
-    TextView tvWeekday;
-    @BindView(R.id.tv_lunaryear)
-    TextView tvLunaryear;
     @BindView(R.id.view_anim_breathe)
     View viewAnimBreathe;
+    @BindView(R.id.tv_lunar)
+    TextView tvLunar;
+    @BindView(R.id.tv_detail)
+    TextView tvDetail;
+    @BindView(R.id.tv_type_des)
+    TextView tvTypeDes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,17 +87,22 @@ public class MainActivity extends BaseActivity {
     private void init() {
         String sloganCN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_CN, "");
         String sloganEN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_EN, "");
-        String weekday = SPHelper.getInstance().get(SPKey.KEY_WEEKDAY, "");
-        String lunar = SPHelper.getInstance().get(SPKey.KEY_LUNAR, "");
+
         String avoid = SPHelper.getInstance().get(SPKey.KEY_AVOID, "");
         String suit = SPHelper.getInstance().get(SPKey.KEY_SUIT, "");
+        String lunar = SPHelper.getInstance().get(SPKey.KEY_LUNAR, "");
+        String typeDes = SPHelper.getInstance().get(SPKey.KEY_TYPE_DES, "");
+        String calendarDetail = SPHelper.getInstance().get(SPKey.KEY_CALENDAR_DETAIL, "");
+
         tvSloganCN.setText(sloganCN);
         tvSloganEN.setText(sloganEN);
-        tvWeekday.setText(weekday);
-        tvLunaryear.setText(lunar);
+        tvAnimDay.setText(DateUtil.getDay());
+        tvLunar.setText(lunar);
+        tvTypeDes.setText(typeDes);
+        tvDetail.setText(calendarDetail);
         tvAvoid.setText(avoid);
         tvSuit.setText(suit);
-        tvDay.setText(DateUtil.getDay());
+
         //开启呼吸动画
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_breathe);
         animation.setInterpolator(new AccelerateInterpolator());
@@ -140,35 +147,64 @@ public class MainActivity extends BaseActivity {
         addTaskToList(call);
     }
 
+    /**
+     * 获取指定日期的节假日及万年历信息
+     */
     private void findCalendar() {
-        APIService apiService = RetrofitManager.getClient().create(APIService.class);
-        Call<CalendarBean> call = apiService.findCalendar(DateUtil.getDatetime(), APIKey.AppKey_Calendar);
+        APIService apiService = RetrofitManager.getClient(APIManager.getMxnzpUrl()).create(APIService.class);
+        Call<CalendarBean> call = apiService.findCalendar(DateUtil.formatDateTime("yyyyMMdd"));
         call.enqueue(new Callback<CalendarBean>() {
             @Override
             public void onResponse(Call<CalendarBean> call, Response<CalendarBean> response) {
                 if (!response.isSuccessful()) return;
-                final CalendarBean bean = response.body();
-                final CalendarBean.ResultBean result = bean.getResult();
-                if (result == null) {
+                CalendarBean.DataBean data = response.body().getData();
+                if (data == null) {
                     T.get(mContext).toast(getString(R.string.error_connect_timeout_lovely));
                     return;
                 }
-                final CalendarBean.ResultBean.DataBean data = result.getData();
-                BaseApplication.getMainHandler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        String weekday = DateUtil.getYear() + "年" + DateUtil.getMonth() + "月" + DateUtil.getDay() + " " + data.getWeekday();
-                        String lunar = data.getLunarYear() + " " + data.getLunar();
-                        tvWeekday.setText(weekday);
-                        tvLunaryear.setText(lunar);
-                        tvAvoid.setText(data.getAvoid());
-                        tvSuit.setText(data.getSuit());
-                        SPHelper.getInstance().put(SPKey.KEY_WEEKDAY, weekday);
-                        SPHelper.getInstance().put(SPKey.KEY_LUNAR, lunar);
-                        SPHelper.getInstance().put(SPKey.KEY_AVOID, data.getAvoid());
-                        SPHelper.getInstance().put(SPKey.KEY_SUIT, data.getSuit());
-                    }
-                });
+                String weekDayCN = data.getWeekDayCN();
+                String chineseZodiac = data.getChineseZodiac();
+                String yearTips = data.getYearTips();
+                String lunarCalendar = data.getLunarCalendar();
+                String typeDes = DateUtil.formatDateTime("yyyy年MM月dd日") + " " + data.getTypeDes();
+                String solarTerms = data.getSolarTerms();
+                String avoid = data.getAvoid();
+                String suit = data.getSuit();
+                int dayOfYear = data.getDayOfYear();
+                int weekOfYear = data.getWeekOfYear();
+
+                StringBuilder builder = new StringBuilder();
+                builder.append(weekDayCN);
+                builder.append(" ");
+                builder.append(yearTips);
+                builder.append("[");
+                builder.append(chineseZodiac);
+                builder.append("]");
+                builder.append("年");
+                builder.append(" ");
+                builder.append(solarTerms);
+                builder.append("\n");
+                builder.append(DateUtil.getYear());
+                builder.append("年第");
+                builder.append(dayOfYear);
+                builder.append("天、第");
+                builder.append(weekOfYear);
+                builder.append("周");
+                String detail = builder.toString();
+
+                tvLunar.setText(lunarCalendar);
+                tvTypeDes.setText(typeDes);
+                tvDetail.setText(detail);
+                tvAvoid.setText(avoid);
+                tvSuit.setText(suit);
+
+                SPHelper.getInstance()
+                        .put(SPKey.KEY_SUIT, suit)
+                        .put(SPKey.KEY_AVOID, avoid)
+                        .put(SPKey.KEY_LUNAR, lunarCalendar)
+                        .put(SPKey.KEY_TYPE_DES, typeDes)
+                        .put(SPKey.KEY_CALENDAR_DETAIL, detail)
+                        .commit();
             }
 
             @Override

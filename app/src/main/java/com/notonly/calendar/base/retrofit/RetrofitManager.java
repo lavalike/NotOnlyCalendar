@@ -19,15 +19,26 @@ public class RetrofitManager {
     /**
      * 获取Retrofit实例
      *
-     * @return
+     * @return Retrofit
      */
     public static Retrofit getClient() {
+        return getClient(APIManager.getBaseUrl());
+    }
+
+    /**
+     * 获取Retrofit实例
+     *
+     * @param url baseUrl
+     * @return Retrofit
+     */
+    public static Retrofit getClient(String url) {
         return new Retrofit.Builder()
-                .baseUrl(APIManager.getBaseUrl())
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(getOkHttpClient())
                 .build();
     }
+
 
     /**
      * 获取带进度回调的Retrofit实例

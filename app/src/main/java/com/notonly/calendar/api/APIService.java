@@ -7,6 +7,7 @@ import com.notonly.calendar.domain.SloganBean;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
 
@@ -39,18 +40,17 @@ public interface APIService {
     /**
      * 万年历
      *
-     * @param date
-     * @param key
-     * @return
+     * @param date date
+     * @return data
      */
-    @GET("calendar/day")
-    Call<CalendarBean> findCalendar(@Query("date") String date, @Query("key") String key);
+    @GET("holiday/single/{date}")
+    Call<CalendarBean> findCalendar(@Path("date") String date);
 
     /**
      * 金山词霸每日一句
      *
-     * @param url
-     * @return
+     * @param url url
+     * @return data
      */
     @GET
     Call<SloganBean> findSlogan(@Url String url);

@@ -1,6 +1,9 @@
 package com.notonly.calendar.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * 日期工具类
@@ -23,9 +26,20 @@ public class DateUtil {
     }
 
     /**
+     * 获取指定格式的日期字符串
+     *
+     * @param format 格式
+     * @return 日期
+     */
+    public static String formatDateTime(String format) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.CHINA);
+        return simpleDateFormat.format(new Date());
+    }
+
+    /**
      * 获取年份
      *
-     * @return
+     * @return year
      */
     public static String getYear() {
         return String.valueOf(mCalendar.get(Calendar.YEAR));
@@ -34,7 +48,7 @@ public class DateUtil {
     /**
      * 获取月份
      *
-     * @return
+     * @return month
      */
     public static String getMonth() {
         return String.valueOf(mCalendar.get(Calendar.MONTH) + 1);
@@ -43,9 +57,9 @@ public class DateUtil {
     /**
      * 获取当月第几天
      *
-     * @return
+     * @return day
      */
     public static String getDay() {
-        return String.valueOf(mCalendar.get(Calendar.DAY_OF_MONTH));
+        return formatDateTime("dd");
     }
 }

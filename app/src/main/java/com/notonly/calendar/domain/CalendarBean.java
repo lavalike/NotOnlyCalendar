@@ -1,147 +1,187 @@
 package com.notonly.calendar.domain;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
-
 /**
  * Created by wangzhen on 16/1/12.
  */
 public class CalendarBean {
 
     /**
-     * reason : Success
-     * result : {"data":{"avoid":"开市.嫁娶.移徙.入宅.掘井.安葬.","animalsYear":"鸡","weekday":"星期一","suit":"沐浴.斋醮.解除.求医.治病.会亲友.造畜椆栖.栽种.理发.扫舍.","lunarYear":"丁酉年","lunar":"三月廿八","year-month":"2017-4","date":"2017-4-24"}}
-     * error_code : 0
+     * code : 1
+     * msg : 数据返回成功
+     * data : {"date":"2019-03-07","weekDay":4,"yearTips":"己亥","type":0,"typeDes":"工作日","chineseZodiac":"猪","solarTerms":"惊蛰后","avoid":"嫁娶.动土.掘井.起基.定磉.破土","lunarCalendar":"二月初一","suit":"祭祀.会亲友.出行.立券.交易.冠笄.纳财","dayOfYear":66,"weekOfYear":10}
      */
 
-    private String reason;
-    private ResultBean result;
-    private int error_code;
+    private int code;
+    private String msg;
+    private DataBean data;
 
-    public String getReason() {
-        return reason;
+    public int getCode() {
+        return code;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public ResultBean getResult() {
-        return result;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setResult(ResultBean result) {
-        this.result = result;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public int getError_code() {
-        return error_code;
+    public DataBean getData() {
+        return data;
     }
 
-    public void setError_code(int error_code) {
-        this.error_code = error_code;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
-    public static class ResultBean implements Serializable {
+    public static class DataBean {
         /**
-         * data : {"avoid":"开市.嫁娶.移徙.入宅.掘井.安葬.","animalsYear":"鸡","weekday":"星期一","suit":"沐浴.斋醮.解除.求医.治病.会亲友.造畜椆栖.栽种.理发.扫舍.","lunarYear":"丁酉年","lunar":"三月廿八","year-month":"2017-4","date":"2017-4-24"}
+         * date : 2019-03-07
+         * weekDay : 4
+         * yearTips : 己亥
+         * type : 0
+         * typeDes : 工作日
+         * chineseZodiac : 猪
+         * solarTerms : 惊蛰后
+         * avoid : 嫁娶.动土.掘井.起基.定磉.破土
+         * lunarCalendar : 二月初一
+         * suit : 祭祀.会亲友.出行.立券.交易.冠笄.纳财
+         * dayOfYear : 66
+         * weekOfYear : 10
          */
 
-        private DataBean data;
+        private String date;
+        private int weekDay;
+        private String yearTips;
+        private int type;
+        private String typeDes;
+        private String chineseZodiac;
+        private String solarTerms;
+        private String avoid;
+        private String lunarCalendar;
+        private String suit;
+        private int dayOfYear;
+        private int weekOfYear;
 
-        public DataBean getData() {
-            return data;
+        public String getDate() {
+            return date;
         }
 
-        public void setData(DataBean data) {
-            this.data = data;
+        public void setDate(String date) {
+            this.date = date;
         }
 
-        public static class DataBean {
-            /**
-             * avoid : 开市.嫁娶.移徙.入宅.掘井.安葬.
-             * animalsYear : 鸡
-             * weekday : 星期一
-             * suit : 沐浴.斋醮.解除.求医.治病.会亲友.造畜椆栖.栽种.理发.扫舍.
-             * lunarYear : 丁酉年
-             * lunar : 三月廿八
-             * year-month : 2017-4
-             * date : 2017-4-24
-             */
+        public int getWeekDay() {
+            return weekDay;
+        }
 
-            private String avoid;
-            private String animalsYear;
-            private String weekday;
-            private String suit;
-            private String lunarYear;
-            private String lunar;
-            @SerializedName("year-month")
-            private String yearmonth;
-            private String date;
+        public void setWeekDay(int weekDay) {
+            this.weekDay = weekDay;
+        }
 
-            public String getAvoid() {
-                return avoid;
-            }
+        public String getYearTips() {
+            return yearTips;
+        }
 
-            public void setAvoid(String avoid) {
-                this.avoid = avoid;
-            }
+        public void setYearTips(String yearTips) {
+            this.yearTips = yearTips;
+        }
 
-            public String getAnimalsYear() {
-                return animalsYear;
-            }
+        public int getType() {
+            return type;
+        }
 
-            public void setAnimalsYear(String animalsYear) {
-                this.animalsYear = animalsYear;
-            }
+        public void setType(int type) {
+            this.type = type;
+        }
 
-            public String getWeekday() {
-                return weekday;
-            }
+        public String getTypeDes() {
+            return typeDes;
+        }
 
-            public void setWeekday(String weekday) {
-                this.weekday = weekday;
-            }
+        public void setTypeDes(String typeDes) {
+            this.typeDes = typeDes;
+        }
 
-            public String getSuit() {
-                return suit;
-            }
+        public String getChineseZodiac() {
+            return chineseZodiac;
+        }
 
-            public void setSuit(String suit) {
-                this.suit = suit;
-            }
+        public void setChineseZodiac(String chineseZodiac) {
+            this.chineseZodiac = chineseZodiac;
+        }
 
-            public String getLunarYear() {
-                return lunarYear;
-            }
+        public String getSolarTerms() {
+            return solarTerms;
+        }
 
-            public void setLunarYear(String lunarYear) {
-                this.lunarYear = lunarYear;
-            }
+        public void setSolarTerms(String solarTerms) {
+            this.solarTerms = solarTerms;
+        }
 
-            public String getLunar() {
-                return lunar;
-            }
+        public String getAvoid() {
+            return avoid;
+        }
 
-            public void setLunar(String lunar) {
-                this.lunar = lunar;
-            }
+        public void setAvoid(String avoid) {
+            this.avoid = avoid;
+        }
 
-            public String getYearmonth() {
-                return yearmonth;
-            }
+        public String getLunarCalendar() {
+            return lunarCalendar;
+        }
 
-            public void setYearmonth(String yearmonth) {
-                this.yearmonth = yearmonth;
-            }
+        public void setLunarCalendar(String lunarCalendar) {
+            this.lunarCalendar = lunarCalendar;
+        }
 
-            public String getDate() {
-                return date;
-            }
+        public String getSuit() {
+            return suit;
+        }
 
-            public void setDate(String date) {
-                this.date = date;
+        public void setSuit(String suit) {
+            this.suit = suit;
+        }
+
+        public int getDayOfYear() {
+            return dayOfYear;
+        }
+
+        public void setDayOfYear(int dayOfYear) {
+            this.dayOfYear = dayOfYear;
+        }
+
+        public int getWeekOfYear() {
+            return weekOfYear;
+        }
+
+        public void setWeekOfYear(int weekOfYear) {
+            this.weekOfYear = weekOfYear;
+        }
+
+        public String getWeekDayCN() {
+            switch (weekDay) {
+                case 1:
+                    return "星期一";
+                case 2:
+                    return "星期二";
+                case 3:
+                    return "星期三";
+                case 4:
+                    return "星期四";
+                case 5:
+                    return "星期五";
+                case 6:
+                    return "星期六";
+                case 7:
+                    return "星期日";
+                default:
+                    return "";
             }
         }
     }
