@@ -156,7 +156,7 @@ public class MainActivity extends BaseActivity {
         call.enqueue(new Callback<CalendarBean>() {
             @Override
             public void onResponse(Call<CalendarBean> call, Response<CalendarBean> response) {
-                if (!response.isSuccessful()) return;
+                if (!response.isSuccessful()){ return;}
                 CalendarBean.DataBean data = response.body().getData();
                 if (data == null) {
                     T.get(mContext).toast(getString(R.string.error_connect_timeout_lovely));
@@ -174,7 +174,7 @@ public class MainActivity extends BaseActivity {
                 int weekOfYear = data.getWeekOfYear();
 
                 StringBuilder builder = new StringBuilder();
-                builder.append(weekDayCN);
+                StringBuilder append = builder.append(weekDayCN);
                 builder.append(" ");
                 builder.append(yearTips);
                 builder.append("[");
