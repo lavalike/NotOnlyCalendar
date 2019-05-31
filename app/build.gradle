@@ -2,12 +2,11 @@ apply plugin: 'com.android.application'
 apply from: 'version.gradle'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.3'
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.notonly.calendar"
         minSdkVersion 19
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode appVersionCode
         versionName appVersionName
         multiDexEnabled true

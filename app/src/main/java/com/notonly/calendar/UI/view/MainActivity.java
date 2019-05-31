@@ -119,24 +119,26 @@ public class MainActivity extends BaseActivity {
         call.enqueue(new Callback<SloganBean>() {
             @Override
             public void onResponse(Call<SloganBean> call, final Response<SloganBean> response) {
-                SloganBean body = response.body();
-                String en = body.getContent();
-                String cn = body.getNote();
-                en = en.substring(0, en.lastIndexOf(".") + 1);
-                cn = cn.substring(0, cn.lastIndexOf("。") + 1);
-                final String finalEn = en;
-                final String finalCn = cn;
-                BaseApplication.getMainHandler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!TextUtils.isEmpty(finalEn) && !TextUtils.isEmpty(finalCn)) {
-                            tvSloganEN.setText(finalEn);
-                            tvSloganCN.setText(finalCn);
-                            SPHelper.getInstance().put(SPKey.KEY_SLOGAN_EN, finalEn);
-                            SPHelper.getInstance().put(SPKey.KEY_SLOGAN_CN, finalCn);
+                if (response.code() == 200) {
+                    SloganBean body = response.body();
+                    String en = body.getContent();
+                    String cn = body.getNote();
+                    en = en.substring(0, en.lastIndexOf(".") + 1);
+                    cn = cn.substring(0, cn.lastIndexOf("。") + 1);
+                    final String finalEn = en;
+                    final String finalCn = cn;
+                    BaseApplication.getMainHandler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (!TextUtils.isEmpty(finalEn) && !TextUtils.isEmpty(finalCn)) {
+                                tvSloganEN.setText(finalEn);
+                                tvSloganCN.setText(finalCn);
+                                SPHelper.getInstance().put(SPKey.KEY_SLOGAN_EN, finalEn);
+                                SPHelper.getInstance().put(SPKey.KEY_SLOGAN_CN, finalCn);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
 
             @Override
@@ -156,7 +158,7 @@ public class MainActivity extends BaseActivity {
         call.enqueue(new Callback<CalendarBean>() {
             @Override
             public void onResponse(Call<CalendarBean> call, Response<CalendarBean> response) {
-                if (!response.isSuccessful()) return;
+                if (200 != response.code()) return;
                 CalendarBean.DataBean data = response.body().getData();
                 if (data == null) {
                     T.get(mContext).toast(getString(R.string.error_connect_timeout_lovely));
