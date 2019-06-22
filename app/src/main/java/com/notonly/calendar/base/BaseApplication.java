@@ -18,6 +18,7 @@ import com.umeng.commonsdk.UMConfigure;
 public class BaseApplication extends MultiDexApplication {
     private static BaseApplication mContext;
     private static Handler mainHandler = new Handler();
+    private String channel = "only";
 
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -41,7 +42,7 @@ public class BaseApplication extends MultiDexApplication {
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
         strategy.setUploadProcess(processName == null || processName.equals(getPackageName()));
         strategy.setDeviceID(AppUtils.getUniquePsuedoID());
-        strategy.setAppChannel("only");
+        strategy.setAppChannel(channel);
         CrashReport.initCrashReport(this, "38f2ae3fad", BuildConfig.DEBUG, strategy);
     }
 
@@ -69,7 +70,7 @@ public class BaseApplication extends MultiDexApplication {
          */
         UMConfigure.init(this,
                 "5b83ad44b27b0a5719000017",
-                "only",
+                channel,
                 UMConfigure.DEVICE_TYPE_PHONE,
                 null);
 

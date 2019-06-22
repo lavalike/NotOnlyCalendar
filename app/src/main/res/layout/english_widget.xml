@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_widget"
+    android:padding="10dp">
+
+    <ViewFlipper
+        android:id="@+id/flipper"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_toStartOf="@+id/iv"
+        android:autoStart="true"
+        android:flipInterval="4000"
+        android:inAnimation="@anim/slide_bottom_in"
+        android:outAnimation="@anim/slide_top_out">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_english"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="#3b424c"
+                android:textSize="15sp"
+                tools:text="If you want to live your whole life free from pain, you must become either a god or else a corpse. Consider other men's troubles and that will comfort yours." />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tv_chinese"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textColor="#3b424c"
+                android:textSize="15sp"
+                tools:text="如果你想一生摆脱苦难，你就得是神或者是死尸。想想他人的不幸，你就能坦然面对人生。" />
+
+        </FrameLayout>
+    </ViewFlipper>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv"
+        android:lineSpacingMultiplier="1.21"
+        android:text="@string/english_daily"
+        android:textColor="#2196F3"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="113dp"
+        android:layout_height="75dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_header" />
+
+</RelativeLayout>
