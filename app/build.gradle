@@ -56,7 +56,6 @@ dependencies {
     implementation 'com.android.support:support-v4:' + SUPPORT_VERSION
     implementation 'com.android.support:percent:' + SUPPORT_VERSION
     implementation 'com.android.support:multidex:1.0.3'
-    implementation files('libs/BmobSDK_V3.4.4_0930.jar')
     implementation files('libs/libammsdk.jar')
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

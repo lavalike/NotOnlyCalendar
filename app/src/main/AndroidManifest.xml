@@ -52,7 +52,7 @@
         <activity android:name=".user_interface.view.HistoryDetailActivity" />
 
         <!--桌面插件-->
-        <receiver android:name=".user_interface.widget.widget.EnglishWidget">
+        <receiver android:name=".user_interface.widget.widget.EnglishEverydayWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

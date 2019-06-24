@@ -1,11 +1,7 @@
 package com.notonly.calendar.user_interface.view;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -22,26 +18,17 @@ import com.notonly.calendar.base.helper.ErrHelper;
 import com.notonly.calendar.base.helper.SPHelper;
 import com.notonly.calendar.base.helper.SPKey;
 import com.notonly.calendar.base.manager.APIManager;
-import com.notonly.calendar.base.manager.PermissionManager;
 import com.notonly.calendar.base.manager.UpdateManager;
 import com.notonly.calendar.base.retrofit.RetrofitManager;
 import com.notonly.calendar.domain.CalendarBean;
-import com.notonly.calendar.domain.Device;
 import com.notonly.calendar.domain.SloganBean;
-import com.notonly.calendar.util.AppUtils;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.T;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UpdateListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,7 +64,6 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         Bmob.initialize(mContext, APIKey.AppKey_bmob);
-        collectDeviceData();
         init();
         findSlogan();
         findCalendar();
@@ -121,20 +107,16 @@ public class MainActivity extends BaseActivity {
             public void onResponse(Call<SloganBean> call, final Response<SloganBean> response) {
                 if (response.code() == 200) {
                     SloganBean body = response.body();
-                    String en = body.getContent();
-                    String cn = body.getNote();
-                    en = en.substring(0, en.lastIndexOf(".") + 1);
-                    cn = cn.substring(0, cn.lastIndexOf("。") + 1);
-                    final String finalEn = en;
-                    final String finalCn = cn;
+                    final String english = body.getContent();
+                    final String chinese = body.getNote();
                     BaseApplication.getMainHandler().post(new Runnable() {
                         @Override
                         public void run() {
-                            if (!TextUtils.isEmpty(finalEn) && !TextUtils.isEmpty(finalCn)) {
-                                tvSloganEN.setText(finalEn);
-                                tvSloganCN.setText(finalCn);
-                                SPHelper.getInstance().put(SPKey.KEY_SLOGAN_EN, finalEn);
-                                SPHelper.getInstance().put(SPKey.KEY_SLOGAN_CN, finalCn);
+                            if (!TextUtils.isEmpty(english) && !TextUtils.isEmpty(chinese)) {
+                                tvSloganEN.setText(english);
+                                tvSloganCN.setText(chinese);
+                                SPHelper.getInstance().put(SPKey.KEY_SLOGAN_EN, english);
+                                SPHelper.getInstance().put(SPKey.KEY_SLOGAN_CN, chinese);
                             }
                         }
                     });
@@ -220,73 +202,6 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean showToolbar() {
         return false;
-    }
-
-    /**
-     * 收集设备信息
-     */
-    private void collectDeviceData() {
-        PermissionManager.requestPermission(this, Manifest.permission.READ_PHONE_STATE, new PermissionManager.OnPermissionCallback() {
-            @Override
-            public void onGranted() {
-                TelephonyManager manager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
-                final String deviceID = manager.getDeviceId();//设备ID
-                final String mobileNumber = manager.getLine1Number();//手机号
-                final String appVersion = AppUtils.getVersionName(mContext);
-                final String sysVersion = Build.VERSION.RELEASE;
-                final String brand = Build.BRAND;
-                final String model = Build.MODEL;
-
-                BmobQuery<Device> query = new BmobQuery<>();
-                query.addWhereEqualTo("DeviceID", deviceID);
-                query.findObjects(mContext, new FindListener<Device>() {
-                    @Override
-                    public void onSuccess(List<Device> list) {
-                        //提交手机信息
-                        Device bean = new Device();
-                        bean.setAppVersion(appVersion);
-                        bean.setBrand(brand);
-                        bean.setDeviceID(deviceID);
-                        bean.setModel(model);
-                        bean.setSysVersion(sysVersion);
-                        bean.setMobileNumber(mobileNumber);
-                        if (list.size() == 0) {
-                            bean.save(mContext, new SaveListener() {
-                                @Override
-                                public void onSuccess() {
-                                }
-
-                                @Override
-                                public void onFailure(int i, String s) {
-
-                                }
-                            });
-                        } else {
-                            bean.update(mContext, list.get(0).getObjectId(), new UpdateListener() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onFailure(int i, String s) {
-
-                                }
-                            });
-                        }
-                    }
-
-                    @Override
-                    public void onError(int i, String s) {
-                    }
-                });
-            }
-
-            @Override
-            public void onDenied() {
-                PermissionManager.managePermissionByHand(mContext);
-            }
-        });
     }
 
     @OnClick({R.id.menu_calendar, R.id.menu_setting})

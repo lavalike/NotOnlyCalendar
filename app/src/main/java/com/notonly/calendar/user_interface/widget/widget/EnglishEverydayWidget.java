@@ -1,5 +1,6 @@
 package com.notonly.calendar.user_interface.widget.widget;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -12,13 +13,13 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import com.notonly.calendar.R;
 import com.notonly.calendar.api.APIService;
 import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.base.retrofit.RetrofitManager;
 import com.notonly.calendar.domain.SloganBean;
+import com.notonly.calendar.user_interface.view.MainActivity;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -31,10 +32,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * EnglishWidget 每日英语插件
+ * EnglishEverydayWidget 每日英语插件
  * Created by wangzhen on 2019-06-22.
  */
-public class EnglishWidget extends AppWidgetProvider {
+public class EnglishEverydayWidget extends AppWidgetProvider {
 
     private Context mContext;
     private static final int MSG_UPDATE = 0;
@@ -51,7 +52,7 @@ public class EnglishWidget extends AppWidgetProvider {
                     if (mContext != null) {
                         RemoteViews remoteViews = getRemoteViews(mContext);
                         AppWidgetManager manager = AppWidgetManager.getInstance(mContext);
-                        ComponentName componentName = new ComponentName(mContext, EnglishWidget.class);
+                        ComponentName componentName = new ComponentName(mContext, EnglishEverydayWidget.class);
                         manager.updateAppWidget(componentName, remoteViews);
                     }
                     break;
@@ -72,6 +73,7 @@ public class EnglishWidget extends AppWidgetProvider {
             views.setImageViewResource(R.id.iv, R.mipmap.ic_header);
         else
             views.setImageViewBitmap(R.id.iv, bitmap);
+        views.setOnClickPendingIntent(R.id.root, PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT));
         return views;
     }
 
@@ -81,7 +83,6 @@ public class EnglishWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
-        Toast.makeText(context, "插件更新了", Toast.LENGTH_SHORT).show();
         request();
     }
 

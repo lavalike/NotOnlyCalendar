@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_widget"
@@ -12,7 +13,7 @@
         android:layout_height="55dp"
         android:layout_toStartOf="@+id/iv"
         android:autoStart="true"
-        android:flipInterval="4000"
+        android:flipInterval="11000"
         android:inAnimation="@anim/slide_bottom_in"
         android:outAnimation="@anim/slide_top_out">
 
@@ -27,9 +28,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:ellipsize="end"
+                android:lineSpacingMultiplier="1.1"
                 android:maxLines="3"
                 android:textColor="#3b424c"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 tools:text="If you want to live your whole life free from pain, you must become either a god or else a corpse. Consider other men's troubles and that will comfort yours." />
 
         </FrameLayout>
@@ -45,9 +47,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:ellipsize="end"
+                android:lineSpacingMultiplier="1.1"
                 android:maxLines="3"
                 android:textColor="#3b424c"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 tools:text="如果你想一生摆脱苦难，你就得是神或者是死尸。想想他人的不幸，你就能坦然面对人生。" />
 
         </FrameLayout>
