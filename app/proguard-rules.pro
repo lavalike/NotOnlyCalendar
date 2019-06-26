@@ -188,10 +188,6 @@
 -keep class com.tencent.**{*;}
 -dontwarn com.tencent.**
 
-#Bmob
--keep class cn.bmob.**{*;}
--dontwarn cn.bmob.**
-
 # 蒲公英混淆
 -dontwarn com.pgyersdk.**
 -keep class com.pgyersdk.** { *; }
