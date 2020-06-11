@@ -1,6 +1,7 @@
 package com.notonly.calendar.base.retrofit;
 
 import com.notonly.calendar.base.manager.APIManager;
+import com.notonly.calendar.base.retrofit.interceptor.RequestInterceptor;
 import com.notonly.calendar.base.retrofit.progress.ProgressInterceptor;
 import com.notonly.calendar.base.retrofit.progress.ProgressListener;
 
@@ -69,6 +70,7 @@ public class RetrofitManager {
         builder.connectTimeout(1000 * 5, TimeUnit.MILLISECONDS);
         builder.readTimeout(1000 * 5, TimeUnit.MILLISECONDS);
         builder.writeTimeout(1000 * 5, TimeUnit.MILLISECONDS);
+        builder.addInterceptor(new RequestInterceptor());
         return builder.build();
     }
 }

@@ -57,10 +57,10 @@ dependencies {
     implementation 'com.android.support:percent:' + SUPPORT_VERSION
     implementation 'com.android.support:multidex:1.0.3'
     implementation files('libs/libammsdk.jar')
+    implementation files('libs/pgyer_sdk_3.0.10.jar')
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
-    implementation 'com.pgyersdk:sdk:3.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.1.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
