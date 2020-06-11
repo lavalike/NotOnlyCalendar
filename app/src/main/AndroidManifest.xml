@@ -21,7 +21,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <meta-data
             android:name="PGYER_APPID"
-            android:value="a28cce8ed87264a2fc6c6c8e1dd7d0e7" />
+            android:value="0ba0aad8f0e73e6c15d1049d833e5f52" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
