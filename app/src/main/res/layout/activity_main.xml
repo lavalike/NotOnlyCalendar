@@ -27,8 +27,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:padding="5dp"
-                android:src="@mipmap/ic_calendar"
-                android:visibility="gone" />
+                android:src="@mipmap/ic_calendar" />
 
             <ImageView
                 android:id="@+id/menu_setting"
