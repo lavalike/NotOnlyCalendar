@@ -132,7 +132,7 @@ public class MainActivity extends BaseActivity {
      * 获取指定日期的节假日及万年历信息
      */
     private void findCalendar() {
-        APIService apiService = RetrofitManager.getClient(APIManager.getMxnzpUrl()).create(APIService.class);
+        APIService apiService = RetrofitManager.getClient().create(APIService.class);
         Call<CalendarBean> call = apiService.findCalendar(DateUtil.formatDateTime("yyyyMMdd"));
         call.enqueue(new Callback<CalendarBean>() {
             @Override

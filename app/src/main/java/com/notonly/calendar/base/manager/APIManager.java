@@ -6,21 +6,10 @@ package com.notonly.calendar.base.manager;
  */
 public class APIManager {
 
-    private static final String BASE_URL = "http://v.juhe.cn/";
-
     public static final String APP_ID = "moehknojlpi9llvn";
     public static final String APP_SECRET = "aVBrU2pBSTJFY3c3aUZVMjZMbW1Wdz09";
 
     public static String getBaseUrl() {
-        return BASE_URL;
-    }
-
-    /**
-     * 个人站点 http://www.mxnzp.com/
-     *
-     * @return url
-     */
-    public static String getMxnzpUrl() {
         return "http://www.mxnzp.com/api/";
     }
 

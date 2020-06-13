@@ -16,7 +16,7 @@ public class RequestInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        if (APIManager.getMxnzpUrl().contains(request.url().host())) {
+        if (APIManager.getBaseUrl().contains(request.url().host())) {
             request = request.newBuilder()
                     .addHeader("app_id", APIManager.APP_ID)
                     .addHeader("app_secret", APIManager.APP_SECRET)

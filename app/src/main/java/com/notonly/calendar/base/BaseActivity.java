@@ -3,7 +3,8 @@ package com.notonly.calendar.base;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.notonly.calendar.base.manager.AppManager;
 import com.notonly.calendar.base.manager.PermissionManager;

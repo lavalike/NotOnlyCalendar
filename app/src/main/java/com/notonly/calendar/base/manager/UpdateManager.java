@@ -2,8 +2,9 @@ package com.notonly.calendar.base.manager;
 
 import android.Manifest;
 import android.content.DialogInterface;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
