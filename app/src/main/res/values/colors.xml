@@ -16,8 +16,11 @@
     <color name="colorGrey">#C0C0C0</color>
     <color name="colorRed">#FF0000</color>
     <color name="colorEDEDE">#EDEDED</color>
+    <color name="black">#000000</color>
 
     <color name="colorTextColor">#3b424c</color>
     <color name="colorTextColorLight">#a0a4a9</color>
     <color name="colorListDivider">#dddddd</color>
+
+    <color name="a">#EDEDED</color>
 </resources>

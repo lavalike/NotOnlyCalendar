@@ -1,50 +1,27 @@
 package com.notonly.calendar.user_interface.adapter;
 
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.notonly.calendar.R;
-import com.notonly.calendar.base.BaseRecyclerAdapter;
-import com.notonly.calendar.domain.HistoryBean;
+import com.dimeno.adapter.RecyclerAdapter;
+import com.notonly.calendar.domain.HistoryResponse;
+import com.notonly.calendar.user_interface.holder.HistoryViewHolder;
 
 import java.util.List;
 
 /**
- * 历史上的今天列表
- * Created by wangzhen on 16/1/13.
+ * HistoryAdapter
+ * Created by wangzhen on 2020/6/13.
  */
-public class HistoryAdapter extends BaseRecyclerAdapter<HistoryBean.ResultBean, HistoryAdapter.HistoryViewHolder> {
+public class HistoryAdapter extends RecyclerAdapter<HistoryResponse.DataBean> {
 
-    public HistoryAdapter(List<HistoryBean.ResultBean> data) {
-        super(data);
+    public HistoryAdapter(List<HistoryResponse.DataBean> list) {
+        super(list);
     }
 
     @Override
-    public HistoryViewHolder onMyCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_history_layout, parent, false);
-        return new HistoryViewHolder(view);
-    }
-
-    @Override
-    public void onMyBindViewHolder(HistoryViewHolder holder, int position) {
-        HistoryBean.ResultBean bean = mDatas.get(position);
-        holder.tv_date.setText(bean.getDate());
-        holder.tv_title.setText(bean.getTitle());
-    }
-
-    public class HistoryViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_date;
-        public TextView tv_title;
-
-
-        public HistoryViewHolder(View itemView) {
-            super(itemView);
-            tv_date = (TextView) itemView.findViewById(R.id.tv_date);
-            tv_title = (TextView) itemView.findViewById(R.id.tv_title);
-        }
+    public RecyclerView.ViewHolder onAbsCreateViewHolder(ViewGroup parent, int viewType) {
+        return new HistoryViewHolder(parent);
     }
 }

@@ -180,7 +180,7 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.menu_calendar:
-                startActivity(new Intent(mContext, HistoryListActivity.class));
+                startActivity(new Intent(mContext, HistoryActivity.class));
                 break;
             case R.id.menu_setting:
                 startActivity(new Intent(mContext, AboutActivity.class));

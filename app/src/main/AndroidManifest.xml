@@ -45,12 +45,11 @@
         </activity>
         <activity android:name=".user_interface.view.SplashActivity" />
         <activity android:name=".user_interface.view.AboutActivity" />
-        <activity android:name=".user_interface.view.HistoryListActivity" />
+        <activity android:name=".user_interface.view.HistoryActivity" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/app_name" />
-        <activity android:name=".user_interface.view.HistoryDetailActivity" />
 
         <!--桌面插件-->
         <receiver android:name=".user_interface.widget.widget.EnglishEverydayWidget">

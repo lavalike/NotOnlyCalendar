@@ -6,7 +6,7 @@
     android:background="@color/colorWhite">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_hitorylist"
+        android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
