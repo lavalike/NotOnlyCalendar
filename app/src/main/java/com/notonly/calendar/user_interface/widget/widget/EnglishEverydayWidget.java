@@ -15,11 +15,10 @@ import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 
+import com.dimeno.network.callback.LoadingCallback;
 import com.notonly.calendar.R;
-import com.notonly.calendar.api.APIService;
-import com.notonly.calendar.base.manager.APIManager;
-import com.notonly.calendar.base.retrofit.RetrofitManager;
 import com.notonly.calendar.domain.SloganBean;
+import com.notonly.calendar.network.task.SloganTask;
 import com.notonly.calendar.user_interface.view.MainActivity;
 
 import java.io.BufferedInputStream;
@@ -27,10 +26,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.Executors;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * EnglishEverydayWidget 每日英语插件
@@ -91,31 +86,21 @@ public class EnglishEverydayWidget extends AppWidgetProvider {
      * 请求每日一句
      */
     private void request() {
-        APIService apiService = RetrofitManager.getClient().create(APIService.class);
-        Call<SloganBean> call = apiService.findSlogan(APIManager.URL_SLOGAN);
-        call.enqueue(new Callback<SloganBean>() {
+        new SloganTask(new LoadingCallback<SloganBean>() {
             @Override
-            public void onResponse(Call<SloganBean> call, Response<SloganBean> response) {
-                if (response.isSuccessful()) {
-                    SloganBean data = response.body();
-                    english = data.getContent();
-                    chinese = data.getNote();
-                    picture = data.getPicture();
-                    createBitmap(picture, new BitmapCallback() {
-                        @Override
-                        public void onFinish(Bitmap data) {
-                            bitmap = data;
-                            mHandler.sendEmptyMessage(MSG_UPDATE);
-                        }
-                    });
-                }
+            public void onSuccess(SloganBean data) {
+                english = data.getContent();
+                chinese = data.getNote();
+                picture = data.getPicture();
+                createBitmap(picture, new BitmapCallback() {
+                    @Override
+                    public void onFinish(Bitmap data) {
+                        bitmap = data;
+                        mHandler.sendEmptyMessage(MSG_UPDATE);
+                    }
+                });
             }
-
-            @Override
-            public void onFailure(Call<SloganBean> call, Throwable t) {
-
-            }
-        });
+        }).setTag(mContext).exe();
     }
 
     /**

@@ -9,27 +9,22 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import com.dimeno.network.callback.LoadingCallback;
 import com.notonly.calendar.R;
-import com.notonly.calendar.api.APIService;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.base.BaseApplication;
-import com.notonly.calendar.base.helper.ErrHelper;
 import com.notonly.calendar.base.helper.SPHelper;
 import com.notonly.calendar.base.helper.SPKey;
-import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.base.manager.UpdateManager;
-import com.notonly.calendar.base.retrofit.RetrofitManager;
 import com.notonly.calendar.domain.CalendarBean;
 import com.notonly.calendar.domain.SloganBean;
+import com.notonly.calendar.network.task.CalendarTask;
+import com.notonly.calendar.network.task.SloganTask;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.T;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 主页面
@@ -97,48 +92,29 @@ public class MainActivity extends BaseActivity {
      * 加载标语
      */
     private void findSlogan() {
-        APIService apiService = RetrofitManager.getClient().create(APIService.class);
-        Call<SloganBean> call = apiService.findSlogan(APIManager.URL_SLOGAN);
-        call.enqueue(new Callback<SloganBean>() {
+        new SloganTask(new LoadingCallback<SloganBean>() {
             @Override
-            public void onResponse(Call<SloganBean> call, final Response<SloganBean> response) {
-                if (response.code() == 200) {
-                    SloganBean body = response.body();
-                    final String english = body.getContent();
-                    final String chinese = body.getNote();
-                    BaseApplication.getMainHandler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (!TextUtils.isEmpty(english) && !TextUtils.isEmpty(chinese)) {
-                                tvSloganEN.setText(english);
-                                tvSloganCN.setText(chinese);
-                                SPHelper.getInstance().put(SPKey.KEY_SLOGAN_EN, english);
-                                SPHelper.getInstance().put(SPKey.KEY_SLOGAN_CN, chinese);
-                            }
-                        }
-                    });
+            public void onSuccess(SloganBean data) {
+                final String english = data.getContent();
+                final String chinese = data.getNote();
+                if (!TextUtils.isEmpty(english) && !TextUtils.isEmpty(chinese)) {
+                    tvSloganEN.setText(english);
+                    tvSloganCN.setText(chinese);
+                    SPHelper.getInstance().put(SPKey.KEY_SLOGAN_EN, english);
+                    SPHelper.getInstance().put(SPKey.KEY_SLOGAN_CN, chinese);
                 }
             }
-
-            @Override
-            public void onFailure(Call<SloganBean> call, Throwable t) {
-                ErrHelper.check(t);
-            }
-        });
-        addTaskToList(call);
+        }).setTag(this).exe();
     }
 
     /**
      * 获取指定日期的节假日及万年历信息
      */
     private void findCalendar() {
-        APIService apiService = RetrofitManager.getClient().create(APIService.class);
-        Call<CalendarBean> call = apiService.findCalendar(DateUtil.formatDateTime("yyyyMMdd"));
-        call.enqueue(new Callback<CalendarBean>() {
+        new CalendarTask(new LoadingCallback<CalendarBean>() {
             @Override
-            public void onResponse(Call<CalendarBean> call, Response<CalendarBean> response) {
-                if (200 != response.code()) return;
-                CalendarBean.DataBean data = response.body().getData();
+            public void onSuccess(CalendarBean bean) {
+                CalendarBean.DataBean data = bean.getData();
                 if (data == null) {
                     T.get(mContext).toast(getString(R.string.error_connect_timeout_lovely));
                     return;
@@ -189,11 +165,10 @@ public class MainActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<CalendarBean> call, Throwable t) {
-                ErrHelper.check(t);
+            public void onError(int code, String message) {
+                T.get(mContext).toast(message);
             }
-        });
-        addTaskToList(call);
+        }).setDate(DateUtil.formatDateTime("yyyyMMdd")).setTag(this).exe();
     }
 
     @Override

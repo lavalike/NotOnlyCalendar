@@ -6,6 +6,10 @@ import android.os.Handler;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
+import com.dimeno.network.Network;
+import com.dimeno.network.config.NetConfig;
+import com.notonly.calendar.base.manager.APIManager;
+import com.notonly.calendar.network.RequestInterceptor;
 import com.notonly.calendar.util.AppUtils;
 import com.notonly.calendar.util.UIUtils;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -33,6 +37,10 @@ public class BaseApplication extends MultiDexApplication {
         UIUtils.init(this);
         initUmeng();
         initBugly();
+        Network.init(new NetConfig.Builder()
+                .baseUrl(APIManager.getBaseUrl())
+                .interceptor(new RequestInterceptor())
+                .build());
     }
 
     /**
