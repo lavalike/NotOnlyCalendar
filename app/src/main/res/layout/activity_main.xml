@@ -1,177 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".user_interface.view.MainActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/colorPrimaryDark"
+        android:fitsSystemWindows="true">
 
-        <!--顶部布局-->
-        <RelativeLayout
-            android:id="@+id/layout_top"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_banner_gradient"
-            android:fitsSystemWindows="true">
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/menu_calendar"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_margin="5dp"
-                android:layout_toLeftOf="@+id/menu_setting"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
+                android:background="?attr/actionBarItemBackground"
                 android:padding="5dp"
-                android:src="@mipmap/ic_calendar" />
+                android:src="@mipmap/ic_calendar"
+                app:layout_constraintEnd_toStartOf="@+id/menu_setting"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/menu_setting"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_alignTop="@+id/menu_calendar"
-                android:layout_alignParentEnd="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:clickable="true"
-                android:src="@mipmap/ic_setting" />
+                android:background="?attr/actionBarItemBackground"
+                android:src="@mipmap/ic_setting"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="20dp"
-                android:orientation="vertical"
-                android:padding="30dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tv_slogan_en"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="20sp"
-                    tools:text="A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal." />
-
-                <TextView
-                    android:id="@+id/tv_slogan_cn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="14sp"
-                    tools:text="不够真诚是危险的，太真诚则绝对是致命的。" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <!--动画-->
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="10dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/bg_banner_gradient" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shadow_bg_slogan"
+                    android:orientation="vertical"
+                    android:padding="30dp">
+
+                    <TextView
+                        android:id="@+id/tv_slogan_en"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="cursive"
+                        android:textColor="@color/colorTextColor"
+                        android:textSize="20sp"
+                        tools:text="A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal." />
+
+                    <TextView
+                        android:id="@+id/tv_slogan_cn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/colorTextColor"
+                        tools:text="不够真诚是危险的，太真诚则绝对是致命的。" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!--动画-->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_margin="10dp">
+
+                <View
+                    android:id="@+id/view_anim_breathe"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/bg_circle" />
+
+                <TextView
+                    android:id="@+id/tv_anim_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="80sp"
+                    tools:text="24" />
+
+            </FrameLayout>
 
             <View
-                android:id="@+id/view_anim_breathe"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:background="@drawable/bg_circle" />
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colorEDEDE" />
 
-            <TextView
-                android:id="@+id/tv_anim_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textColor="@color/colorWhite"
-                android:textSize="80sp"
-                tools:text="24" />
-
-        </FrameLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorEDEDE" />
-
-        <!--日期-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <RelativeLayout
+            <!--日期-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical">
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_lunar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        tools:text="二月初一" />
+
+                    <TextView
+                        android:id="@+id/tv_type_des"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        tools:text="2019年03月07日 工作日" />
+                </RelativeLayout>
+
 
                 <TextView
-                    android:id="@+id/tv_lunar"
+                    android:id="@+id/tv_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    tools:text="二月初一" />
+                    tools:text="星期三 戊戌[狗]年 惊蛰后\n2019年第66天、第10周" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/main_divider"
+                android:background="@color/colorEDEDE" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <!--忌-->
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/ic_avoid" />
 
                 <TextView
-                    android:id="@+id/tv_type_des"
+                    android:id="@+id/tv_avoid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    tools:text="2019年03月07日 工作日" />
-            </RelativeLayout>
+                    android:textSize="15sp"
+                    tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
 
+                <!--宜-->
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/ic_suit" />
 
-            <TextView
-                android:id="@+id/tv_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="星期三 戊戌[狗]年 惊蛰后\n2019年第66天、第10周" />
+                <TextView
+                    android:id="@+id/tv_suit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
+            </LinearLayout>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/main_divider"
-            android:background="@color/colorEDEDE" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-            <!--忌-->
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_avoid" />
-
-            <TextView
-                android:id="@+id/tv_avoid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
-
-            <!--宜-->
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
-                android:src="@mipmap/ic_suit" />
-
-            <TextView
-                android:id="@+id/tv_suit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
-        </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>
 

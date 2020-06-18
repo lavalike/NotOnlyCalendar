@@ -4,9 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.dimeno.network.callback.LoadingCallback;
@@ -80,12 +77,6 @@ public class MainActivity extends BaseActivity {
         tvDetail.setText(calendarDetail);
         tvAvoid.setText(avoid);
         tvSuit.setText(suit);
-
-        //开启呼吸动画
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_breathe);
-        animation.setInterpolator(new AccelerateInterpolator());
-        viewAnimBreathe.setAnimation(animation);
-        animation.start();
     }
 
     /**
@@ -100,8 +91,10 @@ public class MainActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(english) && !TextUtils.isEmpty(chinese)) {
                     tvSloganEN.setText(english);
                     tvSloganCN.setText(chinese);
-                    SPHelper.getInstance().put(SPKey.KEY_SLOGAN_EN, english);
-                    SPHelper.getInstance().put(SPKey.KEY_SLOGAN_CN, chinese);
+                    SPHelper.getInstance()
+                            .put(SPKey.KEY_SLOGAN_EN, english)
+                            .put(SPKey.KEY_SLOGAN_CN, chinese)
+                            .commit();
                 }
             }
         }).setTag(this).exe();
