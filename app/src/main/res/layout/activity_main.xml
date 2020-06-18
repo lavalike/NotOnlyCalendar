@@ -60,30 +60,47 @@
                     android:layout_height="50dp"
                     android:background="@drawable/bg_banner_gradient" />
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shadow_bg_slogan"
                     android:orientation="vertical"
-                    android:padding="30dp">
+                    android:padding="20dp">
+
+                    <ImageView
+                        android:id="@+id/iv_cover"
+                        android:layout_width="70dp"
+                        android:layout_height="0dp"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:src="@mipmap/ic_header" />
 
                     <TextView
                         android:id="@+id/tv_slogan_en"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:fontFamily="cursive"
                         android:textColor="@color/colorTextColor"
                         android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/iv_cover"
+                        app:layout_constraintTop_toTopOf="parent"
                         tools:text="A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal." />
 
                     <TextView
                         android:id="@+id/tv_slogan_cn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:textColor="@color/colorTextColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_slogan_en"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_slogan_en"
                         tools:text="不够真诚是危险的，太真诚则绝对是致命的。" />
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
 
             <!--动画-->

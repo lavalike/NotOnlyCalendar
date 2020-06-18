@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.dimeno.network.callback.LoadingCallback;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
@@ -33,6 +36,8 @@ public class MainActivity extends BaseActivity {
     TextView tvSloganCN;
     @BindView(R.id.tv_slogan_en)
     TextView tvSloganEN;
+    @BindView(R.id.iv_cover)
+    ImageView ivCover;
     @BindView(R.id.tv_anim_day)
     TextView tvAnimDay;
     @BindView(R.id.tv_avoid)
@@ -62,6 +67,7 @@ public class MainActivity extends BaseActivity {
     private void init() {
         String sloganCN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_CN, "");
         String sloganEN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_EN, "");
+        String picture = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_PICTURE, "");
 
         String avoid = SPHelper.getInstance().get(SPKey.KEY_AVOID, "");
         String suit = SPHelper.getInstance().get(SPKey.KEY_SUIT, "");
@@ -71,6 +77,7 @@ public class MainActivity extends BaseActivity {
 
         tvSloganCN.setText(sloganCN);
         tvSloganEN.setText(sloganEN);
+        Glide.with(this).load(picture).apply(new RequestOptions().placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)).into(ivCover);
         tvAnimDay.setText(DateUtil.getDay());
         tvLunar.setText(lunar);
         tvTypeDes.setText(typeDes);
@@ -88,12 +95,15 @@ public class MainActivity extends BaseActivity {
             public void onSuccess(SloganBean data) {
                 final String english = data.getContent();
                 final String chinese = data.getNote();
+                String picture = data.getPicture2();
                 if (!TextUtils.isEmpty(english) && !TextUtils.isEmpty(chinese)) {
                     tvSloganEN.setText(english);
                     tvSloganCN.setText(chinese);
+                    Glide.with(mContext).load(picture).apply(new RequestOptions().placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)).into(ivCover);
                     SPHelper.getInstance()
                             .put(SPKey.KEY_SLOGAN_EN, english)
                             .put(SPKey.KEY_SLOGAN_CN, chinese)
+                            .put(SPKey.KEY_SLOGAN_PICTURE, picture)
                             .commit();
                 }
             }
