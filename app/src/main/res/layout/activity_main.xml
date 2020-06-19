@@ -67,7 +67,7 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <ImageView
+                    <com.wangzhen.circle.CircleImageView
                         android:id="@+id/iv_cover"
                         android:layout_width="70dp"
                         android:layout_height="0dp"
@@ -75,6 +75,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:radius="3.5dp"
                         tools:src="@mipmap/ic_header" />
 
                     <TextView
