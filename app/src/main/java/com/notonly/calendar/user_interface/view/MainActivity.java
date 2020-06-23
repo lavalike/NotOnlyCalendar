@@ -2,7 +2,6 @@ package com.notonly.calendar.user_interface.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -96,16 +95,15 @@ public class MainActivity extends BaseActivity {
                 final String english = data.getContent();
                 final String chinese = data.getNote();
                 String picture = data.getPicture2();
-                if (!TextUtils.isEmpty(english) && !TextUtils.isEmpty(chinese)) {
-                    tvSloganEN.setText(english);
-                    tvSloganCN.setText(chinese);
-                    Glide.with(mContext).load(picture).apply(new RequestOptions().placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)).into(ivCover);
-                    SPHelper.getInstance()
-                            .put(SPKey.KEY_SLOGAN_EN, english)
-                            .put(SPKey.KEY_SLOGAN_CN, chinese)
-                            .put(SPKey.KEY_SLOGAN_PICTURE, picture)
-                            .commit();
-                }
+
+                tvSloganEN.setText(english);
+                tvSloganCN.setText(chinese);
+                Glide.with(mContext).load(picture).apply(new RequestOptions().placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)).into(ivCover);
+                SPHelper.getInstance()
+                        .put(SPKey.KEY_SLOGAN_EN, english)
+                        .put(SPKey.KEY_SLOGAN_CN, chinese)
+                        .put(SPKey.KEY_SLOGAN_PICTURE, picture)
+                        .commit();
             }
         }).setTag(this).exe();
     }
@@ -152,12 +150,6 @@ public class MainActivity extends BaseActivity {
                 builder.append("周");
                 String detail = builder.toString();
 
-                tvLunar.setText(lunarCalendar);
-                tvTypeDes.setText(typeDes);
-                tvDetail.setText(detail);
-                tvAvoid.setText(avoid);
-                tvSuit.setText(suit);
-
                 SPHelper.getInstance()
                         .put(SPKey.KEY_SUIT, suit)
                         .put(SPKey.KEY_AVOID, avoid)
@@ -165,6 +157,8 @@ public class MainActivity extends BaseActivity {
                         .put(SPKey.KEY_TYPE_DES, typeDes)
                         .put(SPKey.KEY_CALENDAR_DETAIL, detail)
                         .commit();
+
+                init();
             }
 
             @Override
