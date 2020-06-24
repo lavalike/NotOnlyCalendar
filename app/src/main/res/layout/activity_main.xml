@@ -8,43 +8,10 @@
     android:overScrollMode="never"
     tools:context=".user_interface.view.MainActivity">
 
-    <ImageView
-        android:id="@+id/iv_cover"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_header" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true">
-
-            <ImageView
-                android:id="@+id/menu_calendar"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="?attr/actionBarItemBackground"
-                android:padding="5dp"
-                android:src="@mipmap/ic_history"
-                app:layout_constraintEnd_toStartOf="@+id/menu_setting"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/menu_setting"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:background="?attr/actionBarItemBackground"
-                android:padding="5dp"
-                android:src="@mipmap/ic_about"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -55,36 +22,51 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shadow_bg_slogan"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/tv_slogan_en"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:fontFamily="cursive"
-                        android:textColor="@color/colorTextColor"
-                        android:textSize="20sp"
+                    <ImageView
+                        android:id="@+id/iv_cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_header"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal." />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
-                        android:id="@+id/tv_slogan_cn"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/colorTextColor"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/tv_slogan_en"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_slogan_en"
-                        tools:text="不够真诚是危险的，太真诚则绝对是致命的。" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_gravity="bottom"
+                        android:layout_margin="10dp">
+
+                        <TextView
+                            android:id="@+id/tv_slogan_en"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="cursive"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal." />
+
+                        <TextView
+                            android:id="@+id/tv_slogan_cn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/colorWhite"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@+id/tv_slogan_en"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_slogan_en"
+                            tools:text="不够真诚是危险的，太真诚则绝对是致命的。" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -199,5 +181,32 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <ImageView
+            android:id="@+id/menu_calendar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="?attr/actionBarItemBackground"
+            android:padding="5dp"
+            android:src="@mipmap/ic_history"
+            app:layout_constraintEnd_toStartOf="@+id/menu_setting"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/menu_setting"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="?attr/actionBarItemBackground"
+            android:padding="5dp"
+            android:src="@mipmap/ic_about"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
 
