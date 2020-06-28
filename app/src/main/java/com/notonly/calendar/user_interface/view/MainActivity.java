@@ -11,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dimeno.network.callback.LoadingCallback;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
+import com.notonly.calendar.base.Constants;
 import com.notonly.calendar.base.helper.SPHelper;
 import com.notonly.calendar.base.helper.SPKey;
 import com.notonly.calendar.base.manager.UpdateManager;
@@ -24,6 +25,7 @@ import com.notonly.calendar.util.T;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * 主页面
@@ -76,7 +78,9 @@ public class MainActivity extends BaseActivity {
 
         tvSloganCN.setText(sloganCN);
         tvSloganEN.setText(sloganEN);
-        Glide.with(this).load(picture).apply(new RequestOptions().placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)).into(ivCover);
+        Glide.with(this).load(picture).apply(
+                RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
+        ).into(ivCover);
         tvAnimDay.setText(DateUtil.getDay());
         tvLunar.setText(lunar);
         tvTypeDes.setText(typeDes);
@@ -98,7 +102,9 @@ public class MainActivity extends BaseActivity {
 
                 tvSloganEN.setText(english);
                 tvSloganCN.setText(chinese);
-                Glide.with(mContext).load(picture).apply(new RequestOptions().placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)).into(ivCover);
+                Glide.with(mContext).load(picture).apply(
+                        RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
+                ).into(ivCover);
                 SPHelper.getInstance()
                         .put(SPKey.KEY_SLOGAN_EN, english)
                         .put(SPKey.KEY_SLOGAN_CN, chinese)
