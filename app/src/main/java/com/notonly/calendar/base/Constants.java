@@ -5,5 +5,5 @@ package com.notonly.calendar.base;
  * Created by wangzhen on 2020/6/28.
  */
 public class Constants {
-    public static final int BLUR_RADIUS = 15;
+    public static final int BLUR_RADIUS = 20;
 }
