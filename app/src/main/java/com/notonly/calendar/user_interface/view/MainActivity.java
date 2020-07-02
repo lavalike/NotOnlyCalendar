@@ -102,9 +102,11 @@ public class MainActivity extends BaseActivity {
 
                 tvSloganEN.setText(english);
                 tvSloganCN.setText(chinese);
-                Glide.with(mContext).load(picture).apply(
-                        RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
-                ).into(ivCover);
+                if (!isDestroyed()) {
+                    Glide.with(mContext).load(picture).apply(
+                            RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
+                    ).into(ivCover);
+                }
                 SPHelper.getInstance()
                         .put(SPKey.KEY_SLOGAN_EN, english)
                         .put(SPKey.KEY_SLOGAN_CN, chinese)
