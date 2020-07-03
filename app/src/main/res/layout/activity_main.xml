@@ -48,7 +48,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:fontFamily="cursive"
                             android:textColor="@color/colorWhite"
                             android:textSize="20sp"
                             app:layout_constraintEnd_toEndOf="parent"
