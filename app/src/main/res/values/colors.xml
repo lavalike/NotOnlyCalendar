@@ -3,7 +3,7 @@
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#FFC107</color>
-    <color name="colorPrimaryTransparent">#ae2196F3</color>
+
     <color name="colorGradient">#58b5ff</color>
     <color name="colorGradientLight">#ebf6ff</color>
 
@@ -12,6 +12,7 @@
     <color name="colorRed">#FF0000</color>
     <color name="colorEDEDE">#EDEDED</color>
     <color name="black">#000000</color>
+    <color name="color_weixin">#1ab84e</color>
 
     <color name="colorTextColor">#3b424c</color>
     <color name="colorTextColorLight">#a0a4a9</color>

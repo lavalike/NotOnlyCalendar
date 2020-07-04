@@ -3,14 +3,17 @@ package com.notonly.calendar.wxapi;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.notonly.calendar.base.helper.APIKey;
 import com.notonly.calendar.util.T;
-import com.tencent.mm.sdk.modelbase.BaseReq;
-import com.tencent.mm.sdk.modelbase.BaseResp;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.opensdk.constants.ConstantsAPI;
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 /**
  * 微信分享回调页面
@@ -31,30 +34,17 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     }
 
     @Override
-    public void onReq(BaseReq arg0) {
+    public void onReq(BaseReq req) {
 
     }
 
     @Override
-    public void onResp(BaseResp arg0) {
-        String result;
-        switch (arg0.errCode) {
-            case BaseResp.ErrCode.ERR_OK:
-                result = "分享成功";
-                break;
-            case BaseResp.ErrCode.ERR_USER_CANCEL:
-                result = "分享被取消";
-                break;
-            case BaseResp.ErrCode.ERR_AUTH_DENIED:
-                result = "分享被拒绝";
-                break;
-
-            default:
-                result = "返回";
-                break;
+    public void onResp(BaseResp resp) {
+        if (resp.getType() == ConstantsAPI.COMMAND_LAUNCH_WX_MINIPROGRAM) {
+            WXLaunchMiniProgram.Resp launchMiniProResp = (WXLaunchMiniProgram.Resp) resp;
+            //对应小程序组件 <button open-type="launchApp"> 中的 app-parameter 属性
+            String extraData =launchMiniProResp.extMsg;
         }
-        T.get(mContext).toast(result);
-        finish();
     }
 
 }
