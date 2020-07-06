@@ -3,6 +3,7 @@ package com.notonly.calendar.user_interface.view;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
@@ -46,6 +47,10 @@ public class AboutActivity extends BaseActivity {
     @OnClick(R.id.btn_jump)
     public void onViewClicked(View view) {
         IWXAPI api = WXAPIFactory.createWXAPI(this, APIKey.AppID_WX);
+        if (!api.isWXAppInstalled()) {
+            Toast.makeText(mContext, "请先安装微信", Toast.LENGTH_SHORT).show();
+            return;
+        }
         WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
         req.userName = APIKey.MINI_APP_ID;
         req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
