@@ -70,7 +70,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="100dp">
                     <!--动画-->
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -196,5 +197,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--小程序-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/color_weixin"
+        android:onClick="openMiniProgram"
+        android:src="@mipmap/ic_mini_program"
+        app:borderWidth="0dp"
+        app:fabCustomSize="50dp" />
 </FrameLayout>
 

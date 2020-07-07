@@ -3,19 +3,15 @@ package com.notonly.calendar.user_interface.view;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.base.helper.APIKey;
 import com.notonly.calendar.base.toolbar.ToolBarCommonHolder;
 import com.notonly.calendar.util.AppUtils;
-import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.notonly.calendar.util.WxUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,14 +42,6 @@ public class AboutActivity extends BaseActivity {
 
     @OnClick(R.id.btn_jump)
     public void onViewClicked(View view) {
-        IWXAPI api = WXAPIFactory.createWXAPI(this, APIKey.AppID_WX);
-        if (!api.isWXAppInstalled()) {
-            Toast.makeText(mContext, "请先安装微信", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-        req.userName = APIKey.MINI_APP_ID;
-        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
-        api.sendReq(req);
+        WxUtils.openMiniProgram(this);
     }
 }

@@ -21,6 +21,7 @@ import com.notonly.calendar.network.task.CalendarTask;
 import com.notonly.calendar.network.task.SloganTask;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.T;
+import com.notonly.calendar.util.WxUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -191,5 +192,9 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(mContext, AboutActivity.class));
                 break;
         }
+    }
+
+    public void openMiniProgram(View view) {
+        WxUtils.openMiniProgram(this);
     }
 }
