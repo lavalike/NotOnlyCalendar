@@ -13,8 +13,5 @@ public class APIKey {
     /**
      * 小程序原始ID
      */
-    public static String AppKey_bmob = "501a9b6f002895753d000a30e8ee983d";
-
     public static final String MINI_APP_ID = "gh_263d444e94e4";
-
 }

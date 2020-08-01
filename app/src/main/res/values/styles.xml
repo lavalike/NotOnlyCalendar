@@ -38,4 +38,20 @@
         <item name="android:windowEnterAnimation">@anim/sharedialog_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/sharedialog_bottom_out</item>
     </style>
+
+    <!--从POS代码移植来样式 by:nixs 2020年08月01日22:53:49-->
+    <style name="POSAppTheme" parent="QMUI.Compat.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+    </style>
+    <style name="TranslucentTheme" parent="POSAppTheme">
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@mipmap/icon_app_flash</item>
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+    </style>
 </resources>
