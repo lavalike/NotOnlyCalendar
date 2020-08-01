@@ -1,10 +1,11 @@
 package com.notonly.calendar.base.toolbar;
 
 import android.app.Activity;
-import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.notonly.calendar.R;
 

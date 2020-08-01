@@ -2,9 +2,12 @@ package com.notonly.calendar.base.manager;
 
 import android.Manifest;
 import android.content.DialogInterface;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.dimeno.permission.PermissionManager;
+import com.dimeno.permission.callback.AbsPermissionCallback;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.util.AppUtils;
@@ -54,18 +57,17 @@ public class UpdateManager {
                         builder.setPositiveButton("更新", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                PermissionManager.requestPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionManager.OnPermissionCallback() {
+                                PermissionManager.request(mContext, new AbsPermissionCallback() {
                                     @Override
-                                    public void onGranted() {
+                                    public void onGrant(String[] permissions) {
                                         download(appBean.getDownloadURL());
                                     }
 
                                     @Override
-                                    public void onDenied() {
+                                    public void onDeny(String[] deniedPermissions, String[] neverAskPermissions) {
                                         T.get(mContext).toast(mContext.getString(R.string.error_permission_denied));
-                                        PermissionManager.managePermissionByHand(mContext);
                                     }
-                                });
+                                }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                             }
                         });
                         builder.setCancelable(false);

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.notonly.calendar">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -17,12 +17,15 @@
         android:icon="@mipmap/calendar128"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
         <meta-data
             android:name="PGYER_APPID"
-            android:value="a28cce8ed87264a2fc6c6c8e1dd7d0e7" />
+            android:value="0ba0aad8f0e73e6c15d1049d833e5f52" />
+
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -32,7 +35,7 @@
         </provider>
 
         <activity
-            android:name=".UI.view.MainActivity"
+            android:name=".user_interface.view.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,14 +43,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.view.SplashActivity" />
-        <activity android:name=".UI.view.AboutActivity" />
-        <activity android:name=".UI.view.HistoryListActivity" />
+        <activity android:name=".user_interface.view.SplashActivity" />
+        <activity android:name=".user_interface.view.AboutActivity" />
+        <activity android:name=".user_interface.view.HistoryActivity" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/app_name" />
-        <activity android:name=".UI.view.HistoryDetailActivity" />
+
+        <!--桌面插件-->
+        <receiver android:name=".user_interface.widget.widget.EnglishEverydayWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/english_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

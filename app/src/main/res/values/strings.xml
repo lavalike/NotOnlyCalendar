@@ -21,4 +21,7 @@
 
     <string name="cancel">取消</string>
     <string name="share">分享</string>
+    <string name="english_daily">《大黄历》每日一句</string>
+
+    <string name="about_jump_mini_program">打开小程序</string>
 </resources>
