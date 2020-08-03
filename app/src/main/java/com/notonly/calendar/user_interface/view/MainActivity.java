@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -21,6 +22,7 @@ import com.notonly.calendar.network.task.CalendarTask;
 import com.notonly.calendar.network.task.SloganTask;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.T;
+import com.notonly.calendar.util.WxUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -96,22 +98,30 @@ public class MainActivity extends BaseActivity {
         new SloganTask(new LoadingCallback<SloganBean>() {
             @Override
             public void onSuccess(SloganBean data) {
-                final String english = data.getContent();
-                final String chinese = data.getNote();
-                String picture = data.getPicture2();
+                if (data!=null){
+                    final String english = data.getContent();
+                    final String chinese = data.getNote();
+                    String picture = data.getPicture2();
 
-                tvSloganEN.setText(english);
-                tvSloganCN.setText(chinese);
-                if (!isDestroyed()) {
-                    Glide.with(mContext).load(picture).apply(
-                            RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
-                    ).into(ivCover);
+                    tvSloganEN.setText(english);
+                    tvSloganCN.setText(chinese);
+                    if (!isDestroyed()) {
+                        Glide.with(mContext).load(picture).apply(
+                                RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
+                        ).into(ivCover);
+                    }
+                    SPHelper.getInstance()
+                            .put(SPKey.KEY_SLOGAN_EN, english)
+                            .put(SPKey.KEY_SLOGAN_CN, chinese)
+                            .put(SPKey.KEY_SLOGAN_PICTURE, picture)
+                            .commit();
                 }
-                SPHelper.getInstance()
-                        .put(SPKey.KEY_SLOGAN_EN, english)
-                        .put(SPKey.KEY_SLOGAN_CN, chinese)
-                        .put(SPKey.KEY_SLOGAN_PICTURE, picture)
-                        .commit();
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                super.onError(code, message);
+                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
             }
         }).setTag(this).exe();
     }
@@ -191,5 +201,9 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(mContext, AboutActivity.class));
                 break;
         }
+    }
+
+    public void openMiniProgram(View view) {
+        WxUtils.openMiniProgram(this);
     }
 }

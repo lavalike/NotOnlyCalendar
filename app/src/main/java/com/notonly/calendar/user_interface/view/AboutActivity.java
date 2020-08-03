@@ -1,21 +1,21 @@
 package com.notonly.calendar.user_interface.view;
 
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
-import com.bumptech.glide.Glide;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.base.toolbar.ToolBarCommonHolder;
 import com.notonly.calendar.util.AppUtils;
+import com.notonly.calendar.util.WxUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 关于页面
@@ -23,8 +23,6 @@ import butterknife.ButterKnife;
  */
 public class AboutActivity extends BaseActivity {
 
-    @BindView(R.id.iv_qrcode)
-    ImageView mImageView;
     @BindView(R.id.tv_version)
     TextView mTextViewVersion;
 
@@ -33,12 +31,17 @@ public class AboutActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
-        Glide.with(mContext).load(APIManager.URL_WEIXIN_QRCODE).placeholder(R.mipmap.qrcode).into(mImageView);
-        mTextViewVersion.setText("版本：" + AppUtils.getVersionName(mContext));
+        mTextViewVersion.setText(String.format("版本：%s", AppUtils.getVersionName(mContext)));
     }
 
     @Override
     protected void onSetupToolbar(Toolbar toolbar, ActionBar actionBar) {
         new ToolBarCommonHolder(this, toolbar, getString(R.string.title_about));
+    }
+
+
+    @OnClick(R.id.btn_jump)
+    public void onViewClicked(View view) {
+        WxUtils.openMiniProgram(this);
     }
 }

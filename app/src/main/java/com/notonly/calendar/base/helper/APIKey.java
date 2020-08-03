@@ -9,5 +9,9 @@ public class APIKey {
     /**
      * 微信AppID
      */
-    public static String AppID_WX = "wx97589a5851c051c8";
+    public static final String AppID_WX = "wx97589a5851c051c8";
+    /**
+     * 小程序原始ID
+     */
+    public static final String MINI_APP_ID = "gh_263d444e94e4";
 }

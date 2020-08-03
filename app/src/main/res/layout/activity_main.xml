@@ -48,7 +48,6 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:fontFamily="cursive"
                             android:textColor="@color/colorWhite"
                             android:textSize="20sp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -71,8 +70,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?android:colorBackground"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="120dp">
                     <!--动画-->
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -98,18 +97,17 @@
 
                     </FrameLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@color/colorEDEDE" />
-
                     <!--日期-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bg_shadow_container"
                         android:orientation="vertical"
-                        android:padding="16dp">
+                        android:padding="15dp">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -140,43 +138,34 @@
                             tools:text="星期三 戊戌[狗]年 惊蛰后\n2019年第66天、第10周" />
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/main_divider"
-                        android:background="@color/colorEDEDE" />
-
-                    <LinearLayout
+                    <!--忌-->
+                    <TextView
+                        android:id="@+id/tv_avoid"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-                        <!--忌-->
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:src="@mipmap/ic_avoid" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bg_shadow_container"
+                        android:padding="15dp"
+                        android:textColor="#80ff0000"
+                        android:textSize="15sp"
+                        tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
 
-                        <TextView
-                            android:id="@+id/tv_avoid"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
+                    <!--宜-->
+                    <TextView
+                        android:id="@+id/tv_suit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bg_shadow_container"
+                        android:padding="15dp"
+                        android:textColor="#80008000"
+                        android:textSize="15sp"
+                        tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
 
-                        <!--宜-->
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="10dp"
-                            android:src="@mipmap/ic_suit" />
-
-                        <TextView
-                            android:id="@+id/tv_suit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="15sp"
-                            tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
-                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
@@ -208,5 +197,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--小程序-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:onClick="openMiniProgram"
+        android:src="@mipmap/ic_mini_program"
+        app:borderWidth="0dp"
+        app:fabCustomSize="50dp"
+        app:useCompatPadding="true" />
 </FrameLayout>
 
