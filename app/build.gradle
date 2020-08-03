@@ -77,7 +77,7 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:3.2.32'
 
     implementation 'com.github.dimeno-tech:dimeno-permission:0.0.2'
-    implementation 'com.github.dimeno-tech:dimeno-network:0.0.3'
+    implementation 'com.github.dimeno-tech:dimeno-network:0.0.5'
     implementation 'com.github.dimeno-tech:dimeno-adapter:0.0.6'
     implementation 'com.github.lavalike:circle-imageview:0.0.1'
 
