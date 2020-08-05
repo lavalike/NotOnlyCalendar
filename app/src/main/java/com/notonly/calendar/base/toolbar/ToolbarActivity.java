@@ -2,14 +2,15 @@ package com.notonly.calendar.base.toolbar;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.LayoutRes;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import androidx.annotation.LayoutRes;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.notonly.calendar.R;
 
@@ -20,8 +21,6 @@ import com.notonly.calendar.R;
 
 public class ToolbarActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
-    private LayoutInflater mInflater;
     private FrameLayout mRootView;
 
     @Override
@@ -40,37 +39,21 @@ public class ToolbarActivity extends AppCompatActivity {
             initContentView(view);
             initToolbar();
         } else {
-//            initView(view);
-//            super.setContentView(mRootView);
             super.setContentView(view);
         }
     }
 
-    private void initView(View view) {
-        mRootView = new FrameLayout(this);
-        mRootView.setBackgroundResource(R.color.colorPrimary);
-        mRootView.setFitsSystemWindows(true);
-        FrameLayout.LayoutParams paramsRoot = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT);
-        mRootView.setLayoutParams(paramsRoot);
-        Drawable background = view.getBackground();
-        if (null == background) {
-            view.setBackgroundColor(Color.parseColor("#f2f2f2"));
-        }
-        mRootView.addView(view);
-    }
-
     private void initToolbar() {
         super.setContentView(mRootView);
-        mInflater = LayoutInflater.from(this);
-        View toolbarView = mInflater.inflate(R.layout.toolbar_layout, mRootView);
-        mToolbar = (Toolbar) toolbarView.findViewById(R.id.id_tool_bar);
-        setSupportActionBar(mToolbar);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View toolbarView = inflater.inflate(R.layout.toolbar_layout, mRootView);
+        Toolbar toolbar = (Toolbar) toolbarView.findViewById(R.id.id_tool_bar);
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (null != actionBar) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        onSetupToolbar(mToolbar, actionBar);
+        onSetupToolbar(toolbar, actionBar);
     }
 
     /**

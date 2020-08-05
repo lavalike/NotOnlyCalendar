@@ -2,9 +2,14 @@ package com.notonly.calendar.base;
 
 import android.content.Context;
 import android.os.Handler;
-import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 
+import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
+
+import com.dimeno.network.Network;
+import com.dimeno.network.config.NetConfig;
+import com.notonly.calendar.base.manager.APIManager;
+import com.notonly.calendar.network.RequestInterceptor;
 import com.notonly.calendar.util.AppUtils;
 import com.notonly.calendar.util.UIUtils;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -18,6 +23,7 @@ import com.umeng.commonsdk.UMConfigure;
 public class BaseApplication extends MultiDexApplication {
     private static BaseApplication mContext;
     private static Handler mainHandler = new Handler();
+    private String channel = "only";
 
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -31,6 +37,10 @@ public class BaseApplication extends MultiDexApplication {
         UIUtils.init(this);
         initUmeng();
         initBugly();
+        Network.init(new NetConfig.Builder()
+                .baseUrl(APIManager.getBaseUrl())
+                .interceptor(new RequestInterceptor())
+                .build());
     }
 
     /**
@@ -41,7 +51,7 @@ public class BaseApplication extends MultiDexApplication {
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
         strategy.setUploadProcess(processName == null || processName.equals(getPackageName()));
         strategy.setDeviceID(AppUtils.getUniquePsuedoID());
-        strategy.setAppChannel("only");
+        strategy.setAppChannel(channel);
         CrashReport.initCrashReport(this, "38f2ae3fad", BuildConfig.DEBUG, strategy);
     }
 
@@ -69,7 +79,7 @@ public class BaseApplication extends MultiDexApplication {
          */
         UMConfigure.init(this,
                 "5b83ad44b27b0a5719000017",
-                "only",
+                channel,
                 UMConfigure.DEVICE_TYPE_PHONE,
                 null);
 

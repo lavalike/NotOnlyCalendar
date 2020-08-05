@@ -9,6 +9,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:scrollbarThumbVertical">@drawable/scroll_bar_vertical</item>
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">

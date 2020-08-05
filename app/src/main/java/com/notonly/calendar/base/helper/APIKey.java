@@ -9,22 +9,11 @@ public class APIKey {
     /**
      * 微信AppID
      */
-    public static String AppID_WX = "wx97589a5851c051c8";
-
+    public static final String AppID_WX = "wx97589a5851c051c8";
     /**
-     * 万年历 AppKey
-     */
-    public static String AppKey_Calendar = "8b1fc95fd35a9f2ebdef438dc8fb3aba";
-
-    /**
-     * 历史上的今天 AppKey
-     */
-    public static String AppKey_todayinhistory = "9cf7fd27641553195bb9c4a99c2ba59a";
-
-
-    /**
-     * Bmob AppKey
+     * 小程序原始ID
      */
     public static String AppKey_bmob = "501a9b6f002895753d000a30e8ee983d";
 
+    public static final String MINI_APP_ID = "gh_263d444e94e4";
 }
