@@ -34,16 +34,20 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <!--如下这里引入 theme防止启动有白屏出现-图片后续可以更换 by:nixs 2020年08月01日23:05:44-->
         <activity
-            android:name=".user_interface.view.MainActivity"
-            android:label="@string/app_name">
+            android:name=".user_interface.view.SplashActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".user_interface.view.SplashActivity" />
+
+        <activity android:name=".user_interface.view.MainActivity" />
         <activity android:name=".user_interface.view.AboutActivity" />
         <activity android:name=".user_interface.view.HistoryActivity" />
         <activity
