@@ -98,24 +98,22 @@ public class MainActivity extends BaseActivity {
         new SloganTask(new LoadingCallback<SloganBean>() {
             @Override
             public void onSuccess(SloganBean data) {
-                if (data!=null){
-                    final String english = data.getContent();
-                    final String chinese = data.getNote();
-                    String picture = data.getPicture2();
+                final String english = data.getContent();
+                final String chinese = data.getNote();
+                String picture = data.getPicture2();
 
-                    tvSloganEN.setText(english);
-                    tvSloganCN.setText(chinese);
-                    if (!isDestroyed()) {
-                        Glide.with(mContext).load(picture).apply(
-                                RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
-                        ).into(ivCover);
-                    }
-                    SPHelper.getInstance()
-                            .put(SPKey.KEY_SLOGAN_EN, english)
-                            .put(SPKey.KEY_SLOGAN_CN, chinese)
-                            .put(SPKey.KEY_SLOGAN_PICTURE, picture)
-                            .commit();
+                tvSloganEN.setText(english);
+                tvSloganCN.setText(chinese);
+                if (!isDestroyed()) {
+                    Glide.with(mContext).load(picture).apply(
+                            RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
+                    ).into(ivCover);
                 }
+                SPHelper.getInstance()
+                        .put(SPKey.KEY_SLOGAN_EN, english)
+                        .put(SPKey.KEY_SLOGAN_CN, chinese)
+                        .put(SPKey.KEY_SLOGAN_PICTURE, picture)
+                        .commit();
             }
 
             @Override
