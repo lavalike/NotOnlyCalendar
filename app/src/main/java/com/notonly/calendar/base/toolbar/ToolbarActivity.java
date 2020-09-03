@@ -1,12 +1,13 @@
 package com.notonly.calendar.base.toolbar;
 
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.LayoutRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,10 +19,20 @@ import com.notonly.calendar.R;
  * 处理Toolbar相关
  * Created by Administrator on 2016/10/18.
  */
-
 public class ToolbarActivity extends AppCompatActivity {
 
     private FrameLayout mRootView;
+
+    @CallSuper
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        ((ViewGroup) getWindow().getDecorView()).getChildAt(0).setFitsSystemWindows(false);
+        View view = findViewById(R.id.action_bar_root);
+        if (view != null) {
+            view.setFitsSystemWindows(false);
+        }
+        super.onPostCreate(savedInstanceState);
+    }
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -43,12 +54,33 @@ public class ToolbarActivity extends AppCompatActivity {
         }
     }
 
-    private void initToolbar() {
+    /**
+     * 创建帧布局，作为视图容器的父容器
+     *
+     * @param view view
+     */
+    private void initContentView(View view) {
+        mRootView = new FrameLayout(this);
+        mRootView.setFitsSystemWindows(true);
+        mRootView.setBackgroundResource(R.color.colorPrimary);
+
+        if (view != null && view.getBackground() == null) {
+            view.setBackgroundColor(Color.parseColor("#f2f2f2"));
+        }
+
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        params.topMargin = (int) getResources().getDimension(R.dimen.toolbar_height);
+        mRootView.addView(view, params);
         super.setContentView(mRootView);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View toolbarView = inflater.inflate(R.layout.toolbar_layout, mRootView);
+    }
+
+    private void initToolbar() {
+        View toolbarView = LayoutInflater.from(this).inflate(R.layout.toolbar_layout, mRootView);
         Toolbar toolbar = (Toolbar) toolbarView.findViewById(R.id.id_tool_bar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
         ActionBar actionBar = getSupportActionBar();
         if (null != actionBar) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -59,7 +91,7 @@ public class ToolbarActivity extends AppCompatActivity {
     /**
      * 设置Toolbar的数据，也可以设置自定义toolBar视图 如需则交给子类去实现
      *
-     * @param toolbar
+     * @param toolbar   toolbar
      * @param actionBar 为了兼容性，设置title、subTitle等使用actionBar
      */
     protected void onSetupToolbar(Toolbar toolbar, ActionBar actionBar) {
@@ -68,37 +100,9 @@ public class ToolbarActivity extends AppCompatActivity {
     }
 
     /**
-     * 创建帧布局，作为视图容器的父容器
-     *
-     * @param view
-     */
-    private void initContentView(View view) {
-        if (view != null && view.getParent() != null && view.getParent() instanceof ViewGroup) {
-            ((ViewGroup) view.getParent()).removeView(view);
-        }
-        mRootView = new FrameLayout(this);
-        mRootView.setBackgroundResource(R.color.colorPrimary);
-        mRootView.setFitsSystemWindows(true);
-        FrameLayout.LayoutParams paramsRoot = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT);
-        mRootView.setLayoutParams(paramsRoot);
-        //设置视图顶部的Toolbar高度
-        int toolbarSize = (int) getResources().getDimension(R.dimen.toolbar_height);
-        FrameLayout.LayoutParams paramsView = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-                FrameLayout.LayoutParams.MATCH_PARENT);
-        paramsView.topMargin = toolbarSize;
-        Drawable background = view.getBackground();
-        if (null == background) {
-            view.setBackgroundColor(Color.parseColor("#f2f2f2"));
-        }
-        //将视图添加到父容器
-        mRootView.addView(view, paramsView);
-    }
-
-    /**
      * 是否显示Toolbar
      *
-     * @return
+     * @return bolean
      */
     public boolean showToolbar() {
         return true;

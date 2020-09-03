@@ -1,13 +1,8 @@
 package com.notonly.calendar.user_interface.view;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,7 +17,6 @@ import com.notonly.calendar.base.toolbar.ToolBarCommonHolder;
 import com.notonly.calendar.domain.HistoryResponse;
 import com.notonly.calendar.network.task.HistoryTask;
 import com.notonly.calendar.user_interface.adapter.HistoryAdapter;
-import com.notonly.calendar.util.DisplayUtil;
 
 import java.util.List;
 
@@ -38,8 +32,6 @@ public class HistoryActivity extends BaseActivity {
     SwipeRefreshLayout mSwipeRefresh;
     @BindView(R.id.recycler)
     RecyclerView mRecycler;
-    private Paint mPaint;
-    private int mSpace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,69 +92,20 @@ public class HistoryActivity extends BaseActivity {
 
     private void initRecycler() {
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext));
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.parseColor("#EDEDED"));
-        mSpace = DisplayUtil.dip2px(this, 0.5f);
-        mRecycler.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                super.onDraw(c, parent, state);
-                int childCount = parent.getChildCount();
-                for (int i = 0; i < childCount; i++) {
-                    View childAt = parent.getChildAt(i);
-                    if (childAt != null && i < childCount - 1) {
-                        int left = childAt.getLeft();
-                        int right = childAt.getRight();
-                        int top = childAt.getBottom();
-                        int bottom = top + mSpace;
-                        c.drawRect(new Rect(left, top, right, bottom), mPaint);
-                    }
-                }
-            }
-
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                int position = parent.getChildAdapterPosition(view);
-                if (parent.getAdapter() == null) {
-                    return;
-                }
-                if (position == parent.getAdapter().getItemCount() - 1) {
-                    outRect.set(0, 0, 0, 0);
-                } else {
-                    outRect.set(0, 0, 0, mSpace);
-                }
-            }
-        });
     }
 
     private void initSwipeRefresh() {
         //设置加载图标颜色
         mSwipeRefresh.setColorSchemeResources(R.color.colorPrimary, android.R.color.holo_purple, android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                request();
-            }
-        });
+        mSwipeRefresh.setOnRefreshListener(this::request);
     }
 
     public void startLoading() {
-        mSwipeRefresh.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefresh.setRefreshing(true);
-            }
-        });
+        mSwipeRefresh.post(() -> mSwipeRefresh.setRefreshing(true));
     }
 
     public void stopLoading() {
-        mSwipeRefresh.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefresh.setRefreshing(false);
-            }
-        });
+        mSwipeRefresh.post(() -> mSwipeRefresh.setRefreshing(false));
     }
 }
