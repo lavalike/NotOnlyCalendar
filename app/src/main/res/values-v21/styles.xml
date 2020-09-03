@@ -3,10 +3,7 @@
     <!--TranslucentBar主题针对API 21以及以上的设置在这-->
     <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <!--Android 5.x开始需要把颜色设置透明，否则状态栏会呈现系统默认的浅灰色-->
         <item name="android:statusBarColor">@android:color/transparent</item>
-        <!--确保状态栏显示，可能继承多次会被设置为false-->
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
     </style>
 </resources>
