@@ -65,7 +65,7 @@ public class ToolbarActivity extends AppCompatActivity {
         mRootView.setBackgroundResource(R.color.colorPrimary);
 
         if (view != null && view.getBackground() == null) {
-            view.setBackgroundColor(Color.parseColor("#f2f2f2"));
+            view.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);

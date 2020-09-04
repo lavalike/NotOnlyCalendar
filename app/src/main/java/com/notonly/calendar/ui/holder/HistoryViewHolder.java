@@ -1,4 +1,4 @@
-package com.notonly.calendar.user_interface.holder;
+package com.notonly.calendar.ui.holder;
 
 import android.view.ViewGroup;
 import android.widget.ImageView;

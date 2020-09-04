@@ -9,9 +9,7 @@
     <dimen name="toolbar_height">55dp</dimen>
     <dimen name="toolbar_title_size">20sp</dimen>
     <dimen name="toolbar_menu_size">14sp</dimen>
-    <dimen name="line_height">0.5dp</dimen>
-
-    <dimen name="main_divider">5dp</dimen>
+    <dimen name="line_height">1dp</dimen>
 
     <!--历史上的今天列表分隔线高度-->
     <dimen name="list_todaylist_divider_height">5dp</dimen>

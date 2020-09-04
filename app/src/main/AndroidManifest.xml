@@ -20,6 +20,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.view.BrowserActivity"></activity>
+        <activity android:name=".ui.view.SettingActivity" />
+
         <meta-data
             android:name="PGYER_APPID"
             android:value="0ba0aad8f0e73e6c15d1049d833e5f52" />
@@ -35,7 +38,7 @@
         </provider>
 
         <activity
-            android:name=".user_interface.view.MainActivity"
+            android:name=".ui.view.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,16 +46,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".user_interface.view.SplashActivity" />
-        <activity android:name=".user_interface.view.AboutActivity" />
-        <activity android:name=".user_interface.view.HistoryActivity" />
+        <activity android:name=".ui.view.SplashActivity" />
+        <activity android:name=".ui.view.AboutActivity" />
+        <activity android:name=".ui.view.HistoryActivity" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:label="@string/app_name" />
-
-        <!--桌面插件-->
-        <receiver android:name=".user_interface.widget.widget.EnglishEverydayWidget">
+            android:label="@string/app_name" /> <!-- 桌面插件 -->
+        <receiver android:name=".ui.widget.widget.EnglishEverydayWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

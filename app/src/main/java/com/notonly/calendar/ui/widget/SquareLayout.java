@@ -1,4 +1,4 @@
-package com.notonly.calendar.user_interface.widget;
+package com.notonly.calendar.ui.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

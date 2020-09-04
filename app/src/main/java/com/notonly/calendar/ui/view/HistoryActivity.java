@@ -1,4 +1,4 @@
-package com.notonly.calendar.user_interface.view;
+package com.notonly.calendar.ui.view;
 
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +16,7 @@ import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.base.toolbar.ToolBarCommonHolder;
 import com.notonly.calendar.domain.HistoryResponse;
 import com.notonly.calendar.network.task.HistoryTask;
-import com.notonly.calendar.user_interface.adapter.HistoryAdapter;
+import com.notonly.calendar.ui.adapter.HistoryAdapter;
 
 import java.util.List;
 

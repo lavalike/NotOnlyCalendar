@@ -1,4 +1,4 @@
-package com.notonly.calendar.user_interface.widget.widget;
+package com.notonly.calendar.ui.widget.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -19,7 +19,7 @@ import com.dimeno.network.callback.LoadingCallback;
 import com.notonly.calendar.R;
 import com.notonly.calendar.domain.SloganBean;
 import com.notonly.calendar.network.task.SloganTask;
-import com.notonly.calendar.user_interface.view.MainActivity;
+import com.notonly.calendar.ui.view.MainActivity;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;

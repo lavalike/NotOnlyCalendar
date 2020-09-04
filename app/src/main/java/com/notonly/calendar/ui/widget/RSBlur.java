@@ -1,4 +1,4 @@
-package com.notonly.calendar.user_interface.widget;
+package com.notonly.calendar.ui.widget;
 
 import android.annotation.TargetApi;
 import android.content.Context;

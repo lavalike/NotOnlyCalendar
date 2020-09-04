@@ -14,7 +14,8 @@
     <color name="black">#000000</color>
     <color name="color_weixin">#1ab84e</color>
 
-    <color name="colorTextColor">#3b424c</color>
-    <color name="colorTextColorLight">#a0a4a9</color>
+    <color name="color_3b424c">#3b424c</color>
+    <color name="color_a0a4a9">#a0a4a9</color>
     <color name="colorListDivider">#dddddd</color>
+    <color name="color_f0f0f0">#f0f0f0</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.notonly.calendar.user_interface.adapter;
+package com.notonly.calendar.ui.adapter;
 
 import android.view.ViewGroup;
 
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dimeno.adapter.RecyclerAdapter;
 import com.notonly.calendar.domain.HistoryResponse;
-import com.notonly.calendar.user_interface.holder.HistoryViewHolder;
+import com.notonly.calendar.ui.holder.HistoryViewHolder;
 
 import java.util.List;
 

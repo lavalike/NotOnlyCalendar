@@ -1,4 +1,4 @@
-package com.notonly.calendar.user_interface.view;
+package com.notonly.calendar.ui.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(mContext, HistoryActivity.class));
                 break;
             case R.id.menu_setting:
-                startActivity(new Intent(mContext, AboutActivity.class));
+                startActivity(new Intent(mContext, SettingActivity.class));
                 break;
         }
     }

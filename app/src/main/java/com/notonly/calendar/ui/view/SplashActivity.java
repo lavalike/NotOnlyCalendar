@@ -1,4 +1,4 @@
-package com.notonly.calendar.user_interface.view;
+package com.notonly.calendar.ui.view;
 
 import android.content.Intent;
 import android.os.Bundle;

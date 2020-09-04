@@ -1,6 +1,7 @@
 package com.notonly.calendar.base.toolbar;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,6 +44,12 @@ public class ToolBarCommonHolder extends BaseToolBarHolder {
     @Override
     protected int getToolBarLayoutResId() {
         return R.layout.layout_toolbar_common;
+    }
+
+    public void setTitle(String title) {
+        if (!TextUtils.isEmpty(title)) {
+            tv_title.setText(title);
+        }
     }
 
     @Override
