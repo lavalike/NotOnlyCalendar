@@ -13,46 +13,42 @@
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textColor="@color/color_3b424c"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2020年6月13日" />
 
-    <com.wangzhen.circle.CircleImageView
-        android:id="@+id/image"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="5dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_header"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_date"
-        app:radius="10dp" />
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/bg_history_shadow_cover"
-        app:layout_constraintBottom_toBottomOf="@+id/image"
-        app:layout_constraintEnd_toEndOf="@+id/image"
-        app:layout_constraintStart_toStartOf="@+id/image"
-        app:layout_constraintTop_toTopOf="@+id/image" />
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:gravity="start"
-        android:maxLines="5"
-        android:padding="10dp"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/image"
-        app:layout_constraintTop_toTopOf="@+id/image"
-        tools:text="历史上的今天" />
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bg_history_corner"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date">
+
+        <com.wangzhen.circle.CircleImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_header"
+            app:radius_top_left="10dp"
+            app:radius_top_right="10dp" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:maxLines="5"
+            android:padding="10dp"
+            android:textColor="@color/color_3b424c"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="历史上的今天" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
