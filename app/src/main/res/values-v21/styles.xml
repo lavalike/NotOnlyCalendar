@@ -1,9 +1,0 @@
-<resources>
-
-    <!--TranslucentBar主题针对API 21以及以上的设置在这-->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-    </style>
-</resources>
