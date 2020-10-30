@@ -7,12 +7,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.base.toolbar.ToolBarCommonHolder;
+import com.notonly.calendar.base.toolbar.AppCommonToolbar;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * BrowserActivity
@@ -22,7 +21,7 @@ public class BrowserActivity extends BaseActivity {
 
     private WebView mWebView;
     private String mTitle;
-    private ToolBarCommonHolder mToolbar;
+    private AppCommonToolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +56,11 @@ public class BrowserActivity extends BaseActivity {
         });
     }
 
+    @Nullable
     @Override
-    protected void onSetupToolbar(Toolbar toolbar, ActionBar actionBar) {
+    public com.dimeno.commons.toolbar.impl.Toolbar createToolbar() {
         mTitle = getIntent().getStringExtra("title");
-        mToolbar = new ToolBarCommonHolder(this, toolbar, mTitle);
+        mToolbar = new AppCommonToolbar(this, mTitle);
+        return mToolbar;
     }
 }

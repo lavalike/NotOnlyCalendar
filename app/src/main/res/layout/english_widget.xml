@@ -29,7 +29,7 @@
                 android:layout_gravity="center_vertical"
                 android:ellipsize="end"
                 android:lineSpacingMultiplier="1.1"
-                android:maxLines="3"
+                android:lines="3"
                 android:textColor="#3b424c"
                 android:textSize="14sp"
                 tools:text="If you want to live your whole life free from pain, you must become either a god or else a corpse. Consider other men's troubles and that will comfort yours." />
@@ -57,9 +57,12 @@
     </ViewFlipper>
 
     <TextView
+        android:id="@+id/tv_app_des"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/iv"
+        android:layout_below="@+id/flipper"
+        android:layout_alignStart="@+id/flipper"
+        android:layout_marginTop="10dp"
         android:lineSpacingMultiplier="1.21"
         android:text="@string/english_daily"
         android:textColor="#2196F3"
@@ -68,8 +71,9 @@
     <ImageView
         android:id="@+id/iv"
         android:layout_width="113dp"
-        android:layout_height="75dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/flipper"
+        android:layout_alignBottom="@+id/tv_app_des"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
         android:scaleType="centerCrop"

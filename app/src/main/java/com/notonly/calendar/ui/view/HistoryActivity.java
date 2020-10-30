@@ -1,22 +1,23 @@
 package com.notonly.calendar.ui.view;
 
 import android.os.Bundle;
-import android.view.View;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dimeno.adapter.base.RecyclerItem;
+import com.dimeno.commons.toolbar.impl.Toolbar;
 import com.dimeno.network.callback.LoadingCallback;
+import com.dimeno.network.loading.DefaultLoadingPage;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.base.toolbar.ToolBarCommonHolder;
+import com.notonly.calendar.base.toolbar.AppCommonToolbar;
 import com.notonly.calendar.domain.HistoryResponse;
 import com.notonly.calendar.network.task.HistoryTask;
 import com.notonly.calendar.ui.adapter.HistoryAdapter;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -40,10 +41,14 @@ public class HistoryActivity extends BaseActivity {
         ButterKnife.bind(this);
         initRecycler();
         initSwipeRefresh();
-        request();
+        request(true);
     }
 
     private void request() {
+        request(false);
+    }
+
+    private void request(boolean loading) {
         startLoading();
         new HistoryTask(new LoadingCallback<HistoryResponse>() {
             @Override
@@ -55,7 +60,7 @@ public class HistoryActivity extends BaseActivity {
             public void onComplete() {
                 stopLoading();
             }
-        }).setTag(this).exe(HistoryTask.TYPE_NO_DETAILS);
+        }).setTag(this).setLoadingPage(loading ? new DefaultLoadingPage(mSwipeRefresh) : null).exe(HistoryTask.TYPE_NO_DETAILS);
     }
 
     private void bind(List<HistoryResponse.DataBean> data) {
@@ -65,29 +70,20 @@ public class HistoryActivity extends BaseActivity {
             public int layout() {
                 return R.layout.layout_history_footer_layout;
             }
-
-            @Override
-            public void onViewCreated(View itemView) {
-
-            }
         }.onCreateView(mRecycler));
         adapter.setEmpty(new RecyclerItem() {
             @Override
             public int layout() {
                 return R.layout.emtpy_layout;
             }
-
-            @Override
-            public void onViewCreated(View itemView) {
-
-            }
         }.onCreateView(mRecycler));
         mRecycler.setAdapter(adapter);
     }
 
+    @Nullable
     @Override
-    protected void onSetupToolbar(Toolbar toolbar, ActionBar actionBar) {
-        new ToolBarCommonHolder(this, toolbar, getString(R.string.title_todayinhistory));
+    public Toolbar createToolbar() {
+        return new AppCommonToolbar(this, getString(R.string.title_todayinhistory));
     }
 
     private void initRecycler() {

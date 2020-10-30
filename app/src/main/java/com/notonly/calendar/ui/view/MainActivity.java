@@ -184,11 +184,6 @@ public class MainActivity extends BaseActivity {
         }).setDate(DateUtil.formatDateTime("yyyyMMdd")).setTag(this).exe();
     }
 
-    @Override
-    public boolean showToolbar() {
-        return false;
-    }
-
     @OnClick({R.id.menu_calendar, R.id.menu_setting})
     public void onClick(View view) {
         switch (view.getId()) {

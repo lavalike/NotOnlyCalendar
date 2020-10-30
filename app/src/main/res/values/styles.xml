@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="CommonTheme">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimary</item>
@@ -11,8 +11,6 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:scrollbarThumbVertical">@drawable/scroll_bar_vertical</item>
     </style>
-
-    <style name="AppTheme" parent="AppBaseTheme" />
 
     <style name="AppTheme.FullScreen">
         <item name="android:windowFullscreen">true</item>

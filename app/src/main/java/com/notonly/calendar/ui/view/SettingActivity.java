@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
-
+import com.dimeno.commons.toolbar.impl.Toolbar;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.base.toolbar.ToolBarCommonHolder;
+import com.notonly.calendar.base.toolbar.AppCommonToolbar;
+
+import org.jetbrains.annotations.Nullable;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -39,8 +39,9 @@ public class SettingActivity extends BaseActivity {
         }
     }
 
+    @Nullable
     @Override
-    protected void onSetupToolbar(Toolbar toolbar, ActionBar actionBar) {
-        new ToolBarCommonHolder(this, toolbar, getString(R.string.title_setting));
+    public Toolbar createToolbar() {
+        return new AppCommonToolbar(this, getString(R.string.title_setting));
     }
 }
