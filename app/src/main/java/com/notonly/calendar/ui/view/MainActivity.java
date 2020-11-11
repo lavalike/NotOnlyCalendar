@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.dimeno.network.callback.LoadingCallback;
 import com.notonly.calendar.R;
@@ -82,7 +83,7 @@ public class MainActivity extends BaseActivity {
         tvSloganEN.setText(sloganEN);
         Glide.with(this).load(picture).apply(
                 RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
-        ).into(ivCover);
+        ).transition(DrawableTransitionOptions.withCrossFade()).into(ivCover);
         tvAnimDay.setText(DateUtil.getDay());
         tvLunar.setText(lunar);
         tvTypeDes.setText(typeDes);
@@ -107,7 +108,7 @@ public class MainActivity extends BaseActivity {
                 if (!isDestroyed()) {
                     Glide.with(mContext).load(picture).apply(
                             RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
-                    ).into(ivCover);
+                    ).transition(DrawableTransitionOptions.withCrossFade()).into(ivCover);
                 }
                 SPHelper.getInstance()
                         .put(SPKey.KEY_SLOGAN_EN, english)
