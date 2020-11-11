@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.dimeno.adapter.base.RecyclerViewHolder;
 import com.notonly.calendar.R;
@@ -36,6 +37,7 @@ public class HistoryViewHolder extends RecyclerViewHolder<HistoryResponse.DataBe
         mTvTitle.setText(mData.title);
         Glide.with(itemView.getContext()).load(mData.picUrl)
                 .apply(new RequestOptions().placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header))
+                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(imageView);
     }
 }
