@@ -42,14 +42,10 @@ public class MainActivity extends BaseActivity {
     TextView tvSloganEN;
     @BindView(R.id.iv_cover)
     ImageView ivCover;
-    @BindView(R.id.tv_anim_day)
-    TextView tvAnimDay;
     @BindView(R.id.tv_avoid)
     TextView tvAvoid;
     @BindView(R.id.tv_suit)
     TextView tvSuit;
-    @BindView(R.id.view_anim_breathe)
-    View viewAnimBreathe;
     @BindView(R.id.tv_lunar)
     TextView tvLunar;
     @BindView(R.id.tv_detail)
@@ -84,7 +80,6 @@ public class MainActivity extends BaseActivity {
         Glide.with(this).load(picture).apply(
                 RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
         ).transition(DrawableTransitionOptions.withCrossFade()).into(ivCover);
-        tvAnimDay.setText(DateUtil.getDay());
         tvLunar.setText(lunar);
         tvTypeDes.setText(typeDes);
         tvDetail.setText(calendarDetail);

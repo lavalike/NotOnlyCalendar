@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,208 +8,209 @@
     android:overScrollMode="never"
     tools:context=".ui.view.MainActivity">
 
-    <LinearLayout
+    <com.wangzhen.circle.CircleImageView
+        android:id="@+id/iv_cover"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_header"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_slogan_en"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_slogan_cn"
+        app:layout_constraintEnd_toEndOf="@+id/tv_slogan_cn"
+        app:layout_constraintStart_toStartOf="@+id/tv_slogan_cn"
+        tools:text="A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal." />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv_slogan_cn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="start"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/container_lunar_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="不够真诚是危险的，太真诚则绝对是致命的。" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_lunar_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="230dp"
+        android:background="@drawable/bg_lunar_info_container"
+        android:orientation="vertical"
+        android:padding="15dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:id="@+id/iv_cover"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:scaleType="centerCrop"
-                        android:src="@mipmap/ic_header"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/tv_lunar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_3b424c"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="二月初一" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_margin="10dp">
+        <TextView
+            android:id="@+id/tv_type_des"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="@color/color_3b424c"
+            app:layout_constraintStart_toStartOf="@+id/tv_lunar"
+            app:layout_constraintTop_toBottomOf="@+id/tv_lunar"
+            tools:text="2019年03月07日 工作日" />
 
-                        <TextView
-                            android:id="@+id/tv_slogan_en"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:textColor="@color/white"
-                            android:textSize="20sp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            tools:text="A little sincerity is a dangerous thing, and a great deal of it is absolutely fatal." />
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="@color/color_3b424c"
+            app:layout_constraintStart_toStartOf="@+id/tv_type_des"
+            app:layout_constraintTop_toBottomOf="@+id/tv_type_des"
+            tools:text="星期三 戊戌[狗]年 惊蛰后\n2019年第66天、第10周" />
 
-                        <TextView
-                            android:id="@+id/tv_slogan_cn"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:textColor="@color/white"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/tv_slogan_en"
-                            app:layout_constraintTop_toBottomOf="@+id/tv_slogan_en"
-                            tools:text="不够真诚是危险的，太真诚则绝对是致命的。" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </FrameLayout>
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_lunar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="20dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_lunar_info">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/lunar_avoid_background"
+                android:elevation="5dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="120dp">
-                    <!--动画-->
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp">
+                    android:layout_gravity="bottom|start"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_boy" />
 
-                        <View
-                            android:id="@+id/view_anim_breathe"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_gravity="center"
-                            android:background="@drawable/bg_circle" />
+                <TextView
+                    android:id="@+id/tv_avoid"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:padding="15dp"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
+            </FrameLayout>
 
-                        <TextView
-                            android:id="@+id/tv_anim_day"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="@color/white"
-                            android:textSize="80sp"
-                            tools:text="24" />
+            <FrameLayout
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/lunar_suit_background"
+                android:elevation="5dp">
 
-                    </FrameLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_girl" />
 
-                    <!--日期-->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/bg_shadow_container"
-                        android:orientation="vertical"
-                        android:padding="15dp">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical">
-
-                            <TextView
-                                android:id="@+id/tv_lunar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="20sp"
-                                android:textStyle="bold"
-                                tools:text="二月初一" />
-
-                            <TextView
-                                android:id="@+id/tv_type_des"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                tools:text="2019年03月07日 工作日" />
-                        </RelativeLayout>
-
-
-                        <TextView
-                            android:id="@+id/tv_detail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="星期三 戊戌[狗]年 惊蛰后\n2019年第66天、第10周" />
-                    </LinearLayout>
-
-                    <!--忌-->
-                    <TextView
-                        android:id="@+id/tv_avoid"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/bg_shadow_container"
-                        android:padding="15dp"
-                        android:textColor="#80ff0000"
-                        android:textSize="15sp"
-                        tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
-
-                    <!--宜-->
-                    <TextView
-                        android:id="@+id/tv_suit"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/bg_shadow_container"
-                        android:padding="15dp"
-                        android:textColor="#80008000"
-                        android:textSize="15sp"
-                        tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_suit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:padding="15dp"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    tools:text="词霸小编：【语法扩充】a lot of,lots of,plenty of,a great deal of 后面都接名词,可数不可数名词都可以,表示数量很多；a few 与 a little 表示不多的意思,a few后接可数名词,a little后接不可数名词；few 和 little 表示很少,几乎没有,含否定意义,同样是few接可数名词, little接不可数名词。" />
+            </FrameLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/menu_calendar"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="?attr/actionBarItemBackground"
+            android:contentDescription="@string/app_name"
             android:padding="5dp"
             android:src="@mipmap/ic_history"
-            app:layout_constraintEnd_toStartOf="@+id/menu_setting"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/menu_setting" />
 
         <ImageView
             android:id="@+id/menu_setting"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:background="?attr/actionBarItemBackground"
+            android:contentDescription="@string/app_name"
             android:padding="5dp"
             android:src="@mipmap/ic_about"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--小程序-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="60dp"
         android:backgroundTint="@color/colorPrimary"
+        android:contentDescription="@string/app_name"
         android:onClick="openMiniProgram"
         android:src="@mipmap/ic_mini_program"
         app:borderWidth="0dp"
         app:fabCustomSize="50dp"
-        app:useCompatPadding="true" />
-</FrameLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 
