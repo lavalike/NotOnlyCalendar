@@ -1,7 +1,7 @@
 package com.notonly.calendar.network.task;
 
-import com.dimeno.network.callback.RequestCallback;
-import com.dimeno.network.task.GetTask;
+import com.wangzhen.network.callback.RequestCallback;
+import com.wangzhen.network.task.GetTask;
 
 /**
  * HistoryTask

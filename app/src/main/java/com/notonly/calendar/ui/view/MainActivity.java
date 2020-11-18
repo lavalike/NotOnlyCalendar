@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.dimeno.network.callback.LoadingCallback;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.base.Constants;
@@ -24,6 +23,7 @@ import com.notonly.calendar.network.task.SloganTask;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.T;
 import com.notonly.calendar.util.WxUtils;
+import com.wangzhen.network.callback.LoadingCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

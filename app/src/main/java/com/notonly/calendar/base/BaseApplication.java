@@ -6,8 +6,6 @@ import android.os.Handler;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
-import com.dimeno.network.Network;
-import com.dimeno.network.config.NetConfig;
 import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.network.RequestInterceptor;
 import com.notonly.calendar.util.AppUtils;
@@ -16,6 +14,8 @@ import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.BuildConfig;
 import com.umeng.commonsdk.UMConfigure;
+import com.wangzhen.network.Network;
+import com.wangzhen.network.config.NetConfig;
 
 /**
  * Created by wangzhen on 16/2/23.
