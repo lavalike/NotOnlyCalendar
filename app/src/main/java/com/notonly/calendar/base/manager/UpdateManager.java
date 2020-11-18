@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dimeno.permission.PermissionManager;
-import com.dimeno.permission.callback.AbsPermissionCallback;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.util.AppUtils;
@@ -15,6 +13,8 @@ import com.notonly.calendar.util.T;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import com.pgyersdk.update.javabean.AppBean;
+import com.wangzhen.permission.PermissionManager;
+import com.wangzhen.permission.callback.AbsPermissionCallback;
 
 /**
  * 更新检测

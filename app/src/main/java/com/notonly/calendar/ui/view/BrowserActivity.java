@@ -10,6 +10,7 @@ import android.webkit.WebViewClient;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.base.toolbar.AppCommonToolbar;
+import com.wangzhen.commons.toolbar.impl.Toolbar;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -58,7 +59,7 @@ public class BrowserActivity extends BaseActivity {
 
     @Nullable
     @Override
-    public com.dimeno.commons.toolbar.impl.Toolbar createToolbar() {
+    public Toolbar createToolbar() {
         mTitle = getIntent().getStringExtra("title");
         mToolbar = new AppCommonToolbar(this, mTitle);
         return mToolbar;

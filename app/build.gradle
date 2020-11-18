@@ -73,13 +73,12 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.7.2'
     implementation 'com.umeng.sdk:common:1.5.3'
     implementation 'com.umeng.sdk:analytics:7.5.3'
-    implementation 'com.tencent.bugly:crashreport:3.2.42'
+    implementation 'com.tencent.bugly:crashreport:3.3.1'
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.4'
 
-    implementation 'com.github.dimeno-tech:dimeno-permission:0.0.2'
-    implementation 'com.github.dimeno-tech:dimeno-adapter:0.0.9'
-    implementation 'com.github.dimeno-tech:dimeno-commons:0.1.4'
+    implementation 'com.github.lavalike:permission:0.0.1'
+    implementation 'com.github.lavalike:adapter:0.1.0'
+    implementation 'com.github.lavalike:commons:0.0.1'
     implementation 'com.github.lavalike:circle-imageview:0.0.1'
     implementation 'com.github.lavalike:network:0.0.1'
-
-    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.6.4'
 }
