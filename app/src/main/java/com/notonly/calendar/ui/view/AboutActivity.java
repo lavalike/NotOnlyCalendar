@@ -4,12 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.dimeno.commons.toolbar.impl.Toolbar;
+import com.wangzhen.commons.toolbar.impl.Toolbar;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.base.toolbar.AppCommonToolbar;
-import com.notonly.calendar.util.AppUtils;
+import com.notonly.calendar.util.Utils;
 import com.notonly.calendar.util.WxUtils;
+import com.wangzhen.commons.utils.AppUtils;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -31,7 +32,7 @@ public class AboutActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
-        mTextViewVersion.setText(String.format("版本：%s", AppUtils.getVersionName(mContext)));
+        mTextViewVersion.setText(String.format("版本：%s", AppUtils.getVersionName()));
     }
 
     @Nullable

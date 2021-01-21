@@ -6,15 +6,15 @@ import android.content.DialogInterface;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.dimeno.permission.PermissionManager;
-import com.dimeno.permission.callback.AbsPermissionCallback;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.util.AppUtils;
 import com.notonly.calendar.util.T;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import com.pgyersdk.update.javabean.AppBean;
+import com.wangzhen.commons.utils.AppUtils;
+import com.wangzhen.permission.PermissionManager;
+import com.wangzhen.permission.callback.AbsPermissionCallback;
 
 /**
  * 更新检测
@@ -47,7 +47,7 @@ public class UpdateManager {
             @Override
             public void onUpdateAvailable(final AppBean appBean) {
                 if (appBean != null) {
-                    String currentCode = AppUtils.getVersionCode(mContext);
+                    String currentCode = String.valueOf(AppUtils.getVersionCode());
                     String serverCode = appBean.getVersionCode();
                     if (serverCode.compareTo(currentCode) > 0) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);

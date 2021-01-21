@@ -58,7 +58,7 @@ public class BrowserActivity extends BaseActivity {
 
     @Nullable
     @Override
-    public com.dimeno.commons.toolbar.impl.Toolbar createToolbar() {
+    public com.wangzhen.commons.toolbar.impl.Toolbar createToolbar() {
         mTitle = getIntent().getStringExtra("title");
         mToolbar = new AppCommonToolbar(this, mTitle);
         return mToolbar;

@@ -6,6 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.notonly.calendar.R;
+import com.wangzhen.commons.utils.AppUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -98,13 +99,13 @@ public class DownloadUtil {
 
     public void download(String url, String dir, String fileName) {
         if (TextUtils.isEmpty(url)) {
-            onFail(UIUtils.getString(R.string.error_invalid_apk_url));
+            onFail(AppUtils.getString(R.string.error_invalid_apk_url));
             return;
         }
         if (TextUtils.isEmpty(fileName))
             fileName = getNameFromUrl(url);
         if (TextUtils.isEmpty(fileName)) {
-            onFail(UIUtils.getString(R.string.error_invalid_apk_url));
+            onFail(AppUtils.getString(R.string.error_invalid_apk_url));
             return;
         }
         if (TextUtils.isEmpty(dir))
@@ -115,7 +116,7 @@ public class DownloadUtil {
             if (file.exists()) {
                 copy2Folder(url, dir);
             } else {
-                onFail(UIUtils.getString(R.string.error_invalid_apk_url));
+                onFail(AppUtils.getString(R.string.error_invalid_apk_url));
             }
         } else if (url.startsWith("http") || url.startsWith("https")) {
             innerDownload(url, dir, fileName);

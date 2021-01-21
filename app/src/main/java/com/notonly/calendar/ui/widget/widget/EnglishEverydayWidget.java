@@ -15,7 +15,7 @@ import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 
-import com.dimeno.network.callback.LoadingCallback;
+import com.wangzhen.network.callback.LoadingCallback;
 import com.notonly.calendar.R;
 import com.notonly.calendar.domain.SloganBean;
 import com.notonly.calendar.network.task.SloganTask;

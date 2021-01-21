@@ -1,6 +1,6 @@
 package com.notonly.calendar.util;
 
-import android.os.Environment;
+import com.wangzhen.commons.utils.AppUtils;
 
 import java.io.File;
 
@@ -10,34 +10,23 @@ import java.io.File;
  */
 
 public class PathUtil {
-    private static String APP_NAME = "NotOnlyCalendar";
     //图片路径
-    private static String PATH_IMAGE = APP_NAME + "/images";
+    private static final String PATH_IMAGE = "images";
     //文件下载路径
-    private static String PATH_DOWNLOAD = APP_NAME + "/download";
+    private static final String PATH_DOWNLOAD = "download";
 
-    /**
-     * 获取图片存储路径
-     *
-     * @return
-     */
     public static String getImagePath() {
-        File path = new File(Environment.getExternalStorageDirectory() + File.separator + PATH_IMAGE);
+        File path = new File(AppUtils.getApplication().getExternalFilesDir(null), PATH_IMAGE);
         if (!path.exists()) {
-            path.mkdirs();
+            boolean ignore = path.mkdirs();
         }
         return path.getAbsolutePath();
     }
 
-    /**
-     * 获取下载存储路径
-     *
-     * @return
-     */
     public static String getDownloadPath() {
-        File path = new File(Environment.getExternalStorageDirectory() + File.separator + PATH_DOWNLOAD);
+        File path = new File(AppUtils.getApplication().getExternalFilesDir(null), PATH_DOWNLOAD);
         if (!path.exists()) {
-            path.mkdirs();
+            boolean ignore = path.mkdirs();
         }
         return path.getAbsolutePath();
     }

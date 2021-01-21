@@ -16,11 +16,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/calendar128"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.view.BrowserActivity"></activity>
+        <activity android:name=".ui.view.BrowserActivity" />
         <activity android:name=".ui.view.SettingActivity" />
 
         <meta-data

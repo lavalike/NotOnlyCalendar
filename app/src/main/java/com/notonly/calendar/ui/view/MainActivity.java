@@ -10,11 +10,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.dimeno.network.callback.LoadingCallback;
 import com.notonly.calendar.R;
 import com.notonly.calendar.base.BaseActivity;
 import com.notonly.calendar.base.Constants;
-import com.notonly.calendar.base.helper.SPHelper;
 import com.notonly.calendar.base.helper.SPKey;
 import com.notonly.calendar.base.manager.UpdateManager;
 import com.notonly.calendar.domain.CalendarBean;
@@ -24,6 +22,8 @@ import com.notonly.calendar.network.task.SloganTask;
 import com.notonly.calendar.util.DateUtil;
 import com.notonly.calendar.util.T;
 import com.notonly.calendar.util.WxUtils;
+import com.wangzhen.commons.storage.SPHelper;
+import com.wangzhen.network.callback.LoadingCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,15 +65,15 @@ public class MainActivity extends BaseActivity {
     }
 
     private void init() {
-        String sloganCN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_CN, "");
-        String sloganEN = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_EN, "");
-        String picture = SPHelper.getInstance().get(SPKey.KEY_SLOGAN_PICTURE, "");
+        String sloganCN = SPHelper.get().get(SPKey.KEY_SLOGAN_CN, "");
+        String sloganEN = SPHelper.get().get(SPKey.KEY_SLOGAN_EN, "");
+        String picture = SPHelper.get().get(SPKey.KEY_SLOGAN_PICTURE, "");
 
-        String avoid = SPHelper.getInstance().get(SPKey.KEY_AVOID, "");
-        String suit = SPHelper.getInstance().get(SPKey.KEY_SUIT, "");
-        String lunar = SPHelper.getInstance().get(SPKey.KEY_LUNAR, "");
-        String typeDes = SPHelper.getInstance().get(SPKey.KEY_TYPE_DES, "");
-        String calendarDetail = SPHelper.getInstance().get(SPKey.KEY_CALENDAR_DETAIL, "");
+        String avoid = SPHelper.get().get(SPKey.KEY_AVOID, "");
+        String suit = SPHelper.get().get(SPKey.KEY_SUIT, "");
+        String lunar = SPHelper.get().get(SPKey.KEY_LUNAR, "");
+        String typeDes = SPHelper.get().get(SPKey.KEY_TYPE_DES, "");
+        String calendarDetail = SPHelper.get().get(SPKey.KEY_CALENDAR_DETAIL, "");
 
         tvSloganCN.setText(sloganCN);
         tvSloganEN.setText(sloganEN);
@@ -105,7 +105,7 @@ public class MainActivity extends BaseActivity {
                             RequestOptions.bitmapTransform(new BlurTransformation(Constants.BLUR_RADIUS)).placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
                     ).transition(DrawableTransitionOptions.withCrossFade()).into(ivCover);
                 }
-                SPHelper.getInstance()
+                SPHelper.get()
                         .put(SPKey.KEY_SLOGAN_EN, english)
                         .put(SPKey.KEY_SLOGAN_CN, chinese)
                         .put(SPKey.KEY_SLOGAN_PICTURE, picture)
@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity {
                 builder.append("周");
                 String detail = builder.toString();
 
-                SPHelper.getInstance()
+                SPHelper.get()
                         .put(SPKey.KEY_SUIT, suit)
                         .put(SPKey.KEY_AVOID, avoid)
                         .put(SPKey.KEY_LUNAR, lunarCalendar)

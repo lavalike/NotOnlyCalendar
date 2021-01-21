@@ -6,16 +6,16 @@ import android.os.Handler;
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
-import com.dimeno.network.Network;
-import com.dimeno.network.config.NetConfig;
 import com.notonly.calendar.base.manager.APIManager;
 import com.notonly.calendar.network.RequestInterceptor;
-import com.notonly.calendar.util.AppUtils;
-import com.notonly.calendar.util.UIUtils;
+import com.notonly.calendar.util.Utils;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.BuildConfig;
 import com.umeng.commonsdk.UMConfigure;
+import com.wangzhen.commons.utils.AppUtils;
+import com.wangzhen.network.Network;
+import com.wangzhen.network.config.NetConfig;
 
 /**
  * Created by wangzhen on 16/2/23.
@@ -34,7 +34,7 @@ public class BaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-        UIUtils.init(this);
+        AppUtils.install(this);
         initUmeng();
         initBugly();
         Network.init(new NetConfig.Builder()
@@ -47,10 +47,10 @@ public class BaseApplication extends MultiDexApplication {
      * 初始化bugly
      */
     private void initBugly() {
-        String processName = AppUtils.getProcessName(android.os.Process.myPid());
+        String processName = Utils.getProcessName(android.os.Process.myPid());
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(this);
         strategy.setUploadProcess(processName == null || processName.equals(getPackageName()));
-        strategy.setDeviceID(AppUtils.getUniquePsuedoID());
+        strategy.setDeviceID(Utils.getUniquePsuedoID());
         strategy.setAppChannel(channel);
         CrashReport.initCrashReport(this, "38f2ae3fad", BuildConfig.DEBUG, strategy);
     }

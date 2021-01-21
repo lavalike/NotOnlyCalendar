@@ -4,7 +4,7 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dimeno.adapter.RecyclerAdapter;
+import com.wangzhen.adapter.RecyclerAdapter;
 import com.notonly.calendar.domain.HistoryResponse;
 import com.notonly.calendar.ui.holder.HistoryViewHolder;
 

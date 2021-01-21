@@ -7,12 +7,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,10 +16,15 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.DialogFragment;
+
 import com.notonly.calendar.R;
 import com.notonly.calendar.util.DownloadUtil;
 import com.notonly.calendar.util.T;
-import com.notonly.calendar.util.UIUtils;
+import com.wangzhen.commons.utils.AppUtils;
 
 import java.io.File;
 
@@ -45,7 +44,7 @@ public class DownloadDialogFragment extends DialogFragment {
     @BindView(R.id.tv_progress)
     TextView tvProgress;
     private String url;
-    private String MIME_APK = "application/vnd.android.package-archive";
+    private final String MIME_APK = "application/vnd.android.package-archive";
     private Context context;
 
     @NonNull
@@ -59,7 +58,7 @@ public class DownloadDialogFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_progress_download_layout, container, false);
         ButterKnife.bind(this, view);
-        context = UIUtils.getContext();
+        context = AppUtils.getContext();
         return view;
     }
 
