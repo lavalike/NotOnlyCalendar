@@ -58,14 +58,6 @@ public class EnglishEverydayWidget extends AppWidgetProvider {
     @NonNull
     private static RemoteViews getRemoteViews(Context context) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.english_widget);
-        english += english;
-        english += english;
-        english += english;
-
-        chinese += chinese;
-        chinese += chinese;
-        chinese += chinese;
-
         views.setTextViewText(R.id.tv_english, english);
         views.setTextViewText(R.id.tv_chinese, chinese);
         if (bitmap == null)
