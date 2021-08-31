@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -15,11 +16,11 @@ import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 
-import com.wangzhen.network.callback.LoadingCallback;
 import com.notonly.calendar.R;
 import com.notonly.calendar.domain.SloganBean;
 import com.notonly.calendar.network.task.SloganTask;
 import com.notonly.calendar.ui.view.MainActivity;
+import com.wangzhen.network.callback.LoadingCallback;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -40,29 +41,31 @@ public class EnglishEverydayWidget extends AppWidgetProvider {
     private static String picture;
     private static Bitmap bitmap;
 
-    private Handler mHandler = new Handler(Looper.getMainLooper()) {
+    private final Handler mHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case MSG_UPDATE:
-                    if (mContext != null) {
-                        RemoteViews remoteViews = getRemoteViews(mContext);
-                        AppWidgetManager manager = AppWidgetManager.getInstance(mContext);
-                        ComponentName componentName = new ComponentName(mContext, EnglishEverydayWidget.class);
-                        manager.updateAppWidget(componentName, remoteViews);
-                    }
-                    break;
+            if (msg.what == MSG_UPDATE) {
+                if (mContext != null) {
+                    RemoteViews remoteViews = getRemoteViews(mContext);
+                    AppWidgetManager manager = AppWidgetManager.getInstance(mContext);
+                    ComponentName componentName = new ComponentName(mContext, EnglishEverydayWidget.class);
+                    manager.updateAppWidget(componentName, remoteViews);
+                }
             }
         }
     };
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        appWidgetManager.updateAppWidget(appWidgetId, getRemoteViews(context));
-    }
-
     @NonNull
     private static RemoteViews getRemoteViews(Context context) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.english_widget);
+        english += english;
+        english += english;
+        english += english;
+
+        chinese += chinese;
+        chinese += chinese;
+        chinese += chinese;
+
         views.setTextViewText(R.id.tv_english, english);
         views.setTextViewText(R.id.tv_chinese, chinese);
         if (bitmap == null)
@@ -74,17 +77,34 @@ public class EnglishEverydayWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
         this.mContext = context;
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
-        }
+    }
+
+    @Override
+    public void onEnabled(Context context) {
+        super.onEnabled(context);
         request();
     }
 
-    /**
-     * 请求每日一句
-     */
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+        request();
+    }
+
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
+        }
+    }
+
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+        appWidgetManager.updateAppWidget(appWidgetId, getRemoteViews(context));
+    }
+
     private void request() {
         new SloganTask(new LoadingCallback<SloganBean>() {
             @Override
@@ -92,6 +112,8 @@ public class EnglishEverydayWidget extends AppWidgetProvider {
                 english = data.getContent();
                 chinese = data.getNote();
                 picture = data.getPicture();
+                mHandler.sendEmptyMessage(MSG_UPDATE);
+
                 createBitmap(picture, new BitmapCallback() {
                     @Override
                     public void onFinish(Bitmap data) {
@@ -107,7 +129,6 @@ public class EnglishEverydayWidget extends AppWidgetProvider {
      * 根据url请求bitmap
      *
      * @param picture url
-     * @return bitmap
      */
     private void createBitmap(final String picture, final BitmapCallback callback) {
         Executors.newSingleThreadExecutor().submit(new Runnable() {
@@ -135,12 +156,6 @@ public class EnglishEverydayWidget extends AppWidgetProvider {
 
     public interface BitmapCallback {
         void onFinish(Bitmap data);
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-        mHandler.sendEmptyMessage(MSG_UPDATE);
     }
 }
 

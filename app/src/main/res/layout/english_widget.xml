@@ -10,7 +10,8 @@
     <ViewFlipper
         android:id="@+id/flipper"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_toStartOf="@+id/iv"
         android:autoStart="true"
         android:flipInterval="11000"
@@ -31,7 +32,7 @@
                 android:lineSpacingMultiplier="1.1"
                 android:lines="3"
                 android:textColor="#3b424c"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 tools:text="If you want to live your whole life free from pain, you must become either a god or else a corpse. Consider other men's troubles and that will comfort yours." />
 
         </FrameLayout>
@@ -50,7 +51,7 @@
                 android:lineSpacingMultiplier="1.1"
                 android:maxLines="3"
                 android:textColor="#3b424c"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 tools:text="如果你想一生摆脱苦难，你就得是神或者是死尸。想想他人的不幸，你就能坦然面对人生。" />
 
         </FrameLayout>
@@ -60,22 +61,21 @@
         android:id="@+id/tv_app_des"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/flipper"
-        android:layout_alignStart="@+id/flipper"
-        android:layout_marginTop="10dp"
-        android:lineSpacingMultiplier="1.21"
+        android:layout_alignBottom="@+id/iv"
+        android:layout_alignParentStart="true"
         android:text="@string/english_daily"
         android:textColor="#2196F3"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        tools:ignore="SmallSp" />
 
     <ImageView
         android:id="@+id/iv"
         android:layout_width="113dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/flipper"
-        android:layout_alignBottom="@+id/tv_app_des"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="10dp"
+        android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_header" />
 

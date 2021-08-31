@@ -54,7 +54,9 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/app_name" /> <!-- 桌面插件 -->
-        <receiver android:name=".ui.widget.widget.EnglishEverydayWidget">
+        <receiver
+            android:name=".ui.widget.widget.EnglishEverydayWidget"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

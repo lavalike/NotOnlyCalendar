@@ -34,7 +34,7 @@ public class BaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         mContext = this;
-        AppUtils.install(this);
+        AppUtils.install(this, true);
         initUmeng();
         initBugly();
         Network.init(new NetConfig.Builder()
