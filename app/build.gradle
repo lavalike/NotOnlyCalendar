@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: 'version.gradle'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 31
@@ -50,6 +51,7 @@ android {
             outputFileName = "NotOnlyCalendar_V" + defaultConfig.versionName + ".apk"
         }
     }
+    viewBinding.enabled = true
 }
 
 dependencies {
@@ -62,8 +64,6 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     implementation files('libs/pgyer_sdk_3.0.10.jar')
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'jp.wasabeef:glide-transformations:4.1.0'

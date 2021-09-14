@@ -1,43 +1,39 @@
-package com.notonly.calendar.ui.holder;
+package com.notonly.calendar.ui.holder
 
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
-import com.wangzhen.adapter.base.RecyclerViewHolder;
-import com.notonly.calendar.R;
-import com.notonly.calendar.domain.HistoryResponse;
-
-import java.util.Locale;
+import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
+import com.notonly.calendar.R
+import com.notonly.calendar.databinding.ItemHistoryHolderLayoutBinding
+import com.notonly.calendar.domain.HistoryResponse
+import com.wangzhen.adapter.base.RecyclerViewHolder
+import java.util.*
 
 /**
  * HistoryViewHolder
  * Created by wangzhen on 2020/6/13.
  */
-public class HistoryViewHolder extends RecyclerViewHolder<HistoryResponse.DataBean> {
+class HistoryViewHolder(parent: ViewGroup) :
+    RecyclerViewHolder<HistoryResponse.DataBean>(parent, R.layout.item_history_holder_layout) {
 
-    private TextView mTvDate, mTvTitle;
-    private ImageView imageView;
+    private var binding: ItemHistoryHolderLayoutBinding =
+        ItemHistoryHolderLayoutBinding.bind(itemView)
 
-    public HistoryViewHolder(@NonNull ViewGroup parent) {
-        super(parent, R.layout.item_history_holder_layout);
-        mTvDate = findViewById(R.id.tv_date);
-        mTvTitle = findViewById(R.id.tv_title);
-        imageView = findViewById(R.id.image);
-    }
-
-    @Override
-    public void bind() {
-        mTvDate.setText(String.format(Locale.CHINA, "%s年%s月%s日", mData.year, mData.month, mData.day));
-        mTvTitle.setText(mData.title);
-        Glide.with(itemView.getContext()).load(mData.picUrl)
-                .apply(new RequestOptions().placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header))
+    override fun bind() {
+        mData?.let { data ->
+            binding.tvDate.text = String.format(
+                Locale.CHINA,
+                "%s年%s月%s日",
+                data.year,
+                data.month,
+                data.day
+            )
+            binding.tvTitle.text = data.title
+            Glide.with(itemView.context).load(data.picUrl)
+                .apply(RequestOptions().placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header))
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .into(imageView);
+                .into(binding.image)
+        }
     }
 }

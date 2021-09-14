@@ -200,13 +200,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_open_mini_program"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="60dp"
         android:backgroundTint="@color/colorPrimary"
         android:contentDescription="@string/app_name"
-        android:onClick="openMiniProgram"
         android:src="@mipmap/ic_mini_program"
         app:borderWidth="0dp"
         app:fabCustomSize="50dp"

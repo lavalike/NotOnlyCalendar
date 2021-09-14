@@ -1,124 +1,98 @@
-package com.notonly.calendar.base.manager;
+package com.notonly.calendar.base.manager
 
-import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
-import androidx.fragment.app.DialogFragment;
-
-import com.notonly.calendar.R;
-import com.notonly.calendar.util.DownloadUtil;
-import com.notonly.calendar.util.T;
-import com.wangzhen.commons.utils.AppUtils;
-
-import java.io.File;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.TextUtils
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.core.content.FileProvider
+import androidx.fragment.app.DialogFragment
+import com.notonly.calendar.R
+import com.notonly.calendar.base.Constants
+import com.notonly.calendar.databinding.DialogProgressDownloadLayoutBinding
+import com.notonly.calendar.util.DownloadUtil
+import com.notonly.calendar.util.T
+import java.io.File
 
 /**
  * 显示进度的文件下载对话框
  * Created by wangzhen on 2017/6/30.
  */
-public class DownloadDialogFragment extends DialogFragment {
+class DownloadDialogFragment : DialogFragment() {
+    private lateinit var binding: DialogProgressDownloadLayoutBinding
+    private var url: String? = null
 
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
-    @BindView(R.id.tv_progress)
-    TextView tvProgress;
-    private String url;
-    private final String MIME_APK = "application/vnd.android.package-archive";
-    private Context context;
-
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return super.onCreateDialog(savedInstanceState);
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val view = inflater.inflate(R.layout.dialog_progress_download_layout, container, false)
+        binding = DialogProgressDownloadLayoutBinding.bind(view)
+        return view
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_progress_download_layout, container, false);
-        ButterKnife.bind(this, view);
-        context = AppUtils.getContext();
-        return view;
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        download()
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        download();
-    }
-
-    private void download() {
+    private fun download() {
         DownloadUtil.get()
-                .setListener(new DownloadUtil.OnDownloadListener() {
-                    @Override
-                    public void onLoading(int progress) {
-                        updateMessage(progress);
-                    }
+            .setListener(object : DownloadUtil.OnDownloadListener {
+                override fun onLoading(progress: Int) {
+                    updateMessage(progress)
+                }
 
-                    @Override
-                    public void onSuccess(String path) {
-                        if (!path.endsWith(".apk")) {
-                            T.get(context).toast(getString(R.string.error_invalid_apk_file));
-                            dismissAllowingStateLoss();
-                            return;
-                        }
-                        final File file = new File(path);
-                        if (file.exists()) {
-                            tvTitle.setText(getString(R.string.tip_update_complete));
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    Intent install = new Intent(Intent.ACTION_VIEW);
-                                    install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    //兼容7.0私有文件权限
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                        Uri apkUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileProvider", file);
-                                        install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                        install.setDataAndType(apkUri, MIME_APK);
-                                    } else {
-                                        install.setDataAndType(Uri.fromFile(file), MIME_APK);
-                                    }
-                                    context.startActivity(install);
-                                    dismissAllowingStateLoss();
+                override fun onSuccess(path: String) {
+                    if (!path.endsWith(".apk")) {
+                        T.get(context).toast(getString(R.string.error_invalid_apk_file))
+                        dismissAllowingStateLoss()
+                        return
+                    }
+                    val file = File(path)
+                    if (file.exists()) {
+                        binding.tvTitle.text = getString(R.string.tip_update_complete)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            context?.let { ctx ->
+                                val install = Intent(Intent.ACTION_VIEW)
+                                install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                //兼容7.0私有文件权限
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    val apkUri = FileProvider.getUriForFile(
+                                        ctx,
+                                        ctx.packageName + ".fileProvider",
+                                        file
+                                    )
+                                    install.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                    install.setDataAndType(apkUri, Constants.MIME_APK)
+                                } else {
+                                    install.setDataAndType(Uri.fromFile(file), Constants.MIME_APK)
                                 }
-                            }, 1000);
-                        }
+                                ctx.startActivity(install)
+                            }
+                            dismissAllowingStateLoss()
+                        }, 1000)
                     }
+                }
 
-                    @Override
-                    public void onFail(String err) {
-                        T.get(context).toast(err);
-                        dismissAllowingStateLoss();
-                    }
-                })
-                .setFileName("NotOnlyCalendar.apk")
-                .download(this.url);
+                override fun onFail(err: String) {
+                    T.get(context).toast(err)
+                    dismissAllowingStateLoss()
+                }
+            })
+            .setFileName("NotOnlyCalendar.apk")
+            .download(url)
     }
 
-    public void setTitle(String title) {
-        if (!TextUtils.isEmpty(title))
-            tvTitle.setText(title);
+    fun setTitle(title: String?) {
+        if (!TextUtils.isEmpty(title)) binding.tvTitle.text = title
     }
 
     /**
@@ -126,11 +100,12 @@ public class DownloadDialogFragment extends DialogFragment {
      *
      * @param progress 进度
      */
-    private void updateMessage(int progress) {
-        if (progress < 0) progress = 0;
-        if (progress > 100) progress = 100;
-        progressBar.setProgress(progress);
-        tvProgress.setText(progress + "%");
+    private fun updateMessage(progress: Int) {
+        var value = progress
+        if (value < 0) value = 0
+        if (value > 100) value = 100
+        binding.progressBar.progress = value
+        binding.tvProgress.text = value.toString()
     }
 
     /**
@@ -138,25 +113,24 @@ public class DownloadDialogFragment extends DialogFragment {
      *
      * @param url
      */
-    public void setUrl(String url) {
-        this.url = url;
+    fun setUrl(url: String?) {
+        this.url = url
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        initWindow();
+    override fun onStart() {
+        super.onStart()
+        initWindow()
     }
 
-    private void initWindow() {
-        if (getDialog() == null) return;
-        Window window = getDialog().getWindow();
+    private fun initWindow() {
+        if (dialog == null) return
+        val window = dialog!!.window
         if (window != null) {
-            WindowManager.LayoutParams attr = window.getAttributes();
-            attr.width = WindowManager.LayoutParams.MATCH_PARENT;
-            window.setAttributes(attr);
+            val attr: WindowManager.LayoutParams = window.attributes
+            attr.width = WindowManager.LayoutParams.MATCH_PARENT
+            window.attributes = attr
         }
-        getDialog().setCanceledOnTouchOutside(false);
-        getDialog().setCancelable(false);
+        dialog!!.setCanceledOnTouchOutside(false)
+        dialog!!.setCancelable(false)
     }
 }

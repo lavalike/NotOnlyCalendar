@@ -1,43 +1,33 @@
-package com.notonly.calendar.base;
+package com.notonly.calendar.base
 
-import android.content.Context;
-import android.os.Bundle;
-
-import com.notonly.calendar.base.manager.AppManager;
-import com.umeng.analytics.MobclickAgent;
-import com.wangzhen.commons.toolbar.ToolbarActivity;
+import android.os.Bundle
+import com.notonly.calendar.base.manager.AppManager
+import com.umeng.analytics.MobclickAgent
+import com.wangzhen.commons.toolbar.ToolbarActivity
 
 /**
  * Activity基类
  * Created by wangzhen on 16/2/23.
  */
-public class BaseActivity extends ToolbarActivity {
+open class BaseActivity : ToolbarActivity() {
 
-    public Context mContext;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AppManager.get().addActivity(this);
-        mContext = this;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        AppManager.get().addActivity(this)
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
+    override fun onResume() {
+        super.onResume()
+        MobclickAgent.onResume(this)
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
+    override fun onPause() {
+        super.onPause()
+        MobclickAgent.onPause(this)
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        AppManager.get().removeActivity(this);
+    public override fun onDestroy() {
+        super.onDestroy()
+        AppManager.get().removeActivity(this)
     }
-
 }

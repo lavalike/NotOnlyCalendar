@@ -1,112 +1,72 @@
-package com.notonly.calendar.base.manager;
+package com.notonly.calendar.base.manager
 
-import android.app.Activity;
-import android.content.pm.PackageManager;
-
-import java.util.Stack;
+import android.app.Activity
+import java.util.*
 
 /**
  * 管理所有Activity
  * Created by wangzhen on 16/10/20.
  */
+class AppManager {
 
-public class AppManager {
-    private static AppManager mInstance;
-    /**
-     * 存储所有打开的Activity
-     */
-    private static Stack<Activity> mActivityStack;
-
-    public static AppManager get() {
-        if (mInstance == null) {
-            synchronized (AppManager.class) {
-                mInstance = new AppManager();
-            }
-        }
-        return mInstance;
-    }
-
-    /**
-     * 获取栈顶元素
-     *
-     * @return
-     */
-    public Activity getActivity() {
-        if (mActivityStack != null) {
-            return mActivityStack.peek();
-        }
-        return null;
-    }
-
-    /**
-     * 添加Activity
-     *
-     * @param activity
-     */
-    public void addActivity(Activity activity) {
+    fun addActivity(activity: Activity) {
         if (mActivityStack == null)
-            mActivityStack = new Stack<>();
-        mActivityStack.push(activity);
+            mActivityStack = Stack()
+        mActivityStack!!.push(activity)
     }
 
-    /**
-     * 移除顶部Activity
-     */
-    public void removeTop() {
-        if (mActivityStack != null) {
-            mActivityStack.pop();
+    fun removeTop() {
+        mActivityStack?.pop()
+    }
+
+    fun removeActivity(activity: Activity) {
+        mActivityStack?.let { stack ->
+            if (stack.contains(activity))
+                stack.remove(activity)
         }
     }
 
-    /**
-     * 删除Activity
-     *
-     * @param activity
-     */
-    public void removeActivity(Activity activity) {
-        if (mActivityStack != null) {
-            if (mActivityStack.contains(activity)) {
-                mActivityStack.remove(activity);
+    fun removeAllActivity() {
+        mActivityStack?.clear()
+    }
+
+    val appName: String
+        get() {
+            var appName = ""
+            try {
+                mActivityStack?.peek()?.let { activity ->
+                    appName = activity.applicationInfo.loadLabel(activity.packageManager).toString()
+                }
+            } catch (ignored: Exception) {
+
             }
+            return appName
         }
-    }
-
-    /**
-     * 清空所有Activity
-     */
-    public void removeAllActivity() {
-        if (mActivityStack != null) {
-            mActivityStack.clear();
-        }
-    }
-
-    /**
-     * 获取App名称
-     */
-    public String getAppName() {
-        String appName = "";
-        try {
-            Activity activity = getActivity();
-            if (activity != null) {
-                PackageManager pm = activity.getPackageManager();
-                appName = activity.getApplicationInfo().loadLabel(pm)
-                        .toString();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return appName;
-    }
 
     /**
      * 退出整个应用
      */
-    public void quit() {
+    fun quit() {
         if (mActivityStack != null) {
-            for (Activity activity : mActivityStack) {
-                activity.finish();
+            for (activity in mActivityStack!!) {
+                activity.finish()
             }
-            mActivityStack.clear();
+            mActivityStack!!.clear()
+        }
+    }
+
+    companion object {
+        private var instance: AppManager? = null
+        private var mActivityStack: Stack<Activity>? = null
+
+        @JvmStatic
+        fun get(): AppManager {
+            if (instance == null) {
+                synchronized(AppManager::class.java) {
+                    instance = AppManager()
+                }
+            }
+            return instance!!
         }
     }
 }

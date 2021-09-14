@@ -1,48 +1,34 @@
-package com.notonly.calendar.ui.view;
+package com.notonly.calendar.ui.view
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
-
-import com.wangzhen.commons.toolbar.impl.Toolbar;
-import com.notonly.calendar.R;
-import com.notonly.calendar.base.BaseActivity;
-import com.notonly.calendar.base.toolbar.AppCommonToolbar;
-import com.notonly.calendar.util.Utils;
-import com.notonly.calendar.util.WxUtils;
-import com.wangzhen.commons.utils.AppUtils;
-
-import org.jetbrains.annotations.Nullable;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+import android.os.Bundle
+import com.notonly.calendar.R
+import com.notonly.calendar.base.BaseActivity
+import com.notonly.calendar.base.toolbar.AppCommonToolbar
+import com.notonly.calendar.databinding.ActivityAboutBinding
+import com.notonly.calendar.util.WxUtils
+import com.wangzhen.commons.toolbar.impl.Toolbar
+import com.wangzhen.commons.utils.AppUtils
 
 /**
  * 关于页面
  * created by wangzhen on 2016/11/18
  */
-public class AboutActivity extends BaseActivity {
+class AboutActivity : BaseActivity() {
+    private lateinit var binding: ActivityAboutBinding
 
-    @BindView(R.id.tv_version)
-    TextView mTextViewVersion;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(ActivityAboutBinding.inflate(layoutInflater).apply {
+            binding = this
+        }.root)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        ButterKnife.bind(this);
-        mTextViewVersion.setText(String.format("版本：%s", AppUtils.getVersionName()));
+        binding.tvVersion.text = String.format("版本：%s", AppUtils.getVersionName())
+        binding.btnJump.setOnClickListener {
+            WxUtils.openMiniProgram(this)
+        }
     }
 
-    @Nullable
-    @Override
-    public Toolbar createToolbar() {
-        return new AppCommonToolbar(this, getString(R.string.title_about));
-    }
-
-    @OnClick(R.id.btn_jump)
-    public void onViewClicked(View view) {
-        WxUtils.openMiniProgram(this);
+    override fun createToolbar(): Toolbar {
+        return AppCommonToolbar(this, getString(R.string.title_about))
     }
 }
