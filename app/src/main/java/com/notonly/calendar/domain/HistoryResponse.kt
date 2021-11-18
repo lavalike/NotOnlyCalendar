@@ -1,27 +1,24 @@
-package com.notonly.calendar.domain;
+package com.notonly.calendar.domain
 
-import java.io.Serializable;
-import java.util.List;
+import java.io.Serializable
 
 /**
  * HistoryResponse
  * Created by wangzhen on 2020/6/13.
  */
-public class HistoryResponse extends BaseBean {
-    public int code;
-    public String msg;
-    public List<DataBean> data;
+class HistoryResponse : BaseBean() {
+    var code = 0
+    var msg: String? = null
+    var data: List<DataBean>? = null
+    val isSuccess: Boolean
+        get() = code == 1
 
-    public boolean isSuccess() {
-        return code == 1;
-    }
-
-    public static class DataBean implements Serializable {
-        public String picUrl;
-        public String title;
-        public String year;
-        public String month;
-        public String day;
-        public String details;
+    class DataBean : Serializable {
+        var picUrl: String? = null
+        var title: String? = null
+        var year: String? = null
+        var month: String? = null
+        var day: String? = null
+        var details: String? = null
     }
 }

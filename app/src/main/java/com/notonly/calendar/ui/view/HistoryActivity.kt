@@ -35,7 +35,9 @@ class HistoryActivity : BaseActivity() {
         startLoading()
         HistoryTask(object : LoadingCallback<HistoryResponse>() {
             override fun onSuccess(response: HistoryResponse) {
-                bind(response.data)
+                response.data?.let { data ->
+                    bind(data)
+                }
             }
 
             override fun onComplete() {

@@ -1,21 +1,21 @@
-package com.notonly.calendar.util;
+package com.notonly.calendar.util
 
-import android.content.Context;
+import android.content.Context
 
 /**
  * dp、sp 转换为 px 的工具类
  * Created by wangzhen on 16/4/5.
  */
-public class DisplayUtil {
+object DimensionUtils {
     /**
      * 将px值转换为dip或dp值，保证尺寸大小不变
      *
      * @param pxValue （DisplayMetrics类中属性density）
      * @return
      */
-    public static int px2dip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
+    fun px2dip(context: Context, pxValue: Float): Int {
+        val scale = context.resources.displayMetrics.density
+        return (pxValue / scale + 0.5f).toInt()
     }
 
     /**
@@ -24,9 +24,9 @@ public class DisplayUtil {
      * @param dipValue （DisplayMetrics类中属性density）
      * @return
      */
-    public static int dip2px(Context context, float dipValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * scale + 0.5f);
+    fun dip2px(context: Context, dipValue: Float): Int {
+        val scale = context.resources.displayMetrics.density
+        return (dipValue * scale + 0.5f).toInt()
     }
 
     /**
@@ -35,9 +35,9 @@ public class DisplayUtil {
      * @param pxValue （DisplayMetrics类中属性scaledDensity）
      * @return
      */
-    public static int px2sp(Context context, float pxValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (pxValue / fontScale + 0.5f);
+    fun px2sp(context: Context, pxValue: Float): Int {
+        val fontScale = context.resources.displayMetrics.scaledDensity
+        return (pxValue / fontScale + 0.5f).toInt()
     }
 
     /**
@@ -46,8 +46,8 @@ public class DisplayUtil {
      * @param spValue （DisplayMetrics类中属性scaledDensity）
      * @return
      */
-    public static int sp2px(Context context, float spValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
+    fun sp2px(context: Context, spValue: Float): Int {
+        val fontScale = context.resources.displayMetrics.scaledDensity
+        return (spValue * fontScale + 0.5f).toInt()
     }
 }

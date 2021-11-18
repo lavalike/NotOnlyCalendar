@@ -17,7 +17,6 @@ import com.notonly.calendar.domain.SloganBean
 import com.notonly.calendar.network.task.CalendarTask
 import com.notonly.calendar.network.task.SloganTask
 import com.notonly.calendar.util.DateUtil
-import com.notonly.calendar.util.T
 import com.notonly.calendar.util.WxUtils
 import com.wangzhen.commons.storage.SPHelper
 import com.wangzhen.network.callback.LoadingCallback
@@ -79,9 +78,9 @@ class MainActivity : BaseActivity() {
     private fun findSlogan() {
         SloganTask(object : LoadingCallback<SloganBean>() {
             override fun onSuccess(data: SloganBean) {
-                val english: String = data.content
-                val chinese: String = data.note
-                val picture: String = data.picture2
+                val english: String? = data.content
+                val chinese: String? = data.note
+                val picture: String? = data.picture2
                 binding.tvSloganEn.text = english
                 binding.tvSloganCn.text = chinese
                 if (!isDestroyed) {
@@ -109,18 +108,22 @@ class MainActivity : BaseActivity() {
             override fun onSuccess(bean: CalendarBean) {
                 val data = bean.data
                 if (data == null) {
-                    T.get(this@MainActivity).toast(getString(R.string.error_connect_timeout_lovely))
+                    Toast.makeText(
+                        this@MainActivity,
+                        getString(R.string.error_connect_timeout_lovely),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return
                 }
                 val weekDayCN: String = data.weekDayCN
-                val chineseZodiac: String = data.chineseZodiac
-                val yearTips: String = data.yearTips
-                val lunarCalendar: String = data.lunarCalendar
+                val chineseZodiac: String? = data.chineseZodiac
+                val yearTips: String? = data.yearTips
+                val lunarCalendar: String? = data.lunarCalendar
                 val typeDes: String =
                     DateUtil.formatDateTime("yyyy年MM月dd日") + " " + data.typeDes
-                val solarTerms: String = data.solarTerms
-                val avoid: String = data.avoid
-                val suit: String = data.suit
+                val solarTerms: String? = data.solarTerms
+                val avoid: String? = data.avoid
+                val suit: String? = data.suit
                 val dayOfYear: Int = data.dayOfYear
                 val weekOfYear: Int = data.weekOfYear
                 val builder = StringBuilder()
@@ -134,7 +137,7 @@ class MainActivity : BaseActivity() {
                 builder.append(" ")
                 builder.append(solarTerms)
                 builder.append("\n")
-                builder.append(DateUtil.getYear())
+                builder.append(DateUtil.year)
                 builder.append("年第")
                 builder.append(dayOfYear)
                 builder.append("天、第")
@@ -152,7 +155,7 @@ class MainActivity : BaseActivity() {
             }
 
             override fun onError(code: Int, message: String) {
-                T.get(this@MainActivity).toast(message)
+                Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
             }
         }).setDate(DateUtil.formatDateTime("yyyyMMdd")).setTag(this).exe()
     }

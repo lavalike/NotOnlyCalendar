@@ -1,31 +1,21 @@
-package com.notonly.calendar.network.task;
+package com.notonly.calendar.network.task
 
-import com.wangzhen.network.callback.RequestCallback;
-import com.wangzhen.network.task.GetTask;
+import com.wangzhen.network.callback.RequestCallback
+import com.wangzhen.network.task.GetTask
 
 /**
  * CalendarTask
  * Created by wangzhen on 2020/6/13.
  */
-public class CalendarTask extends GetTask {
-    private String date;
-
-    public <EntityType> CalendarTask(RequestCallback<EntityType> callback) {
-        super(callback);
+class CalendarTask(callback: RequestCallback<*>) : GetTask(callback) {
+    private var date: String? = null
+    override fun onSetupParams(vararg params: Any) {}
+    fun setDate(date: String?): CalendarTask {
+        this.date = date
+        return this
     }
 
-    @Override
-    public void onSetupParams(Object... params) {
-
-    }
-
-    public CalendarTask setDate(String date) {
-        this.date = date;
-        return this;
-    }
-
-    @Override
-    public String getApi() {
-        return "/holiday/single/" + date;
+    override fun getApi(): String {
+        return "/holiday/single/$date"
     }
 }

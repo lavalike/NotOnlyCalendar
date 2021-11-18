@@ -11,13 +11,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.DialogFragment
 import com.notonly.calendar.R
 import com.notonly.calendar.base.Constants
 import com.notonly.calendar.databinding.DialogProgressDownloadLayoutBinding
 import com.notonly.calendar.util.DownloadUtil
-import com.notonly.calendar.util.T
 import java.io.File
 
 /**
@@ -52,7 +52,11 @@ class DownloadDialogFragment : DialogFragment() {
 
                 override fun onSuccess(path: String) {
                     if (!path.endsWith(".apk")) {
-                        T.get(context).toast(getString(R.string.error_invalid_apk_file))
+                        Toast.makeText(
+                            context,
+                            getString(R.string.error_invalid_apk_file),
+                            Toast.LENGTH_SHORT
+                        ).show()
                         dismissAllowingStateLoss()
                         return
                     }
@@ -83,7 +87,7 @@ class DownloadDialogFragment : DialogFragment() {
                 }
 
                 override fun onFail(err: String) {
-                    T.get(context).toast(err)
+                    Toast.makeText(context, err, Toast.LENGTH_SHORT).show()
                     dismissAllowingStateLoss()
                 }
             })

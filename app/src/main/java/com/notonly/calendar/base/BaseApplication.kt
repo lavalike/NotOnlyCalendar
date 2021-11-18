@@ -40,7 +40,7 @@ class BaseApplication : MultiDexApplication() {
         val processName = Utils.getProcessName(Process.myPid())
         val strategy = UserStrategy(this)
         strategy.isUploadProcess = processName == null || processName == packageName
-        strategy.deviceID = Utils.getUniquePsuedoID()
+        strategy.deviceID = Utils.uniquePsuedoID()
         strategy.appChannel = channel
         CrashReport.initCrashReport(this, "38f2ae3fad", BuildConfig.DEBUG, strategy)
     }

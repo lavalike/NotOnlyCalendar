@@ -1,10 +1,10 @@
 package com.notonly.calendar.base.manager
 
 import android.Manifest
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.notonly.calendar.R
-import com.notonly.calendar.util.T
 import com.pgyersdk.update.PgyUpdateManager
 import com.pgyersdk.update.UpdateManagerListener
 import com.pgyersdk.update.javabean.AppBean
@@ -39,8 +39,11 @@ class UpdateManager private constructor(val activity: FragmentActivity) {
                                     deniedPermissions: Array<String>,
                                     neverAskPermissions: Array<String>
                                 ) {
-                                    T.get(activity)
-                                        .toast(activity.getString(R.string.error_permission_denied))
+                                    Toast.makeText(
+                                        activity,
+                                        activity.getString(R.string.error_permission_denied),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
                             }, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         }
