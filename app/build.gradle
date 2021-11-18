@@ -72,7 +72,7 @@ dependencies {
     implementation 'com.tencent.bugly:crashreport:3.4.4'
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android:6.8.0'
 
-    implementation 'com.github.lavalike:permission:0.0.1'
+    implementation 'com.github.lavalike:permission:0.0.2'
     implementation 'com.github.lavalike:network:0.0.3'
     implementation 'com.github.lavalike:adapter:0.1.0'
     implementation 'com.github.lavalike:commons:0.0.1'
