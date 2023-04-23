@@ -1,7 +1,7 @@
 package com.notonly.calendar.util
 
 import android.app.ActivityManager
-import com.wangzhen.commons.utils.AppUtils
+import com.wangzhen.utils.utils.AppUtils
 import android.content.Context
 import android.os.Build
 import java.lang.Exception

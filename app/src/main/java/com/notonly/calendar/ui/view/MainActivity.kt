@@ -18,8 +18,8 @@ import com.notonly.calendar.network.task.CalendarTask
 import com.notonly.calendar.network.task.SloganTask
 import com.notonly.calendar.util.DateUtil
 import com.notonly.calendar.util.WxUtils
-import com.wangzhen.commons.storage.SPHelper
 import com.wangzhen.network.callback.LoadingCallback
+import com.wangzhen.utils.storage.SPHelper
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 /**
@@ -89,11 +89,8 @@ class MainActivity : BaseActivity() {
                             .placeholder(R.mipmap.ic_header).error(R.mipmap.ic_header)
                     ).transition(DrawableTransitionOptions.withCrossFade()).into(binding.ivCover)
                 }
-                SPHelper.get()
-                    .put(SPKey.KEY_SLOGAN_EN, english)
-                    .put(SPKey.KEY_SLOGAN_CN, chinese)
-                    .put(SPKey.KEY_SLOGAN_PICTURE, picture)
-                    .commit()
+                SPHelper.get().put(SPKey.KEY_SLOGAN_EN, english).put(SPKey.KEY_SLOGAN_CN, chinese)
+                    .put(SPKey.KEY_SLOGAN_PICTURE, picture).commit()
             }
 
             override fun onError(code: Int, message: String) {
@@ -119,8 +116,7 @@ class MainActivity : BaseActivity() {
                 val chineseZodiac: String? = data.chineseZodiac
                 val yearTips: String? = data.yearTips
                 val lunarCalendar: String? = data.lunarCalendar
-                val typeDes: String =
-                    DateUtil.formatDateTime("yyyy年MM月dd日") + " " + data.typeDes
+                val typeDes: String = DateUtil.formatDateTime("yyyy年MM月dd日") + " " + data.typeDes
                 val solarTerms: String? = data.solarTerms
                 val avoid: String? = data.avoid
                 val suit: String? = data.suit
@@ -144,13 +140,9 @@ class MainActivity : BaseActivity() {
                 builder.append(weekOfYear)
                 builder.append("周")
                 val detail = builder.toString()
-                SPHelper.get()
-                    .put(SPKey.KEY_SUIT, suit)
-                    .put(SPKey.KEY_AVOID, avoid)
-                    .put(SPKey.KEY_LUNAR, lunarCalendar)
-                    .put(SPKey.KEY_TYPE_DES, typeDes)
-                    .put(SPKey.KEY_CALENDAR_DETAIL, detail)
-                    .commit()
+                SPHelper.get().put(SPKey.KEY_SUIT, suit).put(SPKey.KEY_AVOID, avoid)
+                    .put(SPKey.KEY_LUNAR, lunarCalendar).put(SPKey.KEY_TYPE_DES, typeDes)
+                    .put(SPKey.KEY_CALENDAR_DETAIL, detail).commit()
                 bindData()
             }
 

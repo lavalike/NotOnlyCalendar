@@ -1,6 +1,6 @@
 package com.notonly.calendar.util
 
-import com.wangzhen.commons.utils.AppUtils
+import com.wangzhen.utils.utils.AppUtils
 import java.io.File
 
 /**

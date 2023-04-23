@@ -10,9 +10,9 @@ import com.tencent.bugly.crashreport.CrashReport.UserStrategy
 import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.BuildConfig
 import com.umeng.commonsdk.UMConfigure
-import com.wangzhen.commons.utils.AppUtils
 import com.wangzhen.network.Network
 import com.wangzhen.network.config.NetConfig
+import com.wangzhen.utils.utils.AppUtils
 
 /**
  * Created by wangzhen on 16/2/23.
@@ -26,9 +26,7 @@ class BaseApplication : MultiDexApplication() {
         initUmeng()
         initBugly()
         Network.init(
-            NetConfig.Builder()
-                .baseUrl(APIManager.baseUrl)
-                .interceptor(RequestInterceptor())
+            NetConfig.Builder().baseUrl(APIManager.baseUrl).interceptor(RequestInterceptor())
                 .build()
         )
     }
@@ -68,11 +66,7 @@ class BaseApplication : MultiDexApplication() {
          * 参数5:Push推送业务的secret，需要集成Push功能时必须传入Push的secret，否则传空。
          */
         UMConfigure.init(
-            this,
-            "5b83ad44b27b0a5719000017",
-            channel,
-            UMConfigure.DEVICE_TYPE_PHONE,
-            null
+            this, "5b83ad44b27b0a5719000017", channel, UMConfigure.DEVICE_TYPE_PHONE, null
         )
 
         //旧版本SDK统计方法

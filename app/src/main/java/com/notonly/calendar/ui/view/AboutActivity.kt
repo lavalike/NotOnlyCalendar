@@ -7,7 +7,7 @@ import com.notonly.calendar.base.toolbar.AppCommonToolbar
 import com.notonly.calendar.databinding.ActivityAboutBinding
 import com.notonly.calendar.util.WxUtils
 import com.wangzhen.commons.toolbar.impl.Toolbar
-import com.wangzhen.commons.utils.AppUtils
+import com.wangzhen.utils.utils.AppUtils
 
 /**
  * 关于页面

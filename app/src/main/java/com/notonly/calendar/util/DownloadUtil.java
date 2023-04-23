@@ -6,7 +6,7 @@ import android.os.Message;
 import android.text.TextUtils;
 
 import com.notonly.calendar.R;
-import com.wangzhen.commons.utils.AppUtils;
+import com.wangzhen.utils.utils.AppUtils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

@@ -6,7 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import com.notonly.calendar.base.BaseActivity
 import com.notonly.calendar.databinding.ActivitySplashBinding
-import com.wangzhen.commons.utils.AppUtils
+import com.wangzhen.utils.utils.AppUtils
 
 /**
  * 启动页

@@ -8,7 +8,7 @@ import com.notonly.calendar.R
 import com.pgyersdk.update.PgyUpdateManager
 import com.pgyersdk.update.UpdateManagerListener
 import com.pgyersdk.update.javabean.AppBean
-import com.wangzhen.commons.utils.AppUtils
+import com.wangzhen.utils.utils.AppUtils
 import com.wangzhen.permission.PermissionManager
 import com.wangzhen.permission.callback.AbsPermissionCallback
 
