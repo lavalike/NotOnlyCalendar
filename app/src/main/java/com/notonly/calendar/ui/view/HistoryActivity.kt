@@ -49,7 +49,7 @@ class HistoryActivity : BaseActivity() {
     }
 
     private fun bind(data: List<HistoryResponse.DataBean>) {
-        val adapter = HistoryAdapter(data).apply {
+        binding.recycler.adapter = HistoryAdapter(data).apply {
             addFooter(object : RecyclerItem() {
                 override fun layout(): Int {
                     return R.layout.layout_history_footer_layout
@@ -61,7 +61,6 @@ class HistoryActivity : BaseActivity() {
                 }
             }.onCreateView(binding.recycler))
         }
-        binding.recycler.adapter = adapter
     }
 
     override fun createToolbar(): Toolbar {
@@ -74,7 +73,9 @@ class HistoryActivity : BaseActivity() {
 
     private fun initSwipeRefresh() {
         binding.refresh.setColorSchemeResources(
-            R.color.colorPrimary, android.R.color.holo_purple, android.R.color.holo_orange_light,
+            R.color.colorPrimary,
+            android.R.color.holo_purple,
+            android.R.color.holo_orange_light,
             android.R.color.holo_red_light
         )
         binding.refresh.setOnRefreshListener(::request)
